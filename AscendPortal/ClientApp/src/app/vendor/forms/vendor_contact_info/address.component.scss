@@ -1,0 +1,58 @@
+.header-p {
+  background-color: #e5edf4;
+}
+
+.contact-text {
+  color: #06c;
+}
+
+.bg-darkgrey {
+  background: #e5edf4;
+}
+
+.heading {
+  font-weight: 600;
+  font-size: 90%;
+  color: #6d6d6d;
+
+  button {
+    padding: 0 !important;
+    margin: 0 !important;
+    line-height: 1;
+    vertical-align: middle;
+    min-width: 10px;
+
+    mat-icon {
+      font-size: 15px;
+      height: auto;
+      vertical-align: middle;
+    }
+  }
+}
+
+.contact_info {
+  .mt-ci {
+    margin-top: 2em !important;
+  }
+
+  .vendormail {
+    button {
+      padding: 0 !important;
+      margin: 0 !important;
+      line-height: 1;
+      vertical-align: middle;
+      min-width: 10px;
+
+      mat-icon {
+        font-size: 20px;
+        height: auto;
+        vertical-align: middle;
+      }
+    }
+  }
+}
+
+.mat-button:hover {
+  background: none;
+}
+

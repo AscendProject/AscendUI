@@ -1,0 +1,56 @@
+.mat-form-field-infix-custom {
+    width: 150% !important;
+  }
+
+
+.fa-bank {
+  font-size: 63px;
+  color: #fff;
+  background: #dee2e6;
+  padding: 15px;
+  border-radius: 50%;
+}
+
+
+.mat-icon {
+  cursor: pointer;
+}
+
+
+.badge-uploaded {
+  color: #028b2c;
+  border: 1px solid #028b2c;
+  border-radius: 20px;
+  padding: 5px 10px;
+}
+
+/*
+.add-edit-financial-info {
+  height: calc(100% - 40px);
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.vendor_details {
+  height: 172px;
+  overflow: hidden;
+}
+.panel-head {
+  height: 40px;
+}*/
+
+
+.content_panel {
+  height: calc(100% - 193px);
+  overflow: hidden;
+}
+
+.panel-head {
+  height: 45px;
+}
+
+.add-edit-financial-info {
+  height: calc(100% - 45px);
+  overflow: auto;
+} 
+ 

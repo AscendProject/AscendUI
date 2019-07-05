@@ -1,0 +1,26 @@
+<div class="col-12 bg-primary text-white footer py-3">
+    <div class="row">
+        <div class="col-6 pr-0">
+            
+                <span> Display</span>
+                    <mat-select [(ngModel)]="currentPageSize" [disabled]="totalRecords<=10" (change)="changePageSize(currentPageSize)">
+                        <mat-option [value]="10">10</mat-option>
+                        <mat-option [value]="25">25</mat-option>
+                        <mat-option [value]="50">50</mat-option>
+                        <mat-option [value]="75">75</mat-option>
+                        <mat-option [value]="100">100</mat-option>
+                    </mat-select>
+                <span> per page</span>
+           
+        </div>
+        <div class="col-6 text-right">
+            Showing:
+            <span *ngIf="pageNumber==1">1 - </span>
+            <span *ngIf="pageNumber!=1">
+                {{ConvertToInt(pageNumber) + ( pageSize -1 ) * ( pageNumber-1) }} -
+            </span>
+            <span>{{pageSize * pageNumber}} </span> of
+            <span>{{totalRecords}} </span>
+        </div>
+    </div>
+</div>

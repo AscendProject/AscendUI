@@ -1,0 +1,29 @@
+<div *ngIf="historydata?.historyLogs.length > 0">
+  <div class="col-lg-12" style="margin-left:10px">
+    <h4 style="margin-bottom :20px;"><strong> History Changes</strong></h4>
+  </div>
+  <div class="col-lg-12" style="overflow:auto; " id="vendorHistoryTable" >
+    <mat-table #table [dataSource]="historytabledata" style="margin-right:30px; margin-left:30px;margin-bottom:20px" class="mat-elevation-z8" matSort matSortDisableClear="true">
+      <ng-container matColumnDef="propertyName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header (click)="getRecord()"> Field </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{addSpaces(element.propertyName)}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="newValue">
+        <mat-header-cell *matHeaderCellDef mat-sort-header (click)="getRecord()"> New Value </mat-header-cell>
+        <mat-cell *matCellDef="let element" [innerHtml]="element.newValue"> </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="oldValue">
+        <mat-header-cell *matHeaderCellDef mat-sort-header (click)="getRecord()">Old Value</mat-header-cell>
+        <mat-cell *matCellDef="let element" [innerHtml]="element.oldValue">  </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="timestamp">
+        <mat-header-cell *matHeaderCellDef mat-sort-header (click)="getRecord()"> Timestamp </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.timestamp|  date:'MM/dd/yyyy HH:mm:ss'}} </mat-cell>
+      </ng-container>
+      <mat-header-row style="font-size-adjust:inherit" *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <a class="show-more" style="margin-left:30px; cursor: pointer;" (click)="showmore('more')" [hidden]="!isShowMore">Show more</a>
+    <a class="show-more" style="margin-left:30px;  cursor: pointer;" (click)="showmore('less')" [hidden]="isShowMore">Show less</a>
+  </div>
+</div>

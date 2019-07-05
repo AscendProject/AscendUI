@@ -1,0 +1,102 @@
+.tag {
+  border-radius: 50%;
+  height: 15px;
+  width: 15px;
+  display: inline-block;
+}
+
+.tag-default {
+  background-color: gray;
+}
+
+.tag-success {
+  background-color: green;
+}
+
+.tag-warning {
+  background-color: orange;
+}
+
+.tag-danger {
+  background-color: red;
+}
+
+.drag-drop {
+  font-weight: bolder;
+  height: 0;
+  width: 100%;
+  display: table;
+}
+
+.browse-anchor {
+  padding-right: 30px;
+  padding-top: 65px;
+  padding-bottom: 70px;
+  display: block;
+  color: blue;
+  text-decoration: underline;
+  text-align: center;
+}
+
+.browse {
+  padding-left: 40px;
+  padding-right: 30px;
+  padding-top: 65px;
+  padding-bottom: 70px;
+  cursor: pointer;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+
+.dotted-line {
+  height: 120px;
+  border: dotted #ddd;
+  border-top: none;
+  width: 100%;
+  display: table;
+}
+
+.pane {
+  margin-top: 7px;
+  border-color: #fff;
+  box-shadow: none;
+  -webkit-box-shadow: none
+}
+
+.text-left {
+  width: 300px;
+}
+
+.history-bg {
+  background-color: #f5f5f5;
+}
+
+.bgcolor {
+  background-color: #f5f5f5;
+}
+
+.upload-bottom-remove {
+  border: 1px solid;
+  background-color: #f5f5f5;
+  border-color: #ddd;
+  height: 35px;
+  padding-top: 8px;
+}
+
+.anchor-color {
+  color: blue;
+  cursor: pointer;
+}
+
+.icon-download {
+  font-size: 30px;
+  color: blue;
+  text-align: center;
+  display: block;
+  position: absolute;
+  margin-left: 160px;
+  margin-top: 30px;
+}

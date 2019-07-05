@@ -1,0 +1,190 @@
+<div id="addInsuranceContainer">
+
+    <div class="container-fluid info_container mt-3">
+      <div class="vendor-contact-header">
+        <div class="info_heading">
+          <h4 class="text-dark d-inline" id="pageTitle-ListInsurancePage">
+            Insurances<span class="text-primary" *ngIf="insuranceDataList&&insuranceDataList.data && insuranceDataList.data.length > 0"> ({{insuranceDataList.data.length}})</span>
+          </h4>
+          <button id="btnAddLicense-ListInsurancePage" type="button" class="btn-link float-right" (click)="addinsurances()">+ Add Insurance</button>
+        </div>
+
+        <!-- Add Insurance-->
+        <div class="row">
+          <div class="col-12" id="insuranceListTable" *ngIf="displayInsuranceTable">
+            <mat-table [dataSource]="insuranceDataList" #insuranceSort="matSort"  class="mt-3 mat-elevation-z8" matSort matSortActive="policyNumber" matSortDirection="desc" matSortDisableClear>
+              <!-- policy no Column -->
+              <ng-container matColumnDef="policyNumber">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Insurance Policy #</mat-header-cell>
+                <mat-cell *matCellDef="let insurance" class="fs-12">
+                  <a id="lnkPolicyNumber" [routerLink]="['/vendor/insurancedetails', insurance.id]" class="cursor-p text-underline">
+                    {{insurance.policyNumber}}
+                  </a>
+                </mat-cell>
+              </ng-container>
+              <!-- type Column -->
+              <ng-container matColumnDef="insuranceType">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Insurance Type </mat-header-cell>
+                <mat-cell *matCellDef="let insurance" class="fs-12"> {{insurance.insuranceType}} </mat-cell>
+              </ng-container>
+              <!-- effectice date Column -->
+              <ng-container matColumnDef="effectiveDate">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Effective Date </mat-header-cell>
+                <mat-cell *matCellDef="let insurance" class="fs-12"> {{insurance.effectiveDate | date: 'MM/dd/yyyy'}} </mat-cell>
+              </ng-container>
+              <!-- letter Column -->
+              <ng-container matColumnDef="expirationDate">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Expiration Date </mat-header-cell>
+                <mat-cell *matCellDef="let insurance" class="fs-12"> {{insurance.expirationDate | date: 'MM/dd/yyyy'}} </mat-cell>
+              </ng-container>
+              <!-- vendor date Column -->
+              <ng-container matColumnDef="lastVerifiedResult">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Verified Result </mat-header-cell>
+                <mat-cell *matCellDef="let insurance" class="fs-12" [ngClass]="chipColor(insurance.lastVerifiedResult)">
+                  {{insurance.lastVerifiedResult}}
+                </mat-cell>
+              </ng-container>
+              <mat-header-row *matHeaderRowDef="insuranceDisplayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: insuranceDisplayedColumns"></mat-row>
+            </mat-table>
+            <div id="insuranceListPaginator" class="mb-3">
+              <mat-paginator #insurancePaginator="matPaginator" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+            </div>
+          </div>
+          <div class="text-secondary col-12 text-center py-5" *ngIf="!displayInsuranceTable">No Insurance have been added</div>
+        </div>
+
+        <!-- Add License-->
+        <div class="info_heading">
+          <h4 class="text-dark d-inline" id="listLicensePageTitle">Licenses <span class="text-primary" *ngIf="licenseDataList && licenseDataList.data && licenseDataList.data.length > 0"> ({{licenseDataList.data.length}})</span></h4>
+          <button id="btnAddLicense-ListInsurancePage" type="button" class="btn-link float-right" (click)="addlicense()">+ Add License</button>
+        </div>
+
+        <div class="row">
+          <div class="col-12" id="licenseListTable" *ngIf="displayLicenseTable">
+            <mat-table [dataSource]="licenseDataList" #licenseSort="matSort" matSort class="mt-3"  matSortActive="licenseNumber" matSortDirection="desc" matSortDisableClear>
+              <!-- policy no Column -->
+              <ng-container matColumnDef="licenseNumber">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> License # </mat-header-cell>
+                <mat-cell *matCellDef="let license" class="fs-12">
+                  <a id="licensePolicyNumber" [routerLink]="['/vendor/licesedetails', license.id]" class="cursor-p text-underline">
+                    {{license.licenseNumber}}
+                  </a> <span *ngIf="license.HasDisciplinaryAction === true" style="color:red">*</span>
+                </mat-cell>
+              </ng-container>
+              <!-- type Column -->
+              <ng-container matColumnDef="licenseType">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> License Type </mat-header-cell>
+                <mat-cell *matCellDef="let license" class="fs-12"> {{license.licenseType}} </mat-cell>
+              </ng-container>
+              <!-- effectice date Column -->
+              <ng-container matColumnDef="effectiveDate">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Effective Date </mat-header-cell>
+                <mat-cell *matCellDef="let license" class="fs-12"> {{license.effectiveDate | date: 'MM/dd/yyyy'}} </mat-cell>
+              </ng-container>
+              <!-- letter Column -->
+              <ng-container matColumnDef="expirationDate">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Expiration Date </mat-header-cell>
+                <mat-cell *matCellDef="let license" class="fs-12"> {{license.expirationDate | date: 'MM/dd/yyyy'}} </mat-cell>
+              </ng-container>
+              <!-- vendor date Column -->
+              <ng-container matColumnDef="lastVerifiedResult">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Verified Result </mat-header-cell>
+                <mat-cell *matCellDef="let license" class="fs-12" [ngClass]="chipColor(license.lastVerifiedResult)">
+                  {{license.lastVerifiedResult}}
+                </mat-cell>
+              </ng-container>
+              <!-- License state Column -->
+              <ng-container matColumnDef="licenseState">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> State </mat-header-cell>
+                <mat-cell *matCellDef="let license" class="fs-12">
+                  {{license.licenseState}}
+                </mat-cell>
+              </ng-container>
+              <mat-header-row *matHeaderRowDef="licenseDisplayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: licenseDisplayedColumns"></mat-row>
+            </mat-table>
+            <div id="licenseListPaginator" class="mb-3">
+              <mat-paginator #licensePaginator="matPaginator" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+            </div>
+          </div>
+          <div id="#" class="text-secondary col-12 text-center py-5" *ngIf="!displayLicenseTable">No License have been added</div>
+        </div>
+
+        <!-- Add Certifications-->
+        <div class="info_heading" *ngIf="!isFromVendorService">
+          <h4 class="text-dark d-inline" id="#">Certifications</h4>
+          <button id="btnAddLicense-ListInsurancePage" type="button" class="btn-link float-right" (click)="addlicense()">+ Add Certifications</button>
+        </div>
+        <div id="#" class="text-secondary text-center py-5" *ngIf="!isFromVendorService">No certifications have been added</div>
+
+        <!-- Add BackGround Check-->
+        <div class="info_heading">
+          <h4 class="text-dark d-inline" id="#">BACKGROUND CHECK</h4>
+          <button id="btnAddLicense-ListInsurancePage" type="button" class="btn-link float-right" (click)="addbackgroundcheck()">+ Add Background Check</button>
+        </div>
+
+       
+          <div class="row" id="vendorHistoryTable" *ngIf="backgroundCheckTable">
+            <div class="col-12">
+              <mat-table #table [dataSource]="backgroundChecktabledata" #bgchechkSort="matSort" class="mt-3 mat-elevation-z8" matSort matSortActive="reportDate" matSortDirection="desc" matSortDisableClear>
+                <ng-container matColumnDef="referenceID">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> Ref ID # </mat-header-cell>
+                  <mat-cell *matCellDef="let element" class="fs-12">
+                    <a (click)="navigativeBackgrounddetails(element.backgroundCheckId)" >{{element.referenceID}}</a>
+                  </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="reportDate">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> Report Date </mat-header-cell>
+                  <mat-cell *matCellDef="let element" class="fs-12"> {{element.reportDate | date: 'MM/dd/yyyy'}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="expirationDate">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> Expiration Date </mat-header-cell>
+                  <mat-cell *matCellDef="let element" class="fs-12"> {{element.expirationDate | date: 'MM/dd/yyyy'}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="bgCompanyName">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Company</mat-header-cell>
+                  <mat-cell *matCellDef="let element" class="fs-12">  {{ element.bgCompanyName}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="typeOfbgCheck">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> Type of Check </mat-header-cell>
+                  <mat-cell *matCellDef="let element" class="fs-12"> {{element.typeOfbgCheck}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="resultType">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> Result </mat-header-cell>
+                  <mat-cell *matCellDef="let element" [ngClass]="chipColor(element.resultType)" class="fs-12"> {{element.resultType}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="isDeleted">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> Action </mat-header-cell>
+                  <mat-cell *matCellDef="let element"  class="fs-12">
+                    <mat-icon id="" class="text-danger float-right" role="img" (click)="deleteBackgroundCheckDialog(element.backgroundCheckId, vendorid)">delete</mat-icon>
+                  </mat-cell>
+                </ng-container>
+                <mat-header-row style="font-size-adjust:inherit" *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+              </mat-table>
+              <div id="backgroundckeckPaginator" class="mb-3">
+                <mat-paginator #backgroundcheckPaginator="matPaginator" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+              </div>
+              <!--<div class="col-12 text-center" *ngIf="backgroundCheckList.length > 5">
+    <a class="show-more btn btn-default normal mx-auto my-4"  (click)="showmore('more')" [hidden]="!isShowMore">Show more</a>
+    <a class="show-more btn btn-default normal mx-auto my-4" (click)="showmore('less')" [hidden]="isShowMore">Show less</a>
+  </div>-->
+            </div>
+
+              <div id="#" class="text-secondary text-center py-5" *ngIf="!backgroundCheckTable">No background checks have been added</div>
+            
+          </div>
+      
+        <!--  End BackGround Check -->
+
+        <div class="info_heading" *ngIf="!isFromVendorService">
+          <h4 class="text-dark d-inline" id="#">Change history</h4>
+        </div>
+
+        <div id="#" class="text-secondary text-center py-5" *ngIf="!isFromVendorService">No Changes Available</div>
+
+      </div>
+    </div>
+
+  </div>

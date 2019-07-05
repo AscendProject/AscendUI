@@ -1,0 +1,75 @@
+<!-- <div class="col-12 no-margin no-padding hgt100"> -->
+<div class="container-fluid">
+  <div class="row">
+
+    <mat-form-field class="col-12">
+      <textarea id="note" class="mat-input-element" matInput placeholder="Enter New Note" [value]="noteText" (input)="noteText = $event.target.value">
+    </textarea>
+    </mat-form-field>
+
+    <div mat-cards-actions align="end" class="col-12">
+      <div class="ml-auto">
+        <button (click)="onCancelClick()" class="btn btn-default small text-primary">Cancel</button>
+        <button class="btn btn-primary small" (click)="addNote()">Add Comment</button>
+      </div>
+    </div>
+
+
+    <div *ngIf="NotesList !== undefined && NotesList.pagingResult.totalCount > NotesList.pagingResult.pageSize">
+      <mat-divider></mat-divider>
+      <ascend-pagination-full (nextpage)="getPaging($event)" [totalRecords]="totalCount" [totalPages]="totalPages" [pageNumber]="pageNumber"
+                              [pageSize]="pageSize" (pagenumberchnage)="changePage($event)" (previouspage)="getPaging($event)">
+
+      </ascend-pagination-full>
+      <mat-divider></mat-divider>
+    </div>
+
+    <div class="orders_list col-12">
+      <div *ngIf="NotesList ===undefined">
+        {{message}}
+      </div>
+      <mat-list role="list" class="panel_list row" *ngIf="NotesList !==undefined">
+        <mat-list-item class="notes_list col-12" *ngFor="let note of NotesList.records; let i = index;trackBy: trackNote">
+          <div class="panel_note row pt-3 mb-2">
+            <p class="creator w-100">
+              <span class="text-primary mr-2">User name</span>
+              <span class="date font-italic text-secondary mr-2">{{note.createdDate | localTime | date: 'MM/dd/yyyy'}}</span>
+              <span class="time font-italic text-secondary">{{note.createdDate | localTime | date: 'shortTime'}}</span>
+            </p>
+
+            <div id="content_{{note.id}}" class="content">
+              <p id="notetext_{{note.id}}" class="noteview hideContent preclass">{{note.noteText}}</p>
+            </div>
+
+            <div id="showmore_{{note.id}}" align="end" class="show-more">
+              <a *ngIf="checkLength(note.id, note.noteText)" id="moreless_{{note.id}}" class="show" (click)="validateShowMore(note.id)">Show more</a>
+            </div>
+
+          </div>
+          <mat-divider></mat-divider>
+        </mat-list-item>
+      </mat-list>
+    </div>
+    <!-- <div class="col-12 no-padding no-padding orders_list">
+        <div class="col-12" *ngIf="NotesList ===undefined">
+            {{message}}
+        </div>
+        <mat-list role="list" class="panel_list" *ngIf="NotesList !==undefined">
+                <mat-list-item class="row no-gutters no-padding notes_list" *ngFor="let note of NotesList.records; let i = index">
+                        <div class="col-12 panel_note">
+                                <p class="creator">
+                                        <span>{{note.createdByUsername}}</span>
+                                        <span class="date">{{note.createdDate | localTime | date: 'MM/dd/yyyy'}}</span>
+                                        <span class="date">{{note.createdDate | localTime | date: 'shortTime'}}</span>
+                                </p>
+                                <p class="noteview">
+                                        {{note.noteText}}
+                                </p>
+                        </div>
+                </mat-list-item>
+        </mat-list>
+    </div> -->
+
+  </div>
+</div>
+<!-- </div> -->

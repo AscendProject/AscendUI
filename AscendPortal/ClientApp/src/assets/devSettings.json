@@ -1,0 +1,40 @@
+{
+  "serviceOrdersURL": "https://ordermanagementqueryapi-dev.azurewebsites.net/api/v1.0/serviceOrders",
+  "serviceOrderbyIdURL": "https://ordermanagementqueryapi-dev.azurewebsites.net/api/v1.0/serviceOrders/{serviceOrderId}",
+  "workOrdersURL": "https://ordermanagementqueryapi-dev.azurewebsites.net/api/v1.0/workOrders",
+  "workOrderbyIdURL": "https://ordermanagementqueryapi-dev.azurewebsites.net/api/v1.0/workOrders/{workOrderId}",
+  "vendorbyIdURL": "http://localhost:6480/api/v1.0/vendorProfile/{vendorId}",
+  "orderManagementCommandAPI": "http://localhost:7379/api/v1.0",
+  "orderManagementQueryAPI": "https://ordermanagementqueryapi-test.azurewebsites.net/api/v1.0",
+  "orderFulfillmentCommandAPI": "http://localhost:7579/api/v1.0",
+  "orderFulfillmentQueryAPI": "https://orderfulfillmentqueryapi-test.azurewebsites.net/api/v1/",
+
+  "vendorProfileQueryAPI": "https://vendorqueryapi-test.azurewebsites.net/api/v1.0/",
+  "vendorProfileCommandAPI": "https://vendorcommandapi-test.azurewebsites.net/api/v1.0/",
+  "vendorSearchqueryAPI": "https://ascend-vendor-search-dev.search.windows.net/indexes/vendor-index/docs/search?api-version=2017-11-11",
+  "azureSearchKey": "B82938FAA52B70F3544EFD6CD750E70B",
+
+  "vendorACHInformationCommandAPI": "https://ionxmockapidev.azurewebsites.net/api/vendors/",
+  "vendorACHInformationQueryAPI": "https://ionxmockapidev.azurewebsites.net/api/vendors/",
+
+  "commentsManagementCommandAPI": "https://notesmanagementcommandapi-test.azurewebsites.net/api/v1.0",
+  "commentsManagementQueryAPI": "https://notesmanagementqueryapi-test.azurewebsites.net/api/v1.0",
+
+  "urlVendorProfileCommandApi": "https://vendorcommandapi-test.azurewebsites.net/api/v1.0/",
+  "urlVendorProfileQueryApi": "https://vendorqueryapi-test.azurewebsites.net/api/v1.0/",
+  "urlOrdersCommandApi": "https://ordermanagementcommandapi-test.azurewebsites.net/api/v1.0",
+  "urlVendorACHInformationCommandApi": "http://ionxmockapidev.azurewebsites.net/api/vendors/payment-method/",
+  "urlVendorACHInformationQueryApi": "http://ionxmockapidev.azurewebsites.net/api/vendors/payment-method/",
+
+  "applicationInsightsInstrumentationKey": "d10b30d6-d70b-45d6-82a9-4a029bb222c0",
+  "vendorHistoryQueryAPI": "https://vendorhistoryqueryapi-test.azurewebsites.net/api/v1.0",
+  "urlServicesCommandApi": "https://vendorcoverageareaqueryapi-test.azurewebsites.net/api/v1.0",
+  "vendorCoverageAreaQueryAPI": "https://vendorcoverageareaqueryapi-test.azurewebsites.net/api/v1.0",
+  "vendorCoverageAreaCommandAPI": "https://vendorcoverageareacommandapi-test.azurewebsites.net/api/v1.0",
+
+  "vendorDocumentQueryAPI": "http://vendordmsqueryapidev.azurewebsites.net/api/v1.0/Document/GetFile?docKey=",
+  "urlOrdersQueryApi": "https://ordermanagementqueryapi-dev.azurewebsites.net/api/v1.0/workOrders",
+  "vendorDocumentCommandAPIAsPDF": "http://vendordmscommandapidev.azurewebsites.net/api/v1.0/UploadDocumentAsPDF",
+  "vendorDocumentCommandAPI": "http://vendordmscommandapidev.azurewebsites.net/api/v1.0/UploadDocument"
+
+}

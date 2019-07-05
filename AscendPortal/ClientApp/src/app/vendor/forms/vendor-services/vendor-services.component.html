@@ -1,0 +1,68 @@
+
+<div class="container-fluid info_container mt-3">
+  <div class="info_heading">
+    <h4 class="text-dark d-inline">
+      SERVICES<span class="text-primary">
+        ({{serviceFilteredData.length}})
+      </span>
+    </h4>
+    <div class="float-right">
+      <button id="btnAdd-Service" class="btn-link" [disabled]="services?.length == 0" (click)="redirectAddNewServices()">
+        <mat-icon>add</mat-icon> Add Service
+      </button>
+    </div>
+  </div>
+  <div class="row info_content">
+    <table id="services" class="table table-hover no-footer" sortable-table (sorted)="onServiceSorted($event)">
+      <thead>
+        <tr>
+          <th sortable-column="serviceName" class="mdl-data-table__cell--non-numeric" rowspan="2" style="font-weight:900"><label>Service Provisioned</label></th>
+          <th class="mdl-data-table__cell--non-numeric" rowspan="2" style="font-weight:900"><label>License and Insurance</label></th>
+          <th class="mdl-data-table__cell--non-numeric" rowspan="2" style="font-weight:900"><label>Rating</label></th>
+        </tr>
+      </thead>
+      <tbody *ngIf="serviceFilteredData.length > 0">
+        <tr *ngFor="let item of serviceFilteredData;">
+          <td class="mdl-data-table__cell--non-numeric">
+            <button type="button" class="btn-link ml-auto" (click)="goToServiceCoverage(item.serviceName);">{{item.serviceName}}</button>           
+          </td>
+          <td class="mdl-data-table__cell--non-numeric">
+            <mat-checkbox class="mr-2 rounded-check check-success" [checked]="true" disabled readonly>License</mat-checkbox>
+            <mat-checkbox class="mr-2 rounded-check check-success" [checked]="true" disabled readonly>Insurance</mat-checkbox>
+          </td>
+          <td class="mdl-data-table__cell--non-numeric">
+            <label> {{item.rating}}/5 </label>
+            <span *ngIf="item.rating === 0 ;then add else update"></span>
+            <ng-template #add>
+              <button type="button" class="btn-link ml-auto" (click)="addRating(item)">Add</button>
+            </ng-template>
+            <ng-template #update>
+              <button type="button" class="btn-link ml-auto" (click)="updateRating(item)">Update</button>
+            </ng-template>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="info_heading">
+    <h4 class="text-dark d-inline">
+      SERVICE TYPES(S), License and Insurance
+    </h4>
+  </div>
+  <div class="row info_content">
+    <form class="vendor-services" [formGroup]="vendorServices">
+      <label>Choose the type of service(s) to perform </label>
+      <div *ngFor="let service of services; let i = index" formArrayName="services">
+        <mat-checkbox class="service_lbl check-primary" [formControlName]="i" (change)="updateServiceType()">
+          {{service}} Services
+        </mat-checkbox>
+      </div>
+    </form>
+  </div>
+  <div class="row">
+    <app-activeinsurancelicense class="w-100"></app-activeinsurancelicense>
+  </div>
+</div>
+  <!-- END -->
+  
+

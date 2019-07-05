@@ -1,0 +1,65 @@
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+@Component({
+    selector: 'ascend-pagination-full',
+    templateUrl: './fullpage.component.html',
+    styleUrls: ['./pagination.component.scss']
+})
+export class FullPaginationComponent implements OnInit {
+
+    @Input('totalRecords') public totalRecords: number;
+    @Input('totalPages') public totalPages: number;
+    @Input('pageSize') public pageSize: number;
+    @Input('pageNumber') public pageNumber: number;
+
+    @Output() nextpage = new EventEmitter<number>();
+    @Output() previouspage = new EventEmitter<number>();
+    @Output() changepage = new EventEmitter<number>();
+
+
+    selected: number;
+    currentPageSize: number;
+    constructor() {
+    }
+    ngOnInit() {
+        this.selected = this.pageNumber;
+        this.currentPageSize = this.pageSize;
+    }
+    changePageSize(pagesize: number) {
+        this.selected = pagesize;
+        this.changepage.emit(pagesize);
+    }
+    ConvertToInt(val) {
+        return parseInt(val);
+    }
+
+    nextPage(pagenumber: number) {
+        if (pagenumber >= 1 && pagenumber <= this.totalPages) {
+            this.pageNumber = pagenumber;
+            this.selected = this.pageNumber;
+            this.nextpage.emit(this.pageNumber);
+        }
+    }
+    previousPage(pagenumber: number) {
+        if (pagenumber >= 1 && pagenumber <= this.totalPages) {
+            this.pageNumber = pagenumber;
+            this.selected = this.pageNumber;
+            this.previouspage.emit(this.pageNumber);
+        }
+
+    }
+    changepagenumber(pagenumber) {
+        if (pagenumber >= 1 && pagenumber <= this.totalPages) {
+            if (this.selected !== pagenumber) {
+                if (pagenumber === undefined || pagenumber === null || pagenumber === '') {
+                    this.pageNumber = 1;
+                } else {
+                    this.pageNumber = pagenumber;
+                }
+                this.selected = this.pageNumber;
+                this.previouspage.emit(this.pageNumber);
+            }
+        } else {
+            this.pageNumber = this.selected;
+        }
+    }
+}

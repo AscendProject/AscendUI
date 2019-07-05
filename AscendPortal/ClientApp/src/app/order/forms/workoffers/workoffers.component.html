@@ -1,0 +1,254 @@
+<div *ngIf="WorkOffers ===undefined">
+    {{message}}
+</div>
+<mat-accordion *ngIf="WorkOffers !=undefined && OrderInfo!=undefined" hideToggle="true">
+    <mat-expansion-panel *ngFor="let workoffer of WorkOffers.records" (closed)="workoffer.expanded=false" (opened)="workoffer.expanded=true">
+        <mat-expansion-panel-header class="pb-0">
+            <mat-panel-description class="text-primary">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span *ngIf="!workoffer.expanded"><mat-icon fontSet="fa" fontIcon="fa-caret-right"></mat-icon></span>
+                            <span *ngIf="workoffer.expanded"><mat-icon fontSet="fa" fontIcon="fa-caret-down"></mat-icon></span>
+                            <span class="text-primary" *ngIf="workoffer.vendorId!=null">{{workoffer.vendorId}}</span>
+                            <span class="text-primary" *ngIf="workoffer.vendorId==null">No vendor Assigned</span>
+                        </div>
+                        <div class="col-md-3">
+                            <span class="text-primary"></span>
+                        </div>
+                        <div class="col-md-3">
+                            <span class="text-primary"> {{workoffer.status | statusTranslate}}</span>
+                        </div>
+                        <div class="col-md-3">
+                            <button mat-raised-button class="bg-primary small text-white float-right" (click)="$event.stopPropagation();assignVendor(workoffer)" *ngIf="workoffer.vendorId==null">
+                                    Assign Vendor
+                            </button>
+                        </div>
+
+                    </div>
+            </mat-panel-description>
+            <!-- <mat-panel-description class="text-primary">
+                {{workoffer.vendorId}} 
+            </mat-panel-description>
+            <mat-panel-description class="text-primary text-status pt-1" *ngIf="workoffer.status != 'Declined'">
+                {{workoffer.status}}
+            </mat-panel-description>
+            <mat-panel-description class="text-primary text-status text-danger font-weight-bold pt-1"  *ngIf="workoffer.status == 'Declined'">
+                {{workoffer.status}}
+            </mat-panel-description>
+            <mat-panel-description class="text-primary text-status text-danger font-weight-bold pt-1"  *ngIf="workoffer.status == 'New' && workoffer.vendorId == null">
+             
+                <button mat-raised-button class="bg-primary small text-white" (click)="$event.stopPropagation()">
+                    Assign Vendor
+                </button>
+            </mat-panel-description> -->
+           
+
+        </mat-expansion-panel-header>
+        <div class="info_container">        
+        <div class="row info_content pt-2 pb-3">
+                <div class="col-md-12 col-sm-12 no-padding">
+                    <label class="col-12 info_section_header text-dark">
+                        Vendor
+                    </label>
+                    <!-- <mat-divider></mat-divider> -->
+                    <div class="col-12 py-1 info-field"> 
+                        <div class="row info_content pt-2 pb-3" *ngIf="workoffer.vendorId!=null">
+                            <div class="col-md-3 col-sm-12 no-padding">
+                                    <label class="col-12">
+                                        Vendor ID
+                                    </label>
+                
+                                    <div class="col-12 py-1 info-field">
+                                        <span>{{workoffer.vendorId }}</span>                                        
+                                    </div>
+                            </div>
+                            <div class="col-md-3 col-sm-12 no-padding">
+                                    <label class="col-12">
+                                        Vendor Name
+                                    </label>                
+                                    <div class="col-12 py-1 info-field ellipsis">
+                                        <span>Connor, John</span>  
+                                    </div>
+                            </div>
+                            <div class="col-md-3 col-sm-12 no-padding">
+                                    <label class="col-12">
+                                       Email
+                                    </label>                
+                                    <div class="col-12 py-1 info-field ellipsis">
+                                        <span>john.connor@test.com</span>  
+                                    </div>
+                            </div>
+                            <div class="col-md-3 col-sm-12 no-padding">
+                                    <label class="col-12">
+                                       Phone
+                                    </label>                
+                                    <div class="col-12 py-1 info-field ellipsis">
+                                        <span>123-123-1234</span>  
+                                    </div>
+                            </div>
+
+                        </div>
+                        <div class="row info_content pt-2 pb-3" *ngIf="workoffer.vendorId==null">
+                            <div class="col-md-12 col-sm-12 no-padding"> 
+                                <div class="col-12 py-1 info-field">
+                                    <span>No Vendor Assigned</span>                                        
+                                </div>
+                            </div>
+                        </div>
+                    </div>                     
+                </div>
+        </div>
+        <div class="row info_content pt-2 pb-3">
+            <div class="col-md-12 col-sm-12 no-padding">
+                <label class="col-12 info_section_header">
+                    Due Dates and Fees
+                </label>
+                <!-- <mat-divider></mat-divider> -->
+                <div class="col-12 py-1 info-field">
+                    <div class="row info_content pt-2 pb-3">                        
+                        <div class="col-md-3 col-sm-12 no-padding">
+                            <label class="col-12">
+                                Vendor Due Date
+                            </label>
+                            <div class="col-12 py-1 info-field">
+                                <span *ngIf="workoffer.vendorDueDate!=null">{{workoffer.vendorDueDate | date: 'MM/dd/yyyy'}}</span>
+                                <span class="no-content-d" *ngIf="workoffer.vendorDueDate==null">-</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-12 no-padding">
+                            <label class="col-12">
+                                Client Due Date
+                            </label>
+                            <div class="col-12 py-1 info-field">
+                                <span *ngIf="OrderInfo.clientDueDate!=null">{{OrderInfo.clientDueDate | date: 'MM/dd/yyyy'}}</span>
+                                <span class="no-content-d" *ngIf="OrderInfo.clientDueDate==null">-</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-12 no-padding">
+                            <label class="col-12">
+                                Vendor Fee
+                            </label>
+        
+                            <div class="col-12 py-1 info-field">
+                                <span *ngIf="workoffer.vendorFee!=null">{{workoffer.vendorFee | currency}}</span>
+                                <span class="no-content-d" *ngIf="workoffer.vendorFee==null">-</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-12 no-padding">
+                            <label class="col-12">
+                                Client Fee
+                            </label>
+        
+                            <div class="col-12 py-1 info-field">
+                                <span *ngIf="OrderInfo.clientFee!=null">{{OrderInfo.clientFee | currency}}</span>
+                                <span class="no-content-d" *ngIf="OrderInfo.clientFee==null">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row info_content pt-2 pb-3">
+            <div class="col-md-12 col-sm-12 no-padding">
+                <label class="col-12 info_section_header">
+                    Status
+                </label>
+                <!-- <mat-divider></mat-divider> -->
+                <div class="col-12 py-1 info-field">                    
+                    <div class="row info_content pt-2 pb-3">
+                        <div class="col-md-3 col-sm-12 no-padding">
+                            <label class="col-12">
+                                Offer Status
+                            </label>
+        
+                            <div class="col-12 py-1 info-field">
+                                <span *ngIf="workoffer.status!=null">{{workoffer.status | statusTranslate}}</span>
+                                <span class="no-content-d" *ngIf="workoffer.status==null">-</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-12 no-padding">
+                            <label class="col-12">
+                                Status Date
+                            </label>
+        
+                            <div class="col-12 py-1 info-field">
+                                <span *ngIf="workoffer.creationDate!=null">{{(workoffer.creationDate > workoffer.lastModifiedDate?workoffer.creationDate:workoffer.lastModifiedDate)
+                                    | date: 'MM/dd/yyyy' }}</span>
+                                <span class="no-content-d" *ngIf="workoffer.creationDate==null">-</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-12 no-padding">
+                            <label class="col-12">
+                                Offer ID
+                            </label>
+        
+                            <div class="col-12 py-1 info-field">
+                                <span *ngIf="workoffer.id!=null">{{workoffer.id }}</span>
+                                <span class="no-content-d" *ngIf="workoffer.id==null">-</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row info_content pt-2 pb-3" *ngIf="workoffer.reason!=null">
+                        <div class="col-md-12 col-sm-12 no-padding">
+                            <label class="col-12">
+                                    Status Reason
+                                </label>
+                            <div class="col-12 py-1 info-field">
+                                <span>{{workoffer.reason }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row info_content pt-2 pb-3">
+                <div class="col-md-12 col-sm-12 no-padding">
+                    <label class="col-12 info_section_header">
+                        Service Instructions
+                    </label>
+                    
+                    <!-- <mat-divider></mat-divider> -->
+                    <div class="col-12 py-1 info-field" style="font-size:.85em !important">
+                        <span *ngIf="workoffer.serviceInstructions!=null" [innerHTML]="getHtml(workoffer.serviceInstructions)"></span>
+                        <span class="no-content-d" *ngIf="workoffer.serviceInstructions==null">-</span>
+                    </div>
+                </div>
+            </div>
+    
+    
+            <div class="row info_content pt-2 pb-3">
+                <div class="col-md-12 col-sm-12 no-padding">
+                    <label class="col-12 info_section_header">
+                        Engagement Letter
+                    </label>
+                    <!-- <mat-divider></mat-divider> -->
+                    <div class="col-12 py-1 info-field">
+                        
+                        <mat-list *ngIf=" workoffer.engagementLetterDetails!=null">
+                            <mat-list-item *ngIf="workoffer.engagementLetterDetails.pdfFileName!=null">
+                                    <mat-icon mat-list-icon fontSet="fa" fontIcon="fa-file-pdf" style="font-size:2em;color:red;width:32px;height: 32px;"></mat-icon>
+                                    <h4 mat-line>{{workoffer.engagementLetterDetails.pdfFileName}}</h4>
+                                    <a mat-line style="cursor: pointer;color:#007bff;" (click)="loadHtml(workoffer.engagementLetterDetails.htmlFileDocumentId);">View</a>
+                            </mat-list-item>
+                            <mat-list-item *ngIf="workoffer.engagementLetterDetails.htmlFileName!=null">
+                                    <mat-icon mat-list-icon fontSet="fab" fontIcon="fa-html5" style="font-size:2em;color:orange;width:32px;height: 32px;"></mat-icon>
+                                    <h4 mat-line>{{workoffer.engagementLetterDetails.htmlFileName}}</h4>
+                                    <a mat-line style="cursor: pointer;color:#007bff;" (click)="loadHtml(workoffer.engagementLetterDetails.htmlFileDocumentId);">View</a>
+                            </mat-list-item>
+                        </mat-list> 
+                            
+                       
+                        <!-- <strong >
+                            <mat-icon fontSet="fa" fontIcon="fa-file-pdf" style="font-size:2em;color:red;width:32px;height: 32px;"></mat-icon>
+                            <a (click)="loadHtml(workoffer.engagementLetterDetails.htmlFileDocumentId);"></a>
+                        </strong>                         -->
+                        <span class="no-content-d" *ngIf="workoffer.engagementLetterDetails==null">-</span>
+                    </div>                     
+                </div>
+            </div>
+
+        </div>
+       
+    </mat-expansion-panel>
+</mat-accordion>

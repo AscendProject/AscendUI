@@ -1,0 +1,132 @@
+<div class="container-fluid info_container mt-3">
+    <form [formGroup]="vendorAvailabilityForm">
+      <!-- Add Availability -->
+      
+      <div class="info_heading">
+        <h4 class="text-dark d-inline">AVAILABILITY INFO</h4>
+          <div class="float-right">
+              <button class="btn-link" (click)="showAvailabilityInfo()" [hidden]="isAddAvailabilityClicked">
+                  <mat-icon>add</mat-icon> Add
+                </button>
+          </div>
+          <div class="float-right" [hidden]="isShowAvailability">
+              <button id="btnAddAvailability" class="btn-link" (click)="addAvailabilityDialog()" [disabled]="vendorAvailabilityForm.invalid && !isdisable">
+                  <mat-icon>save</mat-icon> Save
+                </button>
+                <button class="btn-link" (click)="onCancelAvailability()">
+                  <mat-icon>cancel</mat-icon> Cancel
+                </button>
+          </div>
+      </div>
+
+      <div class="row info_content" [hidden]="isShowAvailability">
+        <div class="col-12 col-sm-6 col-md-4">
+          <mat-form-field>
+            <mat-select id="ddlReason"
+                        (ngModelChange)="onReasonChange()" [(value)]="selectedValue"
+                        formControlName="Reasons" placeholder="Select reason" required>
+              <mat-option>--</mat-option>
+              <mat-option *ngFor="let p of reasons" [value]="p">
+                {{p}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+        </div>
+        <div class="col-12" [hidden]="isreasonselected">
+
+      <div class="row">
+        <div class="col-12 col-sm-6 col-md-4">
+          <mat-form-field>
+            <input matInput [matDatepicker]="startDate" formControlName="startDate"
+                   [(ngModel)]="currentDate" placeholder="Start Date"
+                   name="startDate" required (keypress)="omit_special_char($event)"
+                   (focusout)="onBlurMethod($event.target.value,'startDate')">
+            <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+            <mat-datepicker #startDate
+                            (selectedChanged)="onBlurMethod($event,'startDate')"></mat-datepicker>
+            <mat-error *ngIf="vendorAvailabilityForm.controls['startDate'].touched && vendorAvailabilityForm.controls['startDate'].errors">
+              Enter valid start date.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4">
+          <mat-form-field>
+            <input matInput [matDatepicker]="availabilityDate"
+                   placeholder="{{vaildatePlaceholder}}" formControlName="avaiDate"
+                   [(ngModel)]="updateDate" [attr.disabled]="isreadOnly"
+                   (keypress)="omit_special_char($event)"
+                   (focusout)="onBlurMethod($event.target.value,'avaiDate')">
+            <mat-datepicker-toggle matSuffix [for]="availabilityDate"></mat-datepicker-toggle>
+            <mat-datepicker #availabilityDate
+                            (selectedChanged)="onBlurMethod($event,'avaiDate')"
+                            [attr.disabled]="isOk"></mat-datepicker>
+            <mat-error *ngIf="vendorAvailabilityForm.controls['avaiDate'].touched && vendorAvailabilityForm.controls['avaiDate'].errors">
+              Enter valid available date.
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-4">
+
+          <mat-checkbox class="mt-4 float-left" id="chkUntilFurtherNotice"
+                        [value]="chkUntilFurtherNotice" formControlName="chkUntilFurtherNotice"
+                        (change)="setFurtherNotice($event)">Until Further Notice</mat-checkbox>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+</form>
+
+<!--Add Capacity-->
+<form [formGroup]="vendorCapacityForm">
+<div class="info_heading">
+    <h4 class="text-dark d-inline">CAPACITY INFO</h4>
+    <div class="float-right">
+        <button class="btn-link" (click)="showCapacityInfo()" [hidden]="isAddCapacityClicked">
+            <mat-icon>edit</mat-icon> Edit
+          </button>
+    </div>
+    <div class="float-right" [hidden]="isShowCapacity">
+        <button class="btn-link" (click)="addCapacityDialog()" [disabled]="vendorCapacityForm.invalid">
+            <mat-icon>save</mat-icon> Save
+          </button>
+          <button class="btn-link" (click)="onCancelCapacity()">
+            <mat-icon>cancel</mat-icon> Cancel
+          </button>
+    </div>
+</div>
+<div class="row info_content" [hidden]="isAddCapacityClicked">
+    <div class="col-12 col-sm-6 col-md-4">
+      <label>Capacity</label>
+      <div class="info-field">
+        <span>{{vendorCapacity}}</span>
+      </div>
+    </div>
+    </div>
+<div class="row info_content" [hidden]="isShowCapacity">
+    <div class="col-12 col-sm-6 col-md-4">
+        <mat-form-field class="mx-auto d-table">
+            <input matInput placeholder="Capacity" type="text" formControlName="capacity" 
+             min="0"  maxlength="3"  numbers
+            (keypress)="omit_special_char($event)" (keyup) ="onKeyUp($event.target.value,'capacity')" required>
+            <mat-error *ngIf="vendorCapacityForm.controls['capacity'].touched && vendorCapacityForm.controls['capacity'].errors">
+              {{capacityErrorMessage}}
+            </mat-error>
+          </mat-form-field>
+    </div>
+</div>
+</form>
+       
+
+
+    
+
+ 
+
+</div>
+

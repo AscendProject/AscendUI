@@ -1,0 +1,51 @@
+.add-vendor-custom {
+  .mat-form-field-infix {
+    display: inline;
+  }
+}
+
+
+md-input-container:not(.md-input-invalid).md-input-focused .md-input {
+  border-color: red !important;
+}
+
+md-input-container:not(.md-input-invalid).md-input-focused label {
+  color: red !important;
+}
+
+.mat-input-element {
+  caret-color: #0062cc !important;
+}
+
+.mat-custom-field .mat-form-field-label {
+  color: #0062cc !important;
+  background: red !important;
+}
+
+.mat-custom-field .mat-form-field-ripple {
+  background-color: #0062cc !important;
+}
+
+.md-input-container:not(.md-input-invalid).md-input-focused .md-input {
+  border-color: green !important;
+}
+
+.md-input-container:not(.md-input-invalid).md-input-focused label {
+  color: green !important;
+}
+
+
+.content_panel {
+  height: 100%;
+  overflow: hidden;
+}
+
+.panel-head {
+  height: 45px;
+}
+
+.add-vendor-form {
+  height: calc(100% - 45px);
+  overflow-y: auto;
+  overflow-x: hidden;
+} 

@@ -1,0 +1,28 @@
+     <div class="row no-margin no-padding hgt100">
+       <div class="col-3 no-padding hgt100">
+         <div class="col-12 no-padding vendors_list">
+           <mat-list role="list" class="panel_list">
+             <mat-list-item class="row no-gutters no-padding" (click)="setClickedRow()">
+               <!-- [ngClass]="i == selectedRow ? 'active':''">                 -->
+               <div class="col-12 no-padding">
+                 <div class="row no-margin">
+                   <div class="col-9 pl-0 pr-2">
+                     <h4 mat-line>Exclusion List</h4>
+                   </div>
+                 </div>
+               </div>
+               <mat-divider></mat-divider>
+             </mat-list-item>
+           </mat-list>
+           </div>
+         </div>
+
+         <div class="col-9 hgt100 no-scroll no-padding shadow-cs interactionpane-bg">
+           <div class="row">
+
+             <div class="col-12">
+               <router-outlet></router-outlet>
+             </div>
+           </div>
+         </div>
+       </div>

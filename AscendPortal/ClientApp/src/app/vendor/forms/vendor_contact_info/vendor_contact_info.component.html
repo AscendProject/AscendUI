@@ -1,0 +1,209 @@
+
+<div class="container-fluid info_container mt-3">
+  <div class="info_heading" *ngIf="isvendornamedetais">
+    <h4 class="text-dark d-inline">PROFILE INFORMATION</h4>
+    <div class="float-right">
+      <button id="editName" class="btn-link" (click)="editvendornamedetails()">
+        <mat-icon>edit</mat-icon> Edit
+      </button>
+    </div>
+  </div>
+
+
+  <div class="info_heading" *ngIf="!isvendornamedetais">
+    <h4 class="text-dark d-inline">PROFILE INFORMATION</h4>
+    <div class="float-right">
+      <button class="btn-link" (click)="savevendornamedetails()" [disabled]="vendorProfileForm.invalid || isdisable  ">
+        <mat-icon>save</mat-icon> Save
+      </button>
+      <button class="btn-link" (click)="vendornamedeatilscancel()">
+        <mat-icon>cancel</mat-icon> Cancel
+      </button>
+    </div>
+  </div>
+
+  <!-- Show vendor name details -->
+  <div class="row info_content" *ngIf="isvendornamedetais">
+    <div class="col-12 col-sm-6 col-md-4">
+      <label>First Name</label>
+      <div class="info-field">
+        <span>{{(contactdata?.vendorName.firstName)}}</span>
+      </div>
+    </div>
+    <div class="col-12 col-sm-6 col-md-4" *ngIf="contactdata?.vendorName.middleName">
+      <label>Middle Name</label>
+      <div class="info-field">
+        <span>{{(contactdata?.vendorName.middleName)}}</span>
+      </div>
+    </div>
+    <div class="col-12 col-sm-6 col-md-4">
+      <label>Last Name</label>
+      <div class="info-field">
+        <span>{{contactdata?.vendorName.lastName}}</span>
+      </div>
+    </div>
+
+    <div class="col-12 col-sm-6 col-md-4">
+      <label>Suffix</label>
+      <div class="info-field">
+        <span>{{contactdata?.vendorName.suffix }}</span>
+      </div>
+    </div>
+    <div class="col-12 col-sm-6 col-md-4" *ngIf="contactdata?.vendorName.preferredName">
+      <label>Preferred Name</label>
+      <div class="info-field">
+        <span>{{(contactdata?.vendorName.preferredName)}}</span>
+      </div>
+    </div>
+  </div>
+  <!-- END -->
+  <!-- Edit vendor name details -->
+  <div *ngIf="!isvendornamedetais">
+    <form [formGroup]="vendorProfileForm" (ngSubmit)="savevendornamedetails()" *ngIf="!iseditvendornamedetais" class="row info_content">
+      <div class="col-12 col-sm-6 col-md-4">
+        <mat-form-field>
+          <input matInput id="vpfirstname" [value]="contactdata.vendorName.firstName" placeholder="First Name" formControlName="firstName"
+                 maxlength="200" (focusout)="onBlurMethod($event.target.value,'firstName', 'vendorProfileForm')" trim="blur" required>
+        </mat-form-field>
+        <mat-error *ngIf="vendorProfileForm.controls['firstName'].touched && vendorProfileForm.controls['firstName'].errors">
+          First Name is Required!!
+        </mat-error>
+      </div>
+      <div class="col-12 col-sm-6 col-md-4">
+        <mat-form-field>
+          <input matInput id="vpmidlename" value="{{contactdata.vendorName.middleName}}" placeholder="Middle Name" formControlName="middleName"
+                 maxlength="200" (focusout)="onBlurMethod($event.target.value,'middleName', 'vendorProfileForm')" trim="blur">
+        </mat-form-field>
+        <!--<mat-error *ngIf="vendorProfileForm.controls['middleName'].touched && vendorProfileForm.controls['middleName'].errors">
+      First Name is Required!!
+    </mat-error>-->
+      </div>
+      <div class="col-12 col-sm-6 col-md-4">
+        <mat-form-field>
+          <input matInput id="vplastName" value="{{(contactdata.vendorName.lastName)}}" placeholder="Last Name" formControlName="lastName" maxlength="200" (focusout)="onBlurMethod($event.target.value,'lastName', 'vendorProfileForm')" trim="blur" required />
+        </mat-form-field>
+        <mat-error *ngIf="vendorProfileForm.controls['lastName'].touched && vendorProfileForm.controls['lastName'].errors">
+          Last Name is Required!!
+        </mat-error>
+      </div>
+      <div class="col-12 col-sm-6 col-md-4">
+        <mat-form-field>
+          <mat-select id="ddlSuffix"
+                      [ngClass]="vendorProfileForm.controls['suffix'].value === '' ? 'splacefolder' : 'removeplacefolder'"
+                      formControlName="suffix"
+                      placeholder="Select Suffix">
+            <mat-option [value]="">
+              - Select Suffix -
+            </mat-option>
+            <mat-option *ngFor="let p of suffixs" [value]="p">
+              {{p}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-sm-6 col-md-4">
+        <mat-form-field>
+          <input matInput id="vpprefered" value="{{contactdata.vendorName.preferredName}}" placeholder="Preferred Name" formControlName="preferredName"
+                 maxlength="200" (focusout)="onBlurMethod($event.target.value,'preferredName', 'vendorProfileForm')" trim="blur">
+        </mat-form-field>
+        <!--<mat-error *ngIf="vendorProfileForm.controls['middleName'].touched && vendorProfileForm.controls['middleName'].errors">
+      First Name is Required!!
+    </mat-error>-->
+      </div>
+    </form>
+  </div>
+  <!-- END -->
+  <!-- Company details -->
+
+
+  <div class="info_heading" *ngIf="isvendorcompanydetails">
+    <h4 class="text-dark d-inline">COMPANY</h4>
+    <div class="float-right">
+      <button id="editCompany" class="btn-link" (click)="editvendorcompanydetails()">
+        <mat-icon>edit</mat-icon> Edit
+      </button>
+    </div>
+  </div>
+
+  <div class="info_heading" *ngIf="!isvendorcompanydetails">
+    <h4 class="text-dark d-inline">COMPANY</h4>
+    <div class="float-right">
+      <button class="btn-link" (click)="savevendorcompanydetails()" [disabled]="vendorProfilecompanyForm.invalid || isdisable ">
+        <mat-icon>save</mat-icon> Save
+      </button>
+      <button class="btn-link" (click)="cancelcompanyupdate()">
+        <mat-icon>cancel</mat-icon> Cancel
+      </button>
+    </div>
+  </div>
+
+
+
+
+
+
+  <!-- Show company details -->
+  <div class="row info_content" *ngIf="isvendorcompanydetails">
+    <div class="col-12 col-sm-6 col-md-4">
+      <label>Name</label>
+      <div class="info-field">
+        <span>{{(contactdata?.vendorCompany.companyName)}}</span>
+      </div>
+    </div>
+
+
+    <div class="col-12 col-sm-6 col-md-4">
+      <label>State</label>
+      <div class="info-field">
+        <span>{{contactdata?.vendorCompany.state | uppercase}}</span>
+      </div>
+    </div>
+
+    <div class="col-12 col-sm-6 col-md-4">
+      <div class="text-center float-left ams-appriser-check"> 
+        <label>AMS Staff Appraiser</label>
+        <div class="info-field" >
+        <mat-checkbox [checked] = "contactdata?.vendorName.isStaffAppraiser"
+        disabled class="rounded-check"></mat-checkbox>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- END -->
+  <!-- Edit company details -->
+  <form [formGroup]="vendorProfilecompanyForm" *ngIf="!isvendorcompanydetails">
+    <div class="row info_content">
+      <div class="col-12 col-sm-6 col-md-4">
+        <mat-form-field>
+          <input matInput id="vpcompanyName" value="{{(contactdata.vendorCompany.companyName)}}" placeholder="Company Name" type="text"
+                 formControlName="companyName" maxlength="200" (focusout)="onBlurMethod($event.target.value,'companyName', 'vendorProfilecompanyForm')" required />
+        </mat-form-field>
+        <mat-error *ngIf="vendorProfilecompanyForm.controls['companyName'].touched && vendorProfilecompanyForm.controls['companyName'].errors">
+          Company Name Required!!
+        </mat-error>
+      </div>
+      <div class="col-12 col-sm-6 col-md-4">
+        <mat-form-field>
+          <mat-select id="vpcompanyState"
+                      [ngClass]="vendorProfilecompanyForm.controls['companystate'].value === '' ? 'splacefolder' : 'removeplacefolder'"
+                      formControlName="companystate"
+                      placeholder="Select Company State">
+            <mat-option *ngFor="let state of states" [value]="state">
+              {{state}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+  <!-- END -->
+  <!-- ADDRESS -->
+  <app-address *ngIf="contactdata" [contactData]="contactdata" (messageAddressEvent)="receiveAddressEvent($event)"></app-address>
+  <!-- END -->
+  <!-- Contact Info -->
+  <app-contactinfo *ngIf="contactdata" [contactData]="contactdata" (messageAddressEvent)="receiveAddressEvent($event)"></app-contactinfo>
+  <!-- END -->
+  <!-- Vendor contact history changes. -->
+  <app-contactpage-audit-history></app-contactpage-audit-history>
+  <!-- END -->
+</div>

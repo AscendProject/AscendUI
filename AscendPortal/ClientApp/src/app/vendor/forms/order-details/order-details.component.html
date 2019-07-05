@@ -1,0 +1,106 @@
+<div id="orderDetailsPage" class="container-fluid info_container no-scroll" *ngIf="selectedOfferData && offerDetails">
+    <div class="row ml-0 mt-2">
+      <span class="font-weight-bold"> {{selectedOfferData.workOrderId}} </span>
+    </div>
+    <div class="row border-bottom">
+      <div class="col-md-7">
+        <h5 id="insuranceDetailsPageTitle" class="my-3"> {{offerDetails.property.address.city}}, {{offerDetails.property.address.state}}, {{offerDetails.property.address.postalCode}} </h5>
+      </div>
+      <div class="col-md-5">
+        <div class="float-right pt-1">
+          <button mat-raised-button id="acceptBtn" (click)="acceptOffer();" class="btn btn-primary small">Accept</button>
+          <button mat-raised-button id="declineBtn" (click)="openDialog()" class="btn btn-secondary small">Decline</button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12 order-tabs">
+
+        <mat-tab-group class="sub-tabs-grp">
+          <mat-tab label="Order Info">
+            <div class="row info_content">
+              <div class="col-lg-6">
+                <label id="lblFirstName-InsuranceDetails"> Service </label>
+                <div class="info-field">
+                  <span>{{offerDetails.workOrderType}}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="row info_content">
+              <div class="col-lg-6">
+                <label id="lblFirstName-InsuranceDetails"> Vendor Due Date </label>
+                <div class="info-field">
+                  <span>{{selectedOfferData.vendorDueDate | date: 'MM/dd/yyyy'}}</span>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <label id="lblFirstName-InsuranceDetails"> Client Due Date </label>
+                <div class="info-field">
+                  <span>{{offerDetails.clientDueDate | date: 'MM/dd/yyyy'}}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="info_heading">
+              <h4 class="text-dark">ADDRESS</h4>
+            </div>
+
+            <div class="row info_content">
+              <div class="col-12 col-sm-6 col-md-3">
+                <label id="lblFirstName-InsuranceDetails"> Street </label>
+                <div class="info-field">
+                  <span>{{offerDetails.property.address.street1}}</span>
+                </div>
+              </div>
+              <div class="col-12 col-sm-6 col-md-3">
+                <label id="lblFirstName-InsuranceDetails"> City </label>
+                <div class="info-field">
+                  <span>{{offerDetails.property.address.city}}</span>
+                </div>
+              </div>
+              <div class="col-12 col-sm-6 col-md-3">
+                <label id="lblFirstName-InsuranceDetails"> State </label>
+                <div class="info-field">
+                  <span>{{offerDetails.property.address.state}}</span>
+                </div>
+              </div>
+              <div class="col-12 col-sm-6 col-md-3">
+                <label id="lblFirstName-InsuranceDetails"> Zip </label>
+                <div class="info-field">
+                  <span>{{offerDetails.property.address.postalCode}}</span>
+                </div>
+              </div>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Documents">
+            <div *ngIf="selectedOfferData.engagementLetterDetails">
+              <div class="row info_content">
+                <div class="col-12">
+                  <label id="lblFirstName-InsuranceDetails"> HTML File </label>
+                  <div class="info-field">
+                    <span class="text-primary cursor-pointer" (click)="downloadDocuments(documents.htmlFileDocumentId)">{{documents.htmlFileName}}</span>
+                  </div>
+                </div>
+
+
+                <div class="col-12">
+                  <label id="lblFirstName-InsuranceDetails"> PDF File </label>
+                  <div class="info-field">
+                    <span class="text-primary cursor-pointer" (click)="downloadDocuments(documents.htmlFileDocumentId)">{{documents.pdfFileName}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="text-secondary col-12 text-center py-5" *ngIf="!selectedOfferData.engagementLetterDetails">
+              Files Not Available
+            </div>
+          </mat-tab>
+          <mat-tab label="Location of Service"> Location of Services </mat-tab>
+         
+        </mat-tab-group>
+      </div>
+    </div>
+  </div>

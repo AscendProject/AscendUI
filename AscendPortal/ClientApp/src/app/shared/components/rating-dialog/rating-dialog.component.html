@@ -1,0 +1,28 @@
+<div class="confirm-dialogbox rate-dialog">
+
+  <div class="row border-bottom">
+    <div class="col-md-8">
+      <h4 mat-dialog-subtitle class="mb-4">{{title}}</h4>
+    </div>
+    </div>
+
+  <div mat-dialog-content class="py-3 fs-13" hasBackdrop="true">
+
+
+    <mat-form-field class="w-100">
+      <input matInput placeholder="Enter Rating *" appOneDigitDecimaNumber type="text" maxlength="3" [formControl]="ratingForm" [(ngModel)]="ratingValue">
+    </mat-form-field>
+
+    <mat-error *ngIf="ratingForm.touched && ratingForm.errors">
+      Please enter value between 0.0 and 5
+    </mat-error>
+
+    <mat-hint align="end">Rating should be between '0' to '5'</mat-hint><br />
+    <mat-hint align="end">with '0' being lowest and '5' being highest</mat-hint>
+  </div>
+
+      <div mat-cards-actions align="end" class="mat-dialog-actions">
+        <button class="btn btn-default normal" (click)="close()"> {{cancelButton}} </button>
+        <button class="btn btn-primary normal" [disabled]="ratingForm.invalid" (click)="save()" cdkFocusInitial>{{ saveButton }}</button>
+      </div>
+    </div> 

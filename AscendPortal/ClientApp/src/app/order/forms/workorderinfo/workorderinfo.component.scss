@@ -1,0 +1,21 @@
+.bg-darkgrey {
+    background: #e5edf4;
+}
+.header-p{
+    background-color: #e5edf4;
+}
+
+.heading {
+    button {
+        padding: 0 !important;
+        margin: 0 !important;
+        line-height: 1;
+        vertical-align: middle;
+        min-width: 10px;
+        mat-icon {
+            font-size: 15px;
+            height: auto;
+            vertical-align: middle;
+        }
+    }
+}

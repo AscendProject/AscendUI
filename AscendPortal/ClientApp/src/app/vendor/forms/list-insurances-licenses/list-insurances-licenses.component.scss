@@ -1,0 +1,59 @@
+.mat-table
+{ box-shadow: none;}
+.mat-header-cell {
+  border-top: 0;
+  font-size: .8em;
+  font-weight: 700;
+  padding: .5rem;
+  vertical-align: bottom; 
+  color: rgba(0,0,0,.87);
+}
+.mat-header-row {
+  border-bottom: 2px solid #dee2e6;
+}
+.mat-cell {
+  padding: .5rem;
+  .mat-icon {
+    float: none !important;
+  }
+}
+.mat-header-row, .mat-row {
+  min-height: auto;
+  padding: 0;
+}
+.mat-row:hover .mat-cell {
+  background: #fafafa;
+}
+
+.text-color-green{
+  color:green;
+}
+
+.text-color-red {
+  color: red;
+}
+
+.cursor-p {
+  cursor: pointer;
+}
+
+.text-underline {
+  text-decoration: underline;
+}
+
+.fs-12 {
+  font-size: 12px;
+}
+
+
+
+  .mat-paginator-page-size {
+    width: 200px !important;
+  }
+
+a {
+  color: #007bff !important;
+  text-decoration: underline !important;
+  background-color: transparent;
+  cursor: pointer;
+}

@@ -1,0 +1,64 @@
+<div class="row mb-2">
+    <div class="col-7 mt-3 pagination-range no-padding">
+       <div class="row">
+        <div class="col-6">
+            
+                <span class="pl-1"> Display</span>
+                <mat-select class="fullpage" [(ngModel)]="currentPageSize" [disabled]="totalRecords<=10" (change)="changePageSize(currentPageSize)">
+                    <mat-option [value]="10">10</mat-option>
+                    <mat-option [value]="25">25</mat-option>
+                    <mat-option [value]="50">50</mat-option>
+                    <mat-option [value]="75">75</mat-option>
+                    <mat-option [value]="100">100</mat-option>
+                </mat-select>
+                <span> per page</span>
+                
+        </div>
+        <div class="col-6 no-padding text-left">
+            Showing:
+            <span *ngIf="pageNumber==1">1 - </span>
+            <span *ngIf="pageNumber!=1">
+                {{ConvertToInt(pageNumber) + ( pageSize -1 ) * ( pageNumber-1) }} -
+            </span>
+            <span>{{pageSize * pageNumber}} </span> of
+            <span>{{totalRecords}} </span>
+        </div>
+    </div>
+    </div>
+
+    <div class="col-5 no-padding">
+        <div class="row">
+        <div class="col-3">
+            <div class="float-left">
+            <button (click)="previousPage(1)" mat-mini-fab [disabled]="(pageNumber==1 || totalPages==1)? 'true':'false'">
+                <mat-icon mat-button class="material-icons text-primary" fontSet="fas" fontIcon="fa-angle-double-left"></mat-icon>
+            </button>
+            <button (click)="previousPage(pageNumber - 1)" mat-mini-fab [disabled]="(pageNumber==1 || totalPages==1)? 'true':'false'">
+                <mat-icon mat-button class="material-icons text-primary" fontSet="fas" fontIcon="fa-angle-left"></mat-icon>
+            </button>
+        </div>
+        </div>
+
+        <div class="col-6">
+                    <div class="text-center mt-2"> Page
+                    <div class="page-count d-inline mx-2">
+                        <input class="px-2" *ngIf="totalRecords>10" numbers type="text" (blur)="changepagenumber(pageNumber)" (change)="changepagenumber(pageNumber)"
+                            matInput [(ngModel)]="pageNumber">
+                        <span *ngIf="totalRecords<=10">{{pageNumber}}</span>
+                    </div>of {{totalPages}}
+                      </div>
+                </div>
+
+        <div class="col-3">
+            <div class="float-right">
+            <button (click)="nextPage(pageNumber + 1)" mat-mini-fab [disabled]="(pageNumber==totalPages || totalPages==1 || pageNumber>=totalPages)? 'true':'false'">
+                <mat-icon mat-button class="material-icons text-primary" fontSet="fas" fontIcon="fa-angle-right"></mat-icon>
+            </button>
+            <button (click)="nextPage(totalPages)" mat-mini-fab [disabled]="(pageNumber==totalPages || totalPages==1 || pageNumber>=totalPages)? 'true':'false'">
+                <mat-icon mat-button class="material-icons text-primary" fontSet="fas" fontIcon="fa-angle-double-right"></mat-icon>
+            </button>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>

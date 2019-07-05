@@ -1,0 +1,30 @@
+
+.font-italic {
+  font-style: italic;
+}
+
+.action-button {
+  background-color: #0567d1 !important;
+  height: 27px;
+  border-radius: 20px;
+  font-size: 13px;
+  color: white;
+}
+
+.cancel-button {
+  height: 27px;
+  border-radius: 20px;
+  font-size: 13px;
+  color: #0567d1;
+}
+
+.height-500 {
+  height: 500px !important;
+}
+
+.decline-dialog-content {
+  height: 420px !important;
+  overflow-y: scroll !important;
+  overflow-x: hidden !important;
+  font-size: 13px
+}

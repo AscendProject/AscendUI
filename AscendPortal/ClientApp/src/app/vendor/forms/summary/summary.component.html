@@ -1,0 +1,53 @@
+<div class="container-fluid info_container mt-3">
+  <div class="info_heading">
+    <h4 class="text-dark d-inline">BASIC INFORMATION</h4>
+  </div>
+  <!-- Show Vendor Info -->
+  <div class="row info_content" *ngIf="contactdata">
+    <div class="col-12 col-sm-6 col-md-4">
+      <label>Vendor Name</label>
+      <div class="info-field">
+        <span>{{vendorname | uppercase}}</span>
+      </div>
+    </div>
+    <div class="col-12 col-sm-6 col-md-4">
+      <label>Vendor ID</label>
+      <div class="info-field">
+        <span>{{vendorid | uppercase}}</span>
+      </div>
+    </div>
+    <div class="col-12 col-sm-6 col-md-4">
+      <label>Vendor Type</label>
+      <div class="info-field">
+        <span>{{contactdata?.vendorTypeStatus.vendorType | uppercase}}</span>
+      </div>
+    </div>
+    <div class="text-secondary col-lg-12 text-center py-5" *ngIf="contactdata?.length == 0">No Information have been added</div>
+  </div>
+  <!-- Scores -->
+  <div class="info_heading">
+    <h4 class="text-dark d-inline">SCORES</h4>
+  </div>
+  <div class="row info_content">
+    <div class="col-4">
+      Communication Score
+    </div>
+    <div class="col-1 no-padding">
+      :
+    </div>
+    <div class="col-5">
+       <!-- <mat-star-rating [rating]="rating" [starCount]="starCount" [color]="starColor" (ratingUpdated)="onRatingChanged($event)"></mat-star-rating> &nbsp;&nbsp;{{rating }} / {{starCount}} -->
+       <mat-star-rating [rating]="communicationscore" [starCount]="starCount" [color]="starColor" ></mat-star-rating> &nbsp;&nbsp;{{communicationscore}} / {{starCount}}
+     
+    </div>
+    <div class="col-2" style="float:right">
+      <a class="cmn-link" role="button" (click)="updateRating()">Update</a>
+    </div>
+  </div>
+  
+  
+  <div class="row info_content" *ngIf="showCommunicationScore">
+    <div class="text-secondary col-lg-12 text-center py-5">No Scores found.</div>
+  </div>
+  </div>
+

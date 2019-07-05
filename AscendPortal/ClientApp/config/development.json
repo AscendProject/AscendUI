@@ -1,0 +1,6 @@
+{
+  "api": {
+    "baseUrl": "https://ordermanagementqueryapi-dev.azurewebsites.net/api/v1"
+  },
+  "debugging": true
+}

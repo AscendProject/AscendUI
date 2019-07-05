@@ -1,0 +1,31 @@
+.mat-form-field-infix-custom {
+  width: 150% !important;
+}
+
+.bank-title {
+  display: table;
+  margin-top: 90px;
+}
+.bank-title i {
+  font-size: 63px;
+  color: #fff;
+  background: #dee2e6;
+  padding: 15px;
+  border-radius: 50%;
+  vertical-align: middle;
+}
+.badge-uploaded {
+  color: #028b2c;
+  border: 1px solid #028b2c;
+  border-radius: 20px;
+  padding: 5px 10px;
+}
+.badge-pdf{
+  font-weight: normal !important;
+}
+.no-info-msg {
+  margin: 50px auto;
+}
+.mat-icon {
+  cursor: pointer;
+}

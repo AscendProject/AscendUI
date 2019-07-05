@@ -1,0 +1,190 @@
+<div class="container-fluid info_container advance-search-wrapper hgt100">
+  <form [formGroup]="advanceSearchFormGroup" class="hgt100">
+    <div class="row border-bottom panel-head">
+      <div class="col-md-8">
+        <h4 class="my-3">Advanced Search by</h4>
+      </div>
+      <div class="col-md-4">
+        <div class="float-right pt-2">
+          <button type="button" class="btn btn-link" (click)="AdvanceSearchToggleClose()">CANCEL</button> 
+        </div>
+      </div>
+    </div>
+
+    <div class="row advance-search-innerwrapper">
+      <div class="col-12 col-sm-6 col-md-4 advance-search-left-panel hgt100">
+        <div class="row advance-search-accordian">
+            <div class="col-12">
+                <div class="advance-search-vendor-section">
+                    <mat-form-field>
+                      <input matInput id="txtVendorId" placeholder="Vendor Id" formControlName="vendorId"
+                             maxlength="200">
+                    </mat-form-field>
+                    <mat-form-field>
+                      <input matInput id="txtLicenseNumber" placeholder="License Number" formControlName="licenseNumbers"
+                             maxlength="200">
+                    </mat-form-field>
+                  </div>
+           
+<!-- Search Basic Information -->
+<div class="advance-search-basic-info pr-0">
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Name Information
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-form-field>
+          <input matInput id="txtFirstName" placeholder="First Name" formControlName="firstName"
+                 maxlength="200">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput id="txtMiddleName" placeholder="Middle Name" formControlName="middleName"
+                 maxlength="200">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput id="txtLastName" placeholder="Last Name" formControlName="lastName"
+                 maxlength="200">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput id="txtPreferredName" placeholder="Preferred Name" formControlName="preferredName"
+                 maxlength="200">
+        </mat-form-field>
+      </mat-expansion-panel>
+      <mat-expansion-panel (opened)="panelOpenState = true"
+                           (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Contact Information
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-form-field>
+          <input matInput id="txtemail" placeholder="Email" formControlName="emails"
+                 maxlength="200">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput id="txtphoneNumber" placeholder="Phone number" formControlName="phoneNumbers"
+                 maxlength="200">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput id="txtStreet" placeholder="Street" formControlName="streetAddresses"
+                 maxlength="200">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput id="txtZip" placeholder="Zip" formControlName="zipcodes"
+                 maxlength="200">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput id="txtCity" placeholder="City" formControlName="cities"
+                 maxlength="200">
+        </mat-form-field>
+        <!-- Multi Select Drop Down-->
+
+        <mat-form-field>
+          <mat-select placeholder="Select State" formControlName="states" #stateVal (change)="getStates(stateVal.value);" multiple>
+            <mat-option *ngFor="let state of states" [value]="state">{{state}}</mat-option>
+          </mat-select>
+          
+        </mat-form-field>
+
+      </mat-expansion-panel>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Service Types
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        
+        
+        <mat-form-field>
+          <mat-select placeholder="Select Service" formControlName="serviceTypes" #servicetypeVal (change)="getServiceTypes(servicetypeVal.value);" multiple>
+            <mat-option *ngFor="let service of services" [value]="service">{{service}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </mat-expansion-panel>
+    </mat-accordion>
+            </div>
+        </div>
+      </div>
+
+        <div class="row bottom-search">
+            <button mat-button class="bg-primary text-white btn-block" type="button" (click)="onClickAdvancedSearch()">Search</button>
+        </div>
+
+        
+        
+        
+        
+
+        
+      </div>
+
+      <div class="col-12 col-sm-6 col-md-8 shadow-lt hgt100">
+
+        <!-- Right Panel Header-->
+        <div class="row border-bottom">
+          <div class="col-8">
+            <h4 class="my-3">Search Result</h4>
+          </div>
+          <div class="col-4">
+            <div class="float-right pt-1">
+              <button type="button" class="btn btn-link">{{advSearchTableLength}} Items Found</button>             
+            </div>
+          </div>
+        </div>
+
+        <!-- Mat Table Start-->
+        <div class="row" id="vendoradvsearch" [hidden]="isAdvanceSearchTableData">
+
+          <mat-table #table [dataSource]="advancesearchtabledata" #advanceSearchSort="matSort" 
+          class="col-12 mat-elevation-z8 no-padding" matSort
+                     matSortActive="lastName" matSortDirection="asc" matSortDisableClear>
+            <ng-container matColumnDef="vendorId">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Vendor ID </mat-header-cell>
+              <mat-cell *matCellDef="let element" class="fs-12">
+                <a (click)="onClickHyperLink(element.vendorId)" class="cmn-link">{{element.vendorId}} </a>
+                
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="firstName">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> First Name </mat-header-cell>
+              <mat-cell *matCellDef="let element" class="fs-12"> {{element.firstName}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="middleName">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Middle Name</mat-header-cell>
+              <mat-cell *matCellDef="let element" class="fs-12">  {{element.middleName}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="lastName">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </mat-header-cell>
+              <mat-cell *matCellDef="let element" class="fs-12"> 
+              <a (click)="onClickHyperLink(element.vendorId)" class="cmn-link"> {{element.lastName}} </a>
+              </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="preferredName">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Preferred Name </mat-header-cell>
+              <mat-cell *matCellDef="let element" class="fs-12"> {{element.preferredName}} </mat-cell>
+            </ng-container>
+
+
+            <mat-header-row style="font-size-adjust:inherit" *matHeaderRowDef="vendorAdvSearchColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: vendorAdvSearchColumns;"></mat-row>
+          </mat-table>
+
+          <div id="vendorAdvSearchPaginator" class="col-12">
+            <mat-paginator #advanceSearchPaginator="matPaginator" [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+          </div>
+
+        </div>
+        <!-- Mat Table End-->
+      </div>
+    </div>
+  </form>
+</div>
+

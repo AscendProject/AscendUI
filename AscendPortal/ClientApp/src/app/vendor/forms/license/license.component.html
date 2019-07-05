@@ -1,0 +1,242 @@
+<div class="container-fluid license-inner-wrapper info_container" *ngIf="contactdata!=undefined">
+  <div *ngIf="dispalylicense">
+    <form [formGroup]="addlicense" (ngSubmit)="savelicense()"  #licenseForm="ngForm">
+
+      <div class="row border-bottom">
+        <div class="col-md-8">
+          <h4 class="my-3" id="add/edit-LicenseSectionTitle"> {{ltitle}} License </h4>
+        </div>
+        <div class="col-md-4">
+          <div class="float-right pt-1">
+            <button id="btnCancelLicense" type="button" (click)="reset()" class="btn btn-default normal">
+              Cancel
+            </button>
+            <button id="btnSaveLicense" type="submit" class="btn btn-primary normal" [disabled]="addlicense.invalid || isdisable  ">
+              Save
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 mt-3">
+        <div class="row">
+          <div class="col-lg-4 col-md-4 col-sm-4 pl-0">
+            <mat-form-field>
+              <mat-select id="ddlSuffix-License"
+                          [ngClass]="addlicense.controls['suffix'].value === '' ? 'splacefolder' : 'removeplacefolder'"
+                          formControlName="suffix"
+                          placeholder="Select Suffix">
+                <mat-option [value]="">
+                  - Select Suffix -
+                </mat-option>
+                <mat-option *ngFor="let p of suffixs" [value]="p">
+                  {{p}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-4 pl-0">
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-4 pl-0">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 col-md-4 col-sm-4 pl-0">
+            <mat-form-field>
+              <input matInput id="txtFirstName-License" placeholder="First Name" formControlName="firstName"
+                     maxlength="200" (focusout)="onBlurMethod($event.target.value,'firstName')" trim="blur" required>
+              <mat-error *ngIf="addlicense.controls['firstName'].touched && addlicense.controls['firstName'].errors">
+                First Name is Required!!
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-4 pl-0">
+            <mat-form-field>
+              <input matInput id="txtMiddleName-License" placeholder="Middle Name" formControlName="middleInitial"
+                     maxlength="200" (focusout)="onBlurMethod($event.target.value,'middleInitial')">
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-4 pl-0">
+            <mat-form-field>
+              <input matInput id="txtLastName-License" placeholder="Last Name" formControlName="lastName"
+                     maxlength="200" (focusout)="onBlurMethod($event.target.value,'lastName')" required>
+              <mat-error id="lastName-Error-License" *ngIf="addlicense.controls['lastName'].touched && addlicense.controls['lastName'].errors">
+                Last Name is Required!!
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 col-md-4 col-sm-4 pl-0">
+            <mat-form-field>
+              <mat-select id="ddlLicenseState"
+                          [ngClass]="addlicense.controls['licenseState'].value === '' ? 'splacefolder' : 'removeplacefolder'"
+                          formControlName="licenseState"
+                          placeholder="Select License state" required>
+                <mat-option *ngFor="let state of states" [value]="state">
+                  {{state}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="addlicense.controls['licenseState'].touched && addlicense.controls['licenseState'].errors">
+                Select license state.
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-4 pl-0">
+            <mat-form-field>
+              <mat-select id="ddlLicenseType"
+                          [ngClass]="addlicense.controls['licenseType'].value === '' ? 'splacefolder' : 'removeplacefolder'"
+                          formControlName="licenseType"
+                          placeholder="Select License type" required>
+                <mat-option *ngFor="let licentype of licenseTypes" [value]="licentype">
+                  {{licentype}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="addlicense.controls['licenseType'].touched && addlicense.controls['licenseType'].errors">
+                Select license type.
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-4 pl-0">
+            <mat-form-field>
+              <input matInput id="txtLicenseNumber" placeholder="License Number" formControlName="licenseNumber"
+                     maxlength="200" (focusout)="onBlurMethod($event.target.value,'licenseNumber')" trim="blur" required>
+              <mat-error id="licenseNumber-Error" *ngIf="addlicense.controls['licenseNumber'].touched && addlicense.controls['licenseNumber'].errors">
+                Enter valid license number.
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+
+          <div class="col-lg-4 col-md-4 col-sm-4 pl-0">
+            <mat-form-field>
+              <input matInput [matDatepicker]="picker1" placeholder="Effective Date" id="txtEffectiveDate-License"
+                     formControlName="effectiveDate" (focusout)="onBlurMethod($event.target.value,'effectiveDate')" trim="blur" required>
+              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+              <mat-error id="effectiveDate-Error-License" *ngIf="addlicense.controls['effectiveDate'].touched && addlicense.controls['effectiveDate'].errors">
+                Enter valid effective date.
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-lg-4 col-md-4 col-sm-4 pl-0">
+            <mat-form-field>
+              <input matInput [matDatepicker]="picker2" placeholder="Expiration Date" id="txtExpirationDate-License"
+                     formControlName="expirationDate" (focusout)="onBlurMethod($event.target.value,'expirationDate')" trim="blur" required>
+              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
+              <mat-error id="expirationDate-Error-License" *ngIf="addlicense.controls['expirationDate'].touched && addlicense.controls['expirationDate'].errors">
+                Enter valid expiration date.
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-4 pl-0">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 col-md-4 col-sm-4 pl-0">
+            <mat-form-field>
+              <input matInput [matDatepicker]="picker3" placeholder="Last Date Verified" id="txtLastDateVerified-License"
+                     formControlName="lastDateVerified"
+                     (dateChange)="dropchange($event,'lastDateVerified')">
+              <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+              <mat-datepicker #picker3></mat-datepicker>
+              <mat-error id="expirationDate-Error-License" *ngIf="addlicense.controls['lastDateVerified'].touched && addlicense.controls['lastDateVerified'].invalid">
+                Enter valid last verified date.
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-4 pl-0">
+            <mat-form-field>
+              <mat-select id="ddlLastVerifiedResult-License"
+                          [ngClass]="addlicense.controls['lastVerifiedResult'].value === '' ? 'splacefolder' : 'removeplacefolder'"
+                          formControlName="lastVerifiedResult"
+                          (change)="dropchange($event,'lastVerifiedResult')"
+                          placeholder="Select Last Verified Result">
+                <mat-option [value]="">
+                  - Select Last Verified Result -
+                </mat-option>
+                <mat-option *ngFor="let r of results" [value]="r">
+                  {{r}}
+                </mat-option>
+              </mat-select>
+              <mat-error id="lastVerifiedResult-Error-License" *ngIf="addlicense.controls['lastVerifiedResult'].touched && addlicense.controls['lastVerifiedResult'].invalid">
+                Select last verified result.
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-4 pl-0">
+            <mat-form-field>
+              <mat-select id="ddlVerificationMethod-License"
+                          [ngClass]="addlicense.controls['verificationMethod'].value === '' ? 'splacefolder' : 'removeplacefolder'"
+                          formControlName="verificationMethod"
+                          (change)="dropchange($event,'verificationMethod')"
+                          placeholder="Select Verification Method">
+                <mat-option [value]="">
+                  - Select Verification Method -
+                </mat-option>
+                <mat-option *ngFor="let m of methods" [value]="m">
+                  {{m}}
+                </mat-option>
+              </mat-select>
+              <mat-error id="verificationMethod-Error-License"
+                         *ngIf="addlicense.controls['verificationMethod'].touched && addlicense.controls['verificationMethod'].invalid">
+                Select last verified method.
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row info_heading mt-4">
+          <h4 class="text-dark">DOCUMENT</h4>
+        </div>
+        <file-uploader (messageEvent)="receiveMessage($event)" (onCompleteItem)="onCompleteItem($event)" [historyData]="fileInformation" class="row bg-content mb-3"></file-uploader>
+
+        <div class="row">
+          <!--<mat-chip-list>
+      <mat-chip id="btnSaveLicense" type="submit" color="primary"  [disabled]="addlicense.invalid || isdisable">Save</mat-chip>
+      <mat-chip id="btnCancelLicense" type="button" (click)="reset()" color="accent">Cancel</mat-chip>
+    </mat-chip-list>-->
+        </div>
+
+        <div *ngIf="historyFileData && historyFileData.length > 0">
+       
+              <div class="row info_heading my-4">
+                <h4 class="text-dark">Current Insurance File</h4>
+              </div>
+              <div class="row">
+                <div class="col-md-1 text-center bg-content py-3">
+                  <img src="../assets/img/icon_pdf_note.png" width="30" />
+                </div>
+
+                <div class="col-md-11">
+                  <p class="mt-2 mb-0">{{ historyFileData[0].fileName.split(".",1)+".pdf" }}</p>
+                  <button type="button" class="btn btn-link p-0 m-0" (click)="downloadFile(historyFileData[0].documentKey,historyFileData[0].fileName)">View / Download</button>
+                </div>
+              </div>
+           
+        </div>       
+
+        <div *ngIf="historyFileData && historyFileData.length > 1">
+
+          <div class="row info_heading my-4">
+            <h4 class="text-dark">Insurance File History</h4>
+          </div>
+
+          <div class="row">
+            <div class="col-md-1 text-center bg-content py-3">
+              <img src="../assets/img/icon_pdf_note.png" width="30" />
+            </div>
+            <div class="col-md-11" *ngFor="let item of historyFileData | slice : 1">
+              <p class="mt-2 mb-0">{{ item.fileName.split(".",1)+".pdf" }}</p>
+              <button type="button" class="btn btn-link p-0 m-0" (click)="downloadFile(item.documentKey,item.fileName)">View / Download</button>
+            </div>
+          </div>
+
+        </div>   
+      </div>
+</form>
+  </div>
+</div>
+
+

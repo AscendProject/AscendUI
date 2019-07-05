@@ -1,0 +1,25 @@
+.visible{
+    display:block;
+}
+.hidden{
+    display: none;
+}
+.mat-column-disciplinaryAction {
+  flex: 0 0 180px;
+}
+
+
+.panel-head {
+  height: 45px;
+}
+
+.license_details {
+  height: 100%;
+  overflow: auto;
+}
+
+.mat-cell{
+  .mat-icon {
+    float: none !important;
+  }
+  }

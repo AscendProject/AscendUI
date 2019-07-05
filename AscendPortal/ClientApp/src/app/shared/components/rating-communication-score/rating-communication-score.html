@@ -1,0 +1,29 @@
+<div class="rate-dialog">
+    <div class="row border-bottom">
+        <div class="col-md-8">
+  <h4 mat-dialog-subtitle class="mb-3">{{title}}</h4>
+  </div>
+</div>
+
+  <div mat-dialog-content class="pt-4 ext-center" hasBackdrop="true">
+        <mat-form-field class="mx-auto d-table">
+          <input matInput placeholder="Enter Rating *" type="text" [formControl]="ratingForm" 
+          [(ngModel)]="ratingValue" min="0"  maxlength="1" numbers
+          (keypress)="omit_special_char($event)">
+          
+        </mat-form-field>
+      
+        <div class="p text-center mb-3">
+       Rating should be between '0' to '5'<br>
+       with '0' being lowest and '5' being highest
+      </div>
+    </div>
+
+
+  <div mat-cards-actions align="end" class="mat-dialog-actions"> 
+  <!-- <div mat-dialog-actions class="float-md-right"> -->
+    <button class="btn btn-default normal" (click)="close()"> {{cancelButton}} </button>
+    <button class="btn btn-primary normal" [disabled]="ratingForm.invalid" (click)="save()" cdkFocusInitial>{{ saveButton }}</button>
+  </div>
+
+</div>

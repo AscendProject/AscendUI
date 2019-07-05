@@ -1,0 +1,30 @@
+<div class="col-12 pagination-top">
+  <div class="nav-left float-left pt-1">
+    <button (click)="previousPage(1)" mat-mini-fab [disabled]="(pageNumber==1 || totalPages==1)? 'true':'false'">
+      <mat-icon mat-button class="material-icons text-primary" fontSet="fas" fontIcon="fa-angle-double-left"></mat-icon>
+    </button>
+    <button (click)="previousPage(pageNumber - 1)" mat-mini-fab [disabled]="(pageNumber==1 || totalPages==1)? 'true':'false'">
+      <mat-icon mat-button class="material-icons text-primary" fontSet="fas" fontIcon="fa-angle-left"></mat-icon>
+    </button>
+  </div>
+  
+                <div class="page-count pt-2">
+                    <span class="float-left"> Page</span>
+                    <div class="float-left mx-2">
+                        <input class="px-2" *ngIf="totalRecords>10" numbers type="text" (blur)="changepagenumber(pageNumber)" (change)="changepagenumber(pageNumber)"
+                            matInput [(ngModel)]="pageNumber">
+                        <span *ngIf="totalRecords<=10">{{pageNumber}}</span>
+                    </div>
+
+                    <span class="float-left"> of {{totalPages}}</span>
+                </div>
+
+        <div class="nav-right float-right pt-1">
+                <button (click)="nextPage(pageNumber + 1)" mat-mini-fab [disabled]="(pageNumber==totalPages || totalPages==1 || pageNumber>=totalPages)? 'true':'false'">
+                    <mat-icon mat-button class="material-icons text-primary" fontSet="fas" fontIcon="fa-angle-right"></mat-icon>
+                </button>
+                <button (click)="nextPage(totalPages)" mat-mini-fab [disabled]="(pageNumber==totalPages || totalPages==1 || pageNumber>=totalPages)? 'true':'false'">
+                    <mat-icon mat-button class="material-icons text-primary" fontSet="fas" fontIcon="fa-angle-double-right"></mat-icon>
+                </button>
+        </div>
+</div>

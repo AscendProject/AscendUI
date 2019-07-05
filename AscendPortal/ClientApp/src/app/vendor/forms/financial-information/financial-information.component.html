@@ -1,0 +1,178 @@
+<!--Financial Information Form-->
+
+<div class="container-fluid info_container">
+
+
+
+  <!--Default Section With No Financial Information-->
+  <div *ngIf="isDefaultView" class="text-center text-secondary no-info-msg">
+
+    <h4>No financial information has been added</h4>
+    <button type="button" class="btn btn-primary btn-lg normal mt-3" id="btnAddFinancialInfo" (click)="displayAddFinancialInfoFields()">Add financial Info</button>
+
+  </div>
+
+
+
+  <!--View Financial Information section-->
+  <div *ngIf="isViewFinancialInfo">
+
+    <div class="row bg-content mx-0 mt-4">
+      <div class="col-4">
+        <div class="bank-title mx-auto">
+          <i class="fa fa-university mr-3"></i>
+          <mat-label class="text-primary">{{financialData.paymentMethod}}</mat-label>
+        </div>
+      </div>
+      <div class="col-8 info_content border-left">
+
+        <div class="row">
+          <div class="col-12">
+            <div class="float-right">
+              <mat-icon class="text-primary" (click)="editFinancialInfo()" id="matnotification" role="img" aria-hidden="true">create</mat-icon>
+              <mat-icon class="text-danger" id="matnotification" role="img" aria-hidden="true">delete</mat-icon>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+
+          <div class="col-12">
+            <label>Name On Account</label>
+            <div class="info-field mb-3 pb-3 border-bottom">
+              <span>{{financialData.accountHolderName}}</span>
+            </div>
+          </div>
+
+          <mat-divider></mat-divider>
+
+          <div class="col-md-6">
+            <label>Bank Name</label>
+            <div class="info-field mb-3 ">
+              <span>{{financialData.bankName}}</span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label>Routing Number</label>
+            <div class="info-field mb-3">
+              <span>{{maskedRoutingNumber}}</span>
+            </div>
+          </div>
+
+
+          <div class="col-md-6">
+            <label>Account Type</label>
+            <div class="info-field mb-3">
+              <span>{{financialData.accountType}}</span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label>Account Number</label>
+            <div class="info-field mb-3">
+              <span>{{maskedAccountNumber}}</span>
+            </div>
+          </div>
+
+
+          <div class="col-md-6">
+            <label>Tax ID Type</label>
+            <div class="info-field mb-3">
+              <span>{{financialData.taxIdType}}</span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label>Tax ID </label>
+            <div class="info-field mb-3">
+              <span>{{maskedTaxId}}</span>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+
+  <!-- W9 Section -->
+  <!-- Upload W9 Section -->
+  <div class="col-lg-12 col-md-12" *ngIf="!fileExist || isUploadNewForm">
+    <div class="row info_heading mt-4">
+      <h4 class="text-dark"> Upload W9 Form</h4>
+    </div>
+    <file-uploader (messageEvent)="receiveMessage($event)" (onCompleteItem)="onCompleteItem($event)" [historyData]="fileInformation" class="row bg-content mb-3"></file-uploader>
+    <div class="row">
+      <div class="ml-auto">
+        <button *ngIf="isUploadNewForm" type="button" class="btn btn-link" id="btnCancelW9Upload" (click)="cancelW9Upload($event)">Cancel</button>
+        <button [disabled]="isNoFileSelected" type="button" class="btn btn-sm normal btn-primary my-1" id="btnUploadW9" (click)="uploadW9Form()">Upload</button>
+
+      </div>
+    </div>
+  </div>
+
+  <!--W9 Form Details-->
+
+  <div *ngIf="fileExist && !isUploadNewForm">
+
+
+
+
+    <div class="col-lg-12 col-md-12">
+      <div class="row info_heading my-4">
+
+        <h4 class="text-dark d-inline">W9 Form</h4>
+        <span class="ml-auto">
+          <mat-icon class="text-primary" (click)="uploadNewW9Form()" id="matEditW9Form" role="img" aria-hidden="true">create</mat-icon>
+          <mat-icon class="text-danger" id="matDeleteW9Form" role="img" aria-hidden="true">delete</mat-icon>
+        </span>
+
+      </div>
+
+
+
+
+
+
+      <div class="row">
+        <div class="col-md-8">
+          <div class="row">
+
+            <div class="col-md-2 text-center bg-content pt-3">
+              <img src="../assets/img/icon_pdf_note.png" width="30" />
+              <p align="center" class="badge badge-pill badge-primary mt-2 badge-pdf">PDF</p>
+            </div>
+
+            <div class="col-md-10">
+              <p class="mt-4 mb-0">{{w9FileData[w9FileData.length-1].fileName.split(".",1)+".pdf"}}</p>
+              <button type="button" class="btn btn-link p-0 m-0" (click)="downloadFile(w9FileData[w9FileData.length-1].documentKey,w9FileData[w9FileData.length-1].fileName)">View / Download</button>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <small class="float-right badge-uploaded mt-4 ">Uploaded</small>
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+
+
+
+
+  </div>
+
+
+</div>
+

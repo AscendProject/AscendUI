@@ -1,0 +1,139 @@
+<div class="add-vendor-custom">
+  <div class="container-fluid info_container">
+    <form *ngIf="backgroundCheckFrom" [formGroup]="backgroundCheckFrom" (ngSubmit)="addbgDialog()" #f="ngForm">
+      <div class="row border-bottom">
+        <div class="col-md-8">
+          <h4 class="my-3">{{ltitle}} Background Check</h4>
+        </div>
+        <div class="col-md-4">
+          <div class="float-right pt-1">
+            <button type="button" class="btn btn-link" (click)="reset()" >CANCEL</button>
+            <button id="btnAddVendor" class="btn btn-sm normal btn-primary my-1" [disabled]="backgroundCheckFrom.invalid || isdisable">{{addEditButtonText}}</button>
+          </div>
+        </div>
+      </div>
+      <div>
+        <!--<ascend-vendor-details></ascend-vendor-details>-->
+      </div>
+      <div class="row">
+        <div class="col-md-4 col-lg-4 col-sm-4" style="display:none">
+          <mat-form-field class=" mat-form-field-infix">
+            <input matInput id="txtIReferenceID" placeholder="Reference ID" formControlName="referenceID"
+                   maxlength="200"  trim="blur" required>
+            <mat-error *ngIf="backgroundCheckFrom.controls['referenceID'].touched && backgroundCheckFrom.controls['referenceID'].errors">
+              Please enter the Reference ID
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-4 col-lg-4 col-sm-4">
+          <mat-form-field class=" mat-form-field-infix">
+            <input matInput id="txtIReferenceID" placeholder="Reference ID" formControlName="referenceID"
+                   maxlength="200"  trim="blur" required>
+            <mat-error *ngIf="backgroundCheckFrom.controls['referenceID'].touched && backgroundCheckFrom.controls['referenceID'].errors">
+              Please enter the Reference ID
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-4 col-lg-4 col-sm-4">
+          <mat-form-field class=" mat-form-field-infix">
+            <mat-select id="result"
+                        [ngClass]="backgroundCheckFrom.controls['result'].value === '' ? 'splacefolder' : 'removeplacefolder'"
+                        formControlName="result"
+                        placeholder="Result"
+                        required>
+
+              <mat-option [value]="">
+                - Select Result -
+              </mat-option>
+
+              <mat-option *ngFor="let result of results" [value]="result">
+                {{result}}
+              </mat-option>
+
+            </mat-select>
+            <mat-error *ngIf="backgroundCheckFrom.controls['typeofbg'].touched && backgroundCheckFrom.controls['typeofbg'].errors">
+              Please enter the Result
+            </mat-error>
+          </mat-form-field>
+        </div>
+        
+      </div>
+      <!-- Date picker -->
+
+      <div class="row"> 
+        <div class="col-lg-4 col-md-4 col-sm-4">
+          <mat-form-field>
+            <input matInput [matDatepicker]="picker1" placeholder="Report Date" id="txtReportDate"
+                   formControlName="reportDate"
+                   (focusout)="ValidateReportDate($event.target.value, 'reportDate',true)"
+                   trim="blur"
+                   (keypress)="omit_special_char($event)"
+                   [max]="mindate"
+                   [(ngModel)]="repDate"
+                   required>
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1 (selectedChanged)="ValidateReportDate($event,'reportDate',true)" ></mat-datepicker>
+            <mat-error id="reportDate-Error" *ngIf="backgroundCheckFrom.controls['reportDate'].touched && backgroundCheckFrom.controls['reportDate'].errors">
+              {{reportDatErrorMessage}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4">
+          <mat-form-field>
+            <input matInput [matDatepicker]="picker2" placeholder="Expiration Date"
+                   id="txtExpirationDate-License"
+                   formControlName="expirationDate"
+                   (keypress)="omit_special_char($event)"
+                   (focusout)="ValidateExpiryDate($event.target.value,'expirationDate',true)" trim="blur"
+                   [min]="pastdate"
+                   [(ngModel)]="expDate"
+                   >
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2 (selectedChanged)="ValidateExpiryDate($event,'expirationDate',true)"></mat-datepicker>
+            <mat-error id="reportDate-Error" *ngIf="backgroundCheckFrom.controls['expirationDate'].touched && backgroundCheckFrom.controls['expirationDate'].errors">
+              {{expiryDateErrorMessage}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4">
+        </div>
+      </div>
+
+      <! --  Background Company details -- >
+      <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-4">
+          <mat-form-field class=" mat-form-field-infix">
+            <input matInput id="bgtxtCompanyName" placeholder="Background Company" formControlName="bgcompanyName"
+                   maxlength="200"  required >
+            <mat-error *ngIf="backgroundCheckFrom.controls['bgcompanyName'].touched && backgroundCheckFrom.controls['bgcompanyName'].errors">
+              Please enter the background check company name
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4">
+          <mat-form-field class=" mat-form-field-infix">
+            <mat-select id="typeofbg"
+                        [ngClass]="backgroundCheckFrom.controls['typeofbg'].value === '' ? 'splacefolder' : 'removeplacefolder'"
+                        formControlName="typeofbg"
+                        placeholder="Background Check Type"
+                        required>
+
+              <mat-option  [value]="">
+                - Select Background Check -
+              </mat-option>
+              <mat-option *ngFor="let typeofbg of typeofBackgroundChecks" [value]="typeofbg">
+                {{typeofbg}}
+              </mat-option>
+
+            </mat-select>
+            <mat-error *ngIf="backgroundCheckFrom.controls['typeofbg'].touched && backgroundCheckFrom.controls['typeofbg'].errors">
+              Please enter the type of background check
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4">
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

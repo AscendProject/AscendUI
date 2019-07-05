@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2015
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AscendPortal", "AscendPortal\AscendPortal.csproj", "{7EADFBD8-99A0-4D55-A3D4-12C63A92AAC2}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{A3154340-0682-4274-9A9B-DB7207DDA646}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7EADFBD8-99A0-4D55-A3D4-12C63A92AAC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EADFBD8-99A0-4D55-A3D4-12C63A92AAC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EADFBD8-99A0-4D55-A3D4-12C63A92AAC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EADFBD8-99A0-4D55-A3D4-12C63A92AAC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3154340-0682-4274-9A9B-DB7207DDA646}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3154340-0682-4274-9A9B-DB7207DDA646}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3154340-0682-4274-9A9B-DB7207DDA646}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3154340-0682-4274-9A9B-DB7207DDA646}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F3B10AAE-00B3-46FD-ADC7-09AC35AC3562}
+	EndGlobalSection
+EndGlobal

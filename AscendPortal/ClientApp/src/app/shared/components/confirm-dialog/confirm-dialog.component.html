@@ -1,0 +1,20 @@
+
+
+<div class="confirm-dialogbox">
+
+  
+  <div mat-dialog-content class="text-center">
+
+    <mat-icon *ngIf="isShowSuccess" class="pt-4 text-success"><i class="material-icons icon-success">check_circle_outline</i></mat-icon>
+    <!--<h4 class="pt-2">{{msgBody}}</h4>-->
+
+    <p>{{ msgBody }}</p>
+  </div>
+
+  <div mat-cards-actions align="end" class="mat-dialog-actions">
+    <button *ngIf="isShowCancel" class="btn btn-default normal" (click)="close()"> {{ btnCancel !='' ? btnCancel : 'No' }} </button>
+    <button [disabled]="btnText == ''" class="btn btn-primary normal" (click)="save()" cdkFocusInitial>{{ btnText !='' ? btnText : 'Save' }}</button>
+  </div>
+
+</div>
+

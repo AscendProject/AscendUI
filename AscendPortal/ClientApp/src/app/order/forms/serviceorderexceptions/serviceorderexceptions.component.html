@@ -1,0 +1,124 @@
+<div *ngIf="ExceptionsList ===undefined">
+    {{message}}
+</div>
+<mat-accordion *ngIf="ExceptionsList !=undefined" hideToggle="true">
+    <mat-expansion-panel *ngFor="let exception of ExceptionsList.exceptionLogs" (closed)="exception.expanded=false" (opened)="exception.expanded=true">
+        <mat-expansion-panel-header>
+            <mat-panel-description class="text-primary col-12">
+                <div class="row">
+                    <div class="col-md-3">
+                        <span *ngIf="!exception.expanded"><mat-icon fontSet="fa" fontIcon="fa-caret-right"></mat-icon></span>
+                        <span *ngIf="exception.expanded"><mat-icon fontSet="fa" fontIcon="fa-caret-down"></mat-icon></span>
+                        <span class="text-primary">{{exception.Category | statusTranslate}}</span>
+                    </div>
+                    <div class="col-md-3">
+                        <span class="text-primary">{{exception.Area | statusTranslate}}</span>
+                    </div>
+                    <div class="col-md-3">
+                        <span class="text-primary"> {{exception.Status}}</span>
+                    </div>
+                    <div class="col-md-3">
+                        <button mat-raised-button class="bg-primary small text-white" (click)="$event.stopPropagation()" *ngIf="exception.Status=='New'">
+                                Resolve
+                        </button>
+                    </div>
+
+                </div>
+            </mat-panel-description>
+            <!-- <mat-panel-description class="text-primary width">
+                {{exception.ExceptionId}}
+                <span class="text-dark" *ngIf="exception.Category!=null"> {{exception.Category}} </span>
+            </mat-panel-description>
+            <mat-panel-description *ngIf="exception.Status!=null" class="text-primary text-right float-right text-status pt-1">
+                {{exception.Status}}
+            </mat-panel-description> -->
+        </mat-expansion-panel-header>
+        <div class="info_container">
+            <div class="row info_content pt-2 pb-2">
+                <div class="col-md-4 pt-1 col-sm-12 no-padding">
+                    <label class="col-12">
+                        Exception ID
+                    </label>
+                    <div class="col-12 py-1 info-field">
+                        <span *ngIf="exception.ExceptionId!=null">{{exception.ExceptionId}}</span>
+                        <span class="no-content-d" *ngIf="exception.ExceptionId==null">-</span>
+                    </div>
+                </div>
+                <div class="col-md-4 pt-1 col-sm-12 no-padding">
+                    <label class="col-12">
+                        Area
+                    </label>
+
+                    <div class="col-12 py-1 info-field">
+                        <span *ngIf="exception.Area!=null">{{exception.Area | statusTranslate}}</span>
+                        <span class="no-content-d" *ngIf="exception.Area==null">-</span>
+                    </div>
+                </div>
+                <div class="col-md-4 pt-1 col-sm-12 no-padding">
+                    <label class="col-12">
+                        Category
+                    </label>
+                    <div class="col-12 py-1 info-field">
+                        <span *ngIf="exception.Category !=null">{{exception.Category | statusTranslate}}</span>
+                        <span class="no-content-d" *ngIf="exception.Category==null">-</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row info_content pt-2 pb-2">
+                <div class="col-md-4 pt-1 col-sm-12 no-padding">
+                    <label class="col-12">
+                        Exception Date
+                    </label>
+                    <div class="col-12 py-1 info-field">
+                        <span *ngIf="exception.timestamp !=null">{{exception.timestamp | date:'MM/dd/yyyy'}}</span>
+                        <span class="no-content-d" *ngIf="exception.timestamp==null">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row info_content pt-2 pb-3">
+                <div class="col-sm-12 no-padding">
+                    <label class="col-12">
+                        Exception Message
+                    </label>
+
+                    <div class="col-12 py-1 info-field">
+                        <span *ngIf="exception.Message!=null">{{exception.Message}}</span>
+                        <span class="no-content-d" *ngIf="exception.Message==null">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="row info_content pt-2 pb-3">
+                <div class="col-md-12 col-sm-12 no-padding">
+                    <label class="col-12">
+                        EXCEPTION DATA
+                    </label>
+                    <mat-divider></mat-divider>
+                    <div class="col-12 py-1 info-field">
+                        <span *ngIf="exception.Data!=null">{{exception.Data}}</span>
+                        <span class="no-content-d" *ngIf="exception.Data==null">-</span>
+                    </div>
+                </div>
+            </div> -->
+
+            <div class="row info_content pt-2 pb-3" *ngIf="exception.Notes!=null">
+                <div class="col-md-12 col-sm-12 no-padding">
+                    <label class="col-12 info_section_header">
+                        Note
+                    </label>
+                    <!-- <mat-divider></mat-divider> -->
+                    <div class="col-12 py-1 info-field">
+                        <span>{{exception.Notes}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row info_content pt-2 mt-3" *ngIf="exception.Status=='New'">
+                <div class="col-md-12 no-padding">
+                    <mat-divider></mat-divider>
+                    <button class="col-2 mt-3 normal float-right bg-primary" mat-raised-button color="primary">Resolve</button>
+                </div>
+            </div>
+        </div>
+    </mat-expansion-panel>
+</mat-accordion>

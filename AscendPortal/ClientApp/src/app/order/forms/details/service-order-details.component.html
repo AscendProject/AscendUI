@@ -1,0 +1,21 @@
+<div class="col-12 no-padding" *ngIf="serviceOrderInfo">
+    <div class="row no-margin order_details" [ngClass]="bgcolor(serviceOrderInfo.serviceOrderStatus)">
+        <div class="col-12 order_info">
+            <div class="row hgt100">
+                <h2 class="col-12 align-self-center">{{serviceOrderInfo.serviceOrderID}}
+                    <span> {{serviceOrderInfo.serviceName}}</span>
+                </h2>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-12 no-padding order_tabs">    
+    <nav mat-tab-nav-bar class="demo-tab-group">
+        <a mat-tab-link *ngFor="let routeLink of SOTabs" [routerLink]="routeLink.link" routerLinkActive #rla="routerLinkActive" [active]="rla.isActive">
+            {{routeLink.label}}
+        </a>
+    </nav>
+    <div class="col-12 p-3 order_content">
+        <router-outlet></router-outlet>
+    </div>
+</div>

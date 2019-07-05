@@ -1,0 +1,106 @@
+<div class="container-fluid info_container mt-3" id="activeInsuranceContainer">
+    <div class="vendor-contact-header">
+      <div class="info_heading">
+        <h4 class="text-dark d-inline" id="pageTitle-ListInsurancePage">
+          Insurances<span class="text-primary" *ngIf="activeInsuranceList && activeInsuranceList.data && activeInsuranceList.data.length > 0"> ({{activeInsuranceList.data.length}})</span>
+        </h4>
+        <button id="btnAddLicense-ListInsurancePage" type="button" class="btn-link float-right" (click)="addInsurances()">+ Add Insurance</button>
+      </div>
+
+      <!--Insurance-->
+      <div class="row">
+        <div class="col-12" id="insuranceListTable" *ngIf="displayInsuranceTable">
+          <mat-table [dataSource]="activeInsuranceList" #insuranceSort="matSort" class="mat-elevation-z8" matSort matSortActive="policyNumber" matSortDirection="desc" matSortDisableClear>
+            <!-- policy no Column -->
+            <ng-container matColumnDef="policyNumber">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Insurance Policy #</mat-header-cell>
+              <mat-cell *matCellDef="let insurance" class="fs-12">
+                <a id="lnkPolicyNumber" [routerLink]="['/vendor/insurancedetails', insurance.id]" class="cursor-p text-underline">
+                  {{insurance.policyNumber}}
+                </a>
+              </mat-cell>
+            </ng-container>
+            <!-- type Column -->
+            <ng-container matColumnDef="insuranceType">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Insurance Type </mat-header-cell>
+              <mat-cell *matCellDef="let insurance" class="fs-12"> {{insurance.insuranceType}} </mat-cell>
+            </ng-container>
+            <!-- effectice date Column -->
+            <ng-container matColumnDef="effectiveDate">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Effective Date </mat-header-cell>
+              <mat-cell *matCellDef="let insurance" class="fs-12"> {{insurance.effectiveDate | date: 'MM/dd/yyyy'}} </mat-cell>
+            </ng-container>
+            <!-- letter Column -->
+            <ng-container matColumnDef="expirationDate">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Expiration Date </mat-header-cell>
+              <mat-cell *matCellDef="let insurance" class="fs-12"> {{insurance.expirationDate | date: 'MM/dd/yyyy'}} </mat-cell>
+            </ng-container>
+            <!-- vendor date Column -->
+            <ng-container matColumnDef="lastVerifiedResult">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Verified Result </mat-header-cell>
+              <mat-cell *matCellDef="let insurance" class="fs-12" [ngClass]="chipColor(insurance.lastVerifiedResult)">
+                {{insurance.lastVerifiedResult}}
+              </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="insuranceDisplayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: insuranceDisplayedColumns"></mat-row>
+          </mat-table>
+          <div id="insuranceListPaginator" class="mb-3">
+            <mat-paginator #insurancePaginator="matPaginator" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+          </div>
+        </div>
+        <div class="text-secondary col-12 text-center py-5" *ngIf="!displayInsuranceTable">No Insurance have been added</div>
+      </div>
+
+      <!-- Add License-->
+      <div class="info_heading">
+        <h4 class="text-dark d-inline" id="listLicensePageTitle">Licenses <span class="text-primary" *ngIf="activeLicenseList && activeLicenseList.data && activeLicenseList.data.length > 0"> ({{activeLicenseList.data.length}})</span></h4>
+        <button id="btnAddLicense-ListInsurancePage" type="button" class="btn-link float-right" (click)="addLicense()">+ Add License</button>
+      </div>
+
+      <div class="row">
+        <div class="col-12" id="licenseListTable" *ngIf="displayLicenseTable">
+          <mat-table [dataSource]="activeLicenseList" #licenseSort="matSort" matSort matSortActive="licenseNumber" matSortDirection="desc" matSortDisableClear>
+            <!-- policy no Column -->
+            <ng-container matColumnDef="licenseNumber">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> License # </mat-header-cell>
+              <mat-cell *matCellDef="let license" class="fs-12">
+                <a id="licensePolicyNumber" [routerLink]="['/vendor/licesedetails', license.id]" class="cursor-p text-underline">
+                  {{license.licenseNumber}}
+                </a>
+              </mat-cell>
+            </ng-container>
+            <!-- type Column -->
+            <ng-container matColumnDef="licenseType">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> License Type </mat-header-cell>
+              <mat-cell *matCellDef="let license" class="fs-12"> {{license.licenseType}} </mat-cell>
+            </ng-container>
+            <!-- effectice date Column -->
+            <ng-container matColumnDef="effectiveDate">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Effective Date </mat-header-cell>
+              <mat-cell *matCellDef="let license" class="fs-12"> {{license.effectiveDate | date: 'MM/dd/yyyy'}} </mat-cell>
+            </ng-container>
+            <!-- letter Column -->
+            <ng-container matColumnDef="expirationDate">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Expiration Date </mat-header-cell>
+              <mat-cell *matCellDef="let license" class="fs-12"> {{license.expirationDate | date: 'MM/dd/yyyy'}} </mat-cell>
+            </ng-container>
+            <!-- vendor date Column -->
+            <ng-container matColumnDef="lastVerifiedResult">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Verified Result </mat-header-cell>
+              <mat-cell *matCellDef="let license" class="fs-12" [ngClass]="chipColor(license.lastVerifiedResult)">
+                {{license.lastVerifiedResult}}
+              </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="licenseDisplayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: licenseDisplayedColumns"></mat-row>
+          </mat-table>
+          <div id="licenseListPaginator" class="mb-3">
+            <mat-paginator #licensePaginator="matPaginator" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+          </div>
+        </div>
+        <div id="#" class="text-secondary col-12 text-center py-5" *ngIf="!displayLicenseTable">No License have been added</div>
+      </div>
+
+    </div>
+  </div>

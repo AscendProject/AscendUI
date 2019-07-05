@@ -1,0 +1,34 @@
+<div class="container-fluid info_container">
+  <div class="row border-bottom">
+    <div class="col-md-8">
+      <h4 class="my-3">Exclusion List</h4>
+    </div>
+    <div class="col-md-4">  
+    </div>
+  </div>
+    
+  <div class="row">
+    <div class="col-3 no-padding vendors_list">
+      <mat-list role="list" class="panel_list">
+        <mat-list-item class="row no-gutters no-padding" *ngFor="let client of getVendorsdata; let i = index" (click)="setClickedRow()"
+                       [ngClass]="i == selectedRow ? 'active':''">
+
+          <div class="col-12 no-padding">
+            <div class="row no-margin">
+              <div class="col-9 pl-0 pr-2">
+                <h4 mat-line>{{client}}</h4>
+              </div>
+            </div>
+          </div>
+          <mat-divider *ngIf="getVendorsdata.length!=i+1"></mat-divider>
+        </mat-list-item>
+      </mat-list>
+    </div>
+
+    <div class="col-9 shadow-lt shadow-height">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+
+  </div>
+

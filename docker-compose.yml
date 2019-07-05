@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  vendorui:
+    image: vendorui
+    build:
+      context: .
+      dockerfile: AscendPortal/Dockerfile

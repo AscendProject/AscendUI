@@ -1,0 +1,86 @@
+.addbuttonBGC {
+  background-color: #757575;
+  color: white;
+  height: 45px;
+  width: 100%;
+  padding: 0;
+  min-width: auto;
+  text-align: center;
+  line-height: 1;
+
+  mat-icon {
+    font-size: 18px;
+    width: 16px;
+    height: 16px;
+  }
+
+  span {
+    display: block;
+  }
+}
+
+.mat-raised-button, .mat-button {
+  border-radius: 0px !important;
+}
+/*
+::ng-deep .mat-input-underline {
+  display: none;
+}*/
+
+.vendoe_list {
+  height: calc(100% - 82px);
+  overflow: auto;
+}
+
+.vendor_tabs {
+  height: calc(100% - 172px);
+  overflow: hidden;
+
+  nav {
+    height: 39px;
+  }
+
+  .vendor_content {
+    height: calc(100% - 39px);
+    overflow: auto;
+  }
+
+  .mat-tab-link {
+    height: 38px;
+    padding: 0 14px;
+    min-width: 10px;
+    text-decoration: none;
+    font-weight: normal;
+  }
+
+  .mat-tab-link:hover, .mat-tab-label-active {
+    color: #007bff;
+    text-decoration: none;
+  }
+}
+.vendor-summary {
+  font-size: 0.75em;
+}
+.mat-input-underline {
+  display: block;
+}
+
+
+// Overwrite for Angular Material Tabs CSS
+.mat-tab-label-container {
+  .mat-tab-label {
+    opacity: 1;
+    padding: 0;
+  }
+}
+
+.mat-tab-group.mat-primary {
+  .mat-ink-bar {
+    display: none;
+  }
+}
+
+
+.fa-binoculars {
+  font-size: 20px;
+}

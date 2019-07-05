@@ -1,0 +1,44 @@
+.mat-list-item {
+  cursor: pointer;
+  /*height: auto;
+  padding: 5px 0;*/
+}
+
+.mat-list-item.active, .mat-list-item:hover {
+  background-color: #e5edf4;
+}
+
+.mat-chip {
+  font-size: 11px;
+  line-height: 6px;
+}
+
+em {
+  font-style: normal;
+}
+
+.vendors_list {
+  height: calc(100% - 82px);
+  overflow: auto;
+}
+
+.mat-list {
+  padding: 0px !important;
+}
+
+
+.mat-raised-button, .mat-button {
+  border-radius: 0px !important;
+}
+/*
+::ng-deep .mat-input-underline {
+  display: none;
+}*/
+.shadow-lt {
+  box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.25);
+}
+.shadow-height {
+  height: calc(100% - 45px);
+  overflow: auto;
+  
+}

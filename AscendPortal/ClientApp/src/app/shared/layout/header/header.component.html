@@ -1,0 +1,32 @@
+<mat-toolbar class="shadow-sm bg-white">
+    <mat-toolbar-row>
+        <div id="header" class="container-fluid align-items-center no-padding no-gutters">
+            <div class="row align-items-center">
+                <div class="col no-padding">
+                    <button class="float-left hamburger no-padding" mat-icon-button (click)="navOpen()">
+                        <mat-icon>menu</mat-icon>
+                    </button>
+                    <div id="logo" class="float-left">
+                        <img src="../assets/img/assurant-full-logo.png" alt="Assurant logo" />
+                    </div>
+                </div>
+                <div class="col text-right">
+                  <a (click)="openRightNav('resource')" id="resource" class="notification resource"  [ngClass]="tbutton=='resource'? 'active':''">
+                    <mat-icon id="matresource" matTooltip="Resources" class="material-icons example-icon">
+                      assignment
+                      </mat-icon>
+                  </a>
+
+                  <a (click)="openRightNav('notification')" id="notification" class="notification" [ngClass]="tbutton=='notification'? 'active':''">
+                    <mat-icon id="matnotification" class="example-icon">notifications</mat-icon>
+                    <span class="badge badge-pill badge-danger">4</span>
+                  </a>
+
+                  <a (click)="openRightNav('profile')" id="profile" class="notification" [ngClass]="tbutton=='profile'? 'active':''">
+                    <mat-icon id="matprofile" class="example-icon"> person</mat-icon>
+                  </a>
+                </div>
+            </div>
+        </div>
+    </mat-toolbar-row>
+</mat-toolbar>

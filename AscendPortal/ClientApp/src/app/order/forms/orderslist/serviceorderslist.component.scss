@@ -1,0 +1,30 @@
+.mat-list-item{
+    cursor: pointer;
+}
+  .mat-list-item.active,.mat-list-item:hover{
+    background-color: #e5edf4;
+  }
+
+  .mat-chip {
+    font-size: 11px;
+    line-height: 6px;
+}
+
+.mat-list{
+    padding: 0px !important; 
+}
+em{
+    font-style: normal;
+}
+
+
+.orders_list {
+    height: calc(100% - 82px);
+    overflow: auto;
+  }
+  .mat-raised-button,.mat-button{
+    border-radius: 0px !important;
+  }
+  ::ng-deep .mat-input-underline {
+    display: none;
+  }

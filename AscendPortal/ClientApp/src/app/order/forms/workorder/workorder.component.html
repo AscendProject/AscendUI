@@ -1,0 +1,33 @@
+<div class="container" *ngIf="WorkOrdersList !=undefined">
+    <div class="container info_container">
+        <div class="row info_heading">
+            <h4 class="text-dark">WORK ORDERS LIST</h4>
+        </div>
+    </div>
+
+    <table class="table table-hover table-striped" *ngIf="WorkOrdersList">
+        <thead>
+            <tr>
+                <th> Work Order ID </th>
+                <th> Type </th>
+                <th> Status </th>
+                <th> Vendor ID </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let wo of WorkOrdersList.records">
+                <td> <a [routerLink]="['/order/work-orders',wo.workOrderId,'info']">{{wo.workOrderId}}</a> </td>
+                <td> {{wo.workOrderType}} </td>
+                <td> {{wo.workOrderStatus | statusTranslate}} </td>
+                <td *ngIf="wo.vendorId == null">
+                    <button mat-raised-button class="bg-primary small text-white">
+                        Assign Vendor
+                    </button>
+                </td>
+                <td *ngIf="wo.vendorId != null">
+                    {{wo.vendorId}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

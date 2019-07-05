@@ -1,0 +1,132 @@
+<div class="row border-bottom">
+    <div class="col-md-8">
+        <h3 class="mb-3" style="font-weight:600">VENDOR ASSIGNMENT</h3>
+    </div>
+    <div class="col-md-4">
+        <a role="button" style="cursor: pointer" tabindex="0" (click)="onCancelClick()" class="float-right">CANCEL</a>
+    </div>
+</div>
+
+
+<div class="info_container">
+    <div class="info-bg row pt-2 pb-3 info_content">
+        <div class="col-md-5 pt-1 col-sm-12 no-padding mb-2">
+            <label class="col-12">
+                Offer ID
+            </label>
+            <div class="col-12 py-1 info-field" *ngIf="workofferid!=null">
+                <span class="no-margin mt-2">{{workofferid}}</span>
+                <span class="no-content-d" *ngIf="workofferid==null">-</span>
+            </div>
+        </div>
+        <div class="col-md-4 pt-1 col-sm-12 no-padding mb-2">
+            <label class="col-12">
+                Work Order ID
+            </label>
+            <div class="col-12 py-1 info-field" *ngIf="WOInfo!=null && WOInfo.id!=null">
+                <span class="no-margin mt-2">{{WOInfo.id}}</span>
+                <span class="no-content-d" *ngIf="WOInfo.id==null">-</span>
+            </div>
+        </div>
+        <div class="col-md-3 pt-1 col-sm-12 no-padding mb-2">
+            <label class="col-12">
+                Work Order Type
+            </label>
+            <div class="col-12 py-1 info-field" *ngIf="WOInfo!=null && WOInfo.workOrderType!=null">
+                <span class="no-margin mt-2">{{WOInfo.workOrderType}}</span>
+                <span class="no-content-d" *ngIf="WOInfo.workOrderType==null">-</span>
+            </div>
+        </div>
+
+        <div class="col-md-5 pt-1 col-sm-12 no-padding mb-2">
+            <label class="col-12">
+                Client Due Date
+            </label>
+            <div class="col-12 py-1 info-field" *ngIf="WOInfo!=null && WOInfo.clientDueDate!=null">
+                <span class="no-margin mt-2">{{WOInfo.clientDueDate | date:'MM/dd/yyyy'}}</span>
+                <span class="no-content-d" *ngIf="WOInfo.clientDueDate==null">-</span>
+            </div>
+        </div>
+
+        <div class="col-md-4 pt-1 col-sm-12 no-padding mb-2">
+            <label class="col-12">
+                Client Fee
+            </label>
+            <div class="col-12 py-1 info-field" *ngIf="WOInfo!=null && WOInfo.clientFee!=null">
+                <span class="no-margin mt-2">{{WOInfo.clientFee | currency}}</span>
+                <span class="no-content-d" *ngIf="WOInfo.clientFee==null">-</span>
+            </div>
+        </div>
+        <div class="col-md-3 pt-1 col-sm-12 no-padding mb-2">
+            <!-- <label class="col-12">
+                Vendor Due Date
+            </label>
+            <div class="col-12 py-1 info-field" *ngIf="WOInfo!=null && WOInfo.vendorDueDate!=null">
+                <span class="no-margin mt-2">{{WOInfo.vendorDueDate | date:'MM/dd/yyyy'}}</span>
+                <span class="no-content-d" *ngIf="WOInfo.vendorDueDate==null">-</span>
+            </div> -->
+        </div>
+    </div>
+</div>
+
+
+<div class="container" *ngIf="showSpinner">
+        Please wait while we assign the selected vendor...
+</div>
+<div class="container" *ngIf="!showSpinner">
+    
+    <!-- <div class="row selectionpane-search mt-3">
+        <div class="col-12 align-items-center  pt-2">
+            <input class="search_filed no-padding no-border" matInput placeholder="Search Vendor" [(ngModel)]="searchid">
+            <mat-icon class="text-primary float-right">search</mat-icon>
+        </div>
+    </div> -->
+
+    <div class="row selectionpane-search my-3">
+            <div class="col-10 d-flex align-items-center">
+                <input class="search_filed col-12 no-padding no-border" matInput placeholder="Search vendor">
+            </div>
+            <div class="col-2 text-right no-padding">
+                <button class="search_btn" mat-button >
+                    <mat-icon class="text-primary">search</mat-icon>
+                </button>
+            </div>
+        </div>
+
+
+    <div class="row" *ngIf="VendorsList !=undefined">
+        <div class="col-md-12 vendors-list-grid border-bottom py-3" *ngFor="let vendor of VendorsList.records" [ngStyle]="{'background-color':!vendor.autoSelect ? 'rgba(255,0,0,.1)' : 'inherit' }">
+
+
+            <div class="row">
+                <div class="col-md-2">
+                    <span class="row ml-0">Rank</span>
+                    <strong class="row ml-0 text-primary">{{vendor.rank}}</strong>
+                </div>
+                <div class="col-md-4">
+                    <span class="row text-primary"> {{vendor.vendorId}}</span>
+                    <span class="row no-padding" *ngIf="vendor.firstName!=null"> {{vendor.firstName}}</span>
+                    <span class="row no-padding" *ngIf="vendor.firstName==null">-</span>
+
+
+                </div>
+                <div class="col-md-4">
+                    <div class="col-12 py-1 text-secondary" style="color:green!important;font-weight: 600" *ngIf="vendor.autoSelect">
+                        Auto Offer Enabled
+                    </div>
+                    <div class="col-12 py-1 text-secondary" style="color:red!important;font-weight: 600" *ngIf="!vendor.autoSelect">
+                        Auto Offer Disabled
+                    </div>
+                    <div class="col-12 py-1 text-secondary" style="color:red!important" *ngIf="!vendor.autoSelect">                       
+                        {{vendor.reason==null || vendor.reason==''? 'No reason provided' : vendor.reason}}
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <button mat-raised-button class="float-right bg-primary small text-white mat-raised-button" (click)="assignedVendor(vendor)">
+                        Assign
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

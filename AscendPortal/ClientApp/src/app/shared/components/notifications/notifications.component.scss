@@ -1,0 +1,108 @@
+
+
+.topheader{
+    .title{
+        font-size: 1.25em;
+        font-weight: 600;
+    }
+     .anchortag{
+        font-size: 0.875em;
+    }
+}
+.notification_list{
+    .title {
+        font-weight: 600;
+    }
+    .contant{
+    font-size: 0.875em !important;
+   
+    }
+    .time{
+    }
+    .datetime{
+    font-size: 0.875em !important;
+    }
+    .dot {
+        width: 7px;
+        height: 7px;
+        display: inline-block;
+        border-radius: 20px;
+        margin: 0 4px 0 0;
+    }.material-icons{
+            font-size: 16px;
+        }
+}
+// .panel .title {
+//     position: absolute;
+//     background-color: #fff;
+//     color: #484846;
+//     padding: 10px;
+//     text-align: center;
+//     font-weight: 500;
+//     border-bottom: 1px solid #ddd;
+//     z-index: 3;
+//     width: 100%;
+//   }
+  
+//   ul.notification-bar {
+//     list-style: none;
+//     padding: 60px 10px;
+//     margin: 0;
+//     position: relative;
+//     z-index: 1;
+//     height: 100%;
+//   }
+  
+//   .notification-bar li:not(:first-child) {
+//     margin-top: 60px;
+//   }
+//   .notification-bar li div {
+//     margin-left: 50px;
+//     margin-top: -40px;
+//     border: 1px solid #c7c6c2;
+//     padding: 10px;
+//     background-color: #eeede8;
+//     border-radius: 3px;
+//     font-size: 14px;
+//     color: #7b7a76;
+//     box-shadow: 1px 1px 2px #dedcd4;
+//   }
+//   .notification-bar li i {
+//     width: 40px;
+//     height: 40px;
+//     text-align: center;
+//     vertical-align: middle;
+//     display: table-cell;
+//     border: 2px solid #008dcb;
+//     border-radius: 100%;
+//     background-color: white;
+//     color: #008dcb;
+//   }
+//   .notification-bar li.unread i {
+//       background-color: #008dcb;
+//       color: #fff;
+//   }
+//   .notification-bar li.unread div {
+//       border-color: #008dcb;
+//       background-color: #008dcb;
+//       color: #fff;
+//   }
+//   .notification-bar li i:after {
+//     content: '';
+//     width: 40px;
+//     height: 2px;
+//     position: absolute;
+//     background-color: #ddd;
+//     margin-top: 8px;
+//     z-index: -1;
+//   }
+//   .notification-bar:after {
+//     content: '';
+//     width: 2px;
+//     height: 100%;
+//     background-color: #deddd5;
+//     position: absolute;
+//     top: 0;
+//     left: 28px;
+//     z-index: -1;
+//   }

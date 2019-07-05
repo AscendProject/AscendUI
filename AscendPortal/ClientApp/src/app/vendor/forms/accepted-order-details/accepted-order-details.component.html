@@ -1,0 +1,188 @@
+<div id="orderDetailsPage" class="container-fluid info_container" *ngIf="acceptedOrder">
+  <!--<div class="row border-bottom">
+    <div class="col-md-8">
+      <h4 id="insuranceDetailsPageTitle" class="my-3"> {{acceptedOrder.workOrderId}} </h4>
+    </div>
+    <div class="col-12 col-sm-6 col-md-4">
+      <div class="float-right pt-1">
+        <button mat-raised-button id="formBtn" (click)="orderForm();" class="orderForm-button float-sm-right mr-5">Order Form</button>
+      </div>
+    </div>
+  </div>-->
+  <div class="row ml-0 mt-2">
+    <span class="font-weight-bold"> {{acceptedOrder.workOrderId}} </span>
+  </div>
+  <div class="row border-bottom">
+    <div class="col-md-8">
+      <h5 id="insuranceDetailsPageTitle" class="my-3"> {{acceptedOrder.property.address.city}}, {{acceptedOrder.property.address.state}}, {{acceptedOrder.property.address.postalCode}} </h5>
+    </div>
+    <div class="col-md-4">
+      <div class="float-right pt-1">
+        <button mat-raised-button id="formBtn" (click)="orderForm();" class="btn btn-primary small">Order Form</button>
+      </div>
+    </div>
+  </div>
+
+
+  <mat-tab-group class="sub-tabs-grp">
+    <mat-tab label="Order Info">
+
+      <div class="row info_content">
+        <div class="col-12 col-sm-6 col-md-4">
+          <label id="lblFirstName-InsuranceDetails"> Service </label>
+          <div class="info-field">
+            <span>{{acceptedOrder.workOrderType}}</span>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4">
+          <label id="lblFirstName-InsuranceDetails"> Status </label>
+          <div class="info-field">
+            <span>{{acceptedOrder.workOrderStatus}}</span>
+          </div>
+        </div>
+
+
+        <div class="col-12 col-sm-6 col-md-4">
+          <label id="lblVendorDueDate-orderDetails"> Vendor Due Date </label>
+          <div class="info-field">
+            <span>{{acceptedOrder.vendorDueDate | date: 'MM/dd/yyyy'}}</span>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-4">
+          <label id="lblclientdueDate-orderDetails"> Client Due Date </label>
+          <div class="info-field">
+            <span>{{acceptedOrder.clientDueDate | date: 'MM/dd/yyyy'}}</span>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-4">
+          <label id="lblVendorFee-orderDetails"> Vendor Fee </label>
+          <div class="info-field">
+            <span>{{dollar(acceptedOrder.vendorFee)}}</span>
+          </div>
+        </div>
+
+
+        <div class="col-12 col-sm-6 col-md-4">
+          <label id="lblLoanNumber-orderDetails"> Loan Number </label>
+          <div class="info-field">
+            <span *ngIf="!(serviceOrder && serviceOrder.loanDetails && serviceOrder.loanDetails.loanNumber)">-</span>
+            <span *ngIf="serviceOrder && serviceOrder.loanDetails">{{serviceOrder.loanDetails.loanNumber}}</span>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-4">
+          <label id="lblLoanType-orderDetails"> Loan type </label>
+          <div class="info-field">
+            <span *ngIf="!(serviceOrder && serviceOrder.loanDetails && serviceOrder.loanDetails.loanType)">-</span>
+            <span *ngIf="serviceOrder && serviceOrder.loanDetails">{{serviceOrder.loanDetails.loanType}}</span>
+          </div>
+        </div>
+
+
+        <div class="col-12 col-sm-6 col-md-4">
+          <label id="lblLoanPurpose-orderDetails"> Loan Purpose </label>
+          <div class="info-field">
+            <span *ngIf="!(serviceOrder && serviceOrder.loanDetails && serviceOrder.loanDetails.loanPurpose)">-</span>
+            <span *ngIf="serviceOrder && serviceOrder.loanDetails">{{serviceOrder.loanDetails.loanPurpose}}</span>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-4">
+          <label id="lblBFName-orderDetails"> Borrower First Name </label>
+          <div class="info-field">
+            <span *ngIf="!(serviceOrder && serviceOrder.borrowerInfo && serviceOrder.borrowerInfo.FirstName)">-</span>
+            <span *ngIf="serviceOrder && serviceOrder.borrowerInfo">{{serviceOrder.borrowerInfo.FirstName}}</span>
+          </div>
+        </div>
+
+
+        <div class="col-12 col-sm-6 col-md-4">
+          <label id="lblBLName-orderDetails"> Borrower Last Name </label>
+          <div class="info-field">
+            <span *ngIf="!(serviceOrder && serviceOrder.borrowerInfo && serviceOrder.borrowerInfo.LastName)">-</span>
+            <span *ngIf="serviceOrder && serviceOrder.borrowerInfo">{{serviceOrder.borrowerInfo.LastName}}</span>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-4">
+          <label id="lblClient-orderDetails"> Client Name </label>
+          <div class="info-field">
+            <span *ngIf="!(serviceOrder && serviceOrder.clientDetails && serviceOrder.clientDetails.first)">-</span>
+            <span *ngIf="serviceOrder && serviceOrder.clientDetails">{{serviceOrder.clientDetails.first}} {{serviceOrder.clientDetails.last}}</span>
+
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-4">
+          <label id="lblqcFailReasons-orderDetails">  qcFailReasons </label>
+          <div class="info-field">
+            <span *ngIf="!(serviceOrder && serviceOrder.qcRevisions && serviceOrder.qcRevisions.qcFailReasons)">-</span>
+            <span *ngIf="serviceOrder && serviceOrder.qcRevisions">{{serviceOrder.qcRevisions.qcFailReasons}}</span>
+          </div>
+        </div>
+
+      </div>
+
+  <div class="info_heading">
+    <h4 class="text-dark">ADDRESS</h4>
+  </div>
+
+      <div class="row info_content">
+        <div class="col-12 col-sm-6 col-md-4">
+          <label id="lblStreet-OrderDetails"> Street </label>
+          <div class="info-field">
+            <span>{{acceptedOrder.property.address.street1}}</span>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4">
+          <label id="lblCity-OrderDetails"> City </label>
+          <div class="info-field">
+            <span>{{acceptedOrder.property.address.city}}</span>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4">
+          <label id="lblState-OrderDetails"> State </label>
+          <div class="info-field">
+            <span>{{acceptedOrder.property.address.state}}</span>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4">
+          <label id="lblZip-OrderDetails"> Zip </label>
+          <div class="info-field">
+            <span>{{acceptedOrder.property.address.postalCode}}</span>
+          </div>
+        </div>
+      </div>
+
+    </mat-tab>
+    <mat-tab label="Documents">
+      <div *ngIf="acceptedOrder.engagementLetter">
+        <div class="row info_content">
+          <div class="col-12">
+            <label id="lblFirstName-InsuranceDetails" *ngIf="documents.htmlFileName"> HTML File </label>
+            <div class="info-field">
+              <span class="text-primary cursor-pointer" (click)="downloadDocuments(documents.htmlFileDocumentId)">{{documents.htmlFileName}}</span>
+            </div>
+          </div>
+
+
+          <div class="col-12">
+            <label id="lblFirstName-InsuranceDetails" *ngIf="documents.htmlFileName"> PDF File </label>
+            <div class="info-field">
+              <span class="text-primary cursor-pointer" (click)="downloadDocuments(documents.htmlFileDocumentId)">{{documents.pdfFileName}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-secondary col-12 text-center py-5" *ngIf="!acceptedOrder.engagementLetter">
+        Files Not Available
+      </div>
+    </mat-tab>
+    <mat-tab label="Comments">
+      <orderComment></orderComment>
+    </mat-tab>
+  </mat-tab-group>
+  </div>

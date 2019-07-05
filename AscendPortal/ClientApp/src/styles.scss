@@ -1,0 +1,289 @@
+/* You can add global styles to this file, and also import other style files */
+//@import "https://fonts.googleapis.com/css?family=Material+Icons";
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+//@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i');
+@import '~@angular/material/theming';
+@include mat-core();
+//@import '~bootstrap/dist/css/bootstrap.min.css';
+
+$custom-primary: mat-palette($mat-gray,50);
+$custom-accent:  mat-palette($mat-pink);
+
+$general-typography: mat-typography-config(
+  $font-family: '"Open Sans", "Helvetica Neue", sans-serif',
+  $body-2:        mat-typography-level(14px, 24px, 600)
+);
+
+
+@include mat-core($general-typography);
+
+
+// $my-app-new: #000000;
+// $my-app-inactive: #000000;
+// $my-app-active: #000000;
+// $my-app-delete:  #ff0000;
+// $my-color-white:  #ffffff;
+// $my-app-theme: mat-light-theme($my-app-new,$my-app-inactive,$my-app-active,$my-app-delete,$my-color-white);
+
+//@import './scss/mixins';
+//@import './scss/layout';
+//@import './scss/_badge';
+@import './scss/common';
+@import './scss/fonts';
+// .badge-success {
+//   color: $my-color-white;
+//   background-color: $my-app-delete;
+// }
+html, body {
+  margin: 0;
+  height: 100%;
+  min-height: 100%;
+  overflow: hidden;
+  font-size: 12px !important;
+  font-family: 'Open Sans', sans-serif;
+  ascend-root, assignvendor {
+    font-size: 1.33em !important;
+  }
+}
+
+body {
+  margin: 0;
+}
+
+
+.sidebar-active .mat-text {
+  display: none !important;
+}
+
+.c-m-bottom{
+  margin-bottom: 0.5em !important;
+}
+
+// .mat-nav-list, .mat-list{
+//   padding-top: 0px !important;
+// }
+
+
+// .displaytext{
+//   margin: 2%;
+// }
+// .interaction-pan-header{
+//   color: #828282;
+//   position: relative;
+//   margin-left: 1% !important;
+//   position: relative;
+//   top: 50%;
+// }
+// .interaction-pan-header h2{
+//   margin: 0px !important;
+//   margin-top: 2% !important;
+  
+// }
+// .interaction-pan-header p{
+//   margin: 0px !important;
+// }
+
+// .mat-fab.mat-primary, .mat-mini-fab.mat-primary, .mat-raised-button.mat-primary,.mat-chip.mat-chip-selected.mat-primary,.mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+//   background-color: #0456A7;
+// }
+// .mat-drawer.mat-drawer-side{
+//   background-color: #f0f5f9 !important;
+//   // border-right: 1px #dadada solid !important
+//   // box-shadow: inset 0px 0px 8px rgba(0, 0, 0, 0.25);
+// }
+// .mat-tab-link.mat-tab-label-active{
+// color: #0456A7;
+// }
+
+
+// .mat-chip-list-wrapper .badge-success {
+//   color: #fff !important;
+//   background-color: #4dbd74 !important;
+// }
+// .mat-chip-list-wrapper .badge-warning {
+//   color: #23282c !important;
+//   background-color: #ffc107 !important;
+// }
+
+
+
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+  border-color: #0066ffb8 !important;
+  height: 15px;
+  width: 15px;
+}
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle {
+  background-color: #0066ffb8 !important;
+  height: 15px;
+  width: 15px;
+}
+
+.mat-radio-outer-circle {
+  height: 15px !important;
+  width: 15px !important;
+}
+
+.mat-radio-container {
+  margin-top: 5px !important;
+}
+
+#vendorOrderTable .mat-table {
+  width: 200% !important;
+}
+
+#vendorOrderTable .mat-table .mat-cell {
+  font-size: 12px !important;
+}
+
+.checbox-align .mat-checkbox-layout .mat-checkbox-inner-container-no-side-margin {
+  width: 15px;
+  height: 15px;
+}
+
+#vendorOrderPaginator .mat-paginator {
+  display: unset !important;
+}
+
+.orderForm.mat-input-element:disabled {
+  color: rgba(0,0,0,.87) !important;
+  font-size: 13px;
+}
+
+// decline popup css
+.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+  background-color: #0066ff !important;
+}
+
+.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+  background-color: #0066ffb8 !important;
+}
+
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+  border-color: #0066ffb8 !important;
+  height: 15px;
+  width: 15px;
+}
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle {
+  background-color: #0066ffb8 !important;
+  height: 15px;
+  width: 15px;
+}
+
+.mat-radio-outer-circle {
+  height: 15px !important;
+  width: 15px !important;
+}
+
+.mat-radio-container {
+  margin-top: 5px !important;
+}
+
+.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+  background-color: #0066ff !important;
+  width: 50px;
+  height: 20px;
+  border-radius: 15px !important;
+}
+
+.mat-slide-toggle-content {
+  position: absolute;
+  font-size: 11px;
+  margin-left: 23px;
+  color: #0567d1;
+}
+
+.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+  background-color: #f8f9fa !important;
+  width: 12px;
+  height: 12px;
+  margin-left: 18px;
+  margin-top: 5px;
+}
+
+.mat-slide-toggle-bar {
+  background-color: rgba(146, 182, 236, 0.51) !important;
+  width: 50px !important;
+  height: 20px !important;
+  border: 1px solid #4791ff !important;
+  border-radius: 10px !important;
+}
+
+.mat-slide-toggle-thumb {
+  height: 13px !important;
+  width: 13px !important;
+  border-radius: 50%;
+  margin-top: 5px;
+  margin-left: 3px;
+  border: 1px solid #4791ff !important;
+}
+
+.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-content {
+  color: white;
+  margin-left: 10px;
+}
+
+/*
+.mat-tab-body-wrapper {
+  height: 260px !important;
+}*/
+
+.decline-button .mat-button-wrapper, .accept-button .mat-button-wrapper,
+.action-button .mat-button-wrapper, .cancel-button .mat-button-wrapper {
+  position: absolute;
+  margin-top: -18px;
+  margin-left: -20px;
+}
+
+.orderForm-button .mat-button-wrapper {
+  position: absolute;
+  margin-top: -18px;
+  margin-left: -33px;
+}
+
+.action-button .mat-fab.mat-accent[disabled], .mat-fab.mat-primary[disabled], .mat-fab.mat-warn[disabled], .mat-fab[disabled][disabled], .mat-mini-fab.mat-accent[disabled], .mat-mini-fab.mat-primary[disabled], .mat-mini-fab.mat-warn[disabled], .mat-mini-fab[disabled][disabled], .mat-raised-button.mat-accent[disabled], .mat-raised-button.mat-primary[disabled], .mat-raised-button.mat-warn[disabled], .mat-raised-button[disabled][disabled] {
+  background-color: #82b2fb !important;
+  border: 1px solid #238af9;
+  cursor: not-allowed !important;
+  color: #6c757d !important;
+}
+
+
+#addVendorContainer .mat-drawer-backdrop.mat-drawer-shown {
+  position: fixed;
+}
+
+.multiFormToggle {
+  width: 75% !important
+}
+
+.mat-table {
+  box-shadow: none;
+}
+
+.mat-header-cell {
+  border-top: 0;
+  font-size: .8em;
+  font-weight: 700;
+  padding: .5rem;
+  vertical-align: bottom;
+  color: rgba(0,0,0,.87);
+}
+
+.mat-header-row {
+  border-bottom: 2px solid #dee2e6;
+}
+
+.mat-cell {
+  padding: .5rem;
+}
+
+.mat-header-row, .mat-row {
+  min-height: auto;
+  padding: 0;
+}
+
+.mat-row:hover .mat-cell {
+  background: #fafafa;
+}

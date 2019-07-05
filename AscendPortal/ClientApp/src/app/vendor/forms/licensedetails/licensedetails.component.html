@@ -1,0 +1,241 @@
+<div class="container-fluid info_container" *ngIf="licensedetailsdata">
+
+  <div class="row border-bottom">
+    <div class="col-md-8">
+      <h4 id="licenseDetailsPageTitle" class="my-3"> Licence Details: <span>{{licensedetailsdata?.vendorLicense.licenseNumber | uppercase}} </span>  </h4>
+    </div>
+    <div class="col-md-4">
+      <div class="float-right pt-1">
+        <button type="button" (click)="goBack()" class="btn btn-link">CANCEL</button>
+        <button id="btnEditLicense" (click)="editLicense()" type="submit" class="btn btn-sm normal btn-primary my-1">Edit</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-3">
+    <div class="info_heading">
+      <h4 class="text-dark">PERSONAL INFO</h4>
+    </div>
+
+    <div class="row info_content">
+      <div class="col-12 col-sm-6 col-md-4">
+        <label id="lblFirstName-LicenseDetails"> First Name </label>
+        <div class="info-field">
+          <span>{{ (licensedetailsdata.vendorLicense.firstName)}} </span>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-md-4">
+        <label id="lblMiddleName-LicenseDetails"> Middle Initial </label>
+        <div class="info-field">
+          <span>{{ (licensedetailsdata.vendorLicense.middleInitial)}} </span>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-md-4">
+        <label id="lblLastName-LicenseDetails"> Last Name </label>
+        <div class="info-field">
+          <span>{{(licensedetailsdata.vendorLicense.lastName )}} </span>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-md-4">
+        <label id="lblSuffix-LicenseDetails"> Suffix </label>
+        <div class="info-field">
+          <span>{{licensedetailsdata.vendorLicense.suffix}} </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="info_heading">
+      <h4 class="text-dark">LICENSE DETAILS</h4>
+    </div>
+
+    <div class="row info_content">
+      <div class="col-12 col-sm-6 col-md-4">
+        <label id="lblLicenseState-LicenseDetails"> License State </label>
+        <div class="info-field">
+          <span>{{licensedetailsdata.vendorLicense.licenseState | uppercase}} </span>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-md-4">
+        <label id="lblLicenseType-LicenseDetails"> License Type </label>
+        <div class="info-field">
+          <span>{{(licensedetailsdata.vendorLicense.licenseType)}} </span>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-md-4">
+        <label id="lblEffectiveDate-LicenseDetails"> Effective Date </label>
+        <div class="info-field">
+          <span>{{licensedetailsdata.vendorLicense.effectiveDate | date:'MM/dd/yyyy'}} </span>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-md-4">
+        <label id="lblExpirationDate-LicenseDetails"> Expiration Date </label>
+        <div class="info-field">
+          <span>{{licensedetailsdata.vendorLicense.expirationDate | date:'MM/dd/yyyy'}} </span>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-md-4">
+        <label id="lblLastDateVerified-LicenseDetails"> Last Date Verified </label>
+        <div class="info-field">
+          <span>{{licensedetailsdata.vendorLicense.lastDateVerified | date:'MM/dd/yyyy'}} </span>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-md-4">
+        <label id="lblLastVerifiedResult-LicenseDetails"> Last Verified Result </label>
+        <div class="info-field">
+          <span>{{licensedetailsdata.vendorLicense.lastVerifiedResult | titlecase}} </span>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-4 col-sm-4">
+        <label id="lblVerificationMethod-LicenseDetails"> Verification Method </label>
+        <div class="info-field">
+          <span>{{(licensedetailsdata.vendorLicense.verificationMethod )}} </span>
+        </div>
+      </div>
+    </div>
+    <!-- Disciplinary List-->
+    <div class="info_heading">
+      <h4 class="text-dark d-inline" id="#">Disciplinary </h4>
+      <button id="btnAddDisciplinary-ListInsurancePage" type="button" class="btn-link float-right" (click)="addDisciplinary()">+ Add Disciplinary</button>
+    </div>
+    <div>
+      <div class="row col-12" style="overflow:auto;" id="disciplinaryActionTable" *ngIf="isdisciplinaryActionTable">
+        <mat-table #table [dataSource]="disciplinaryActionTableData"
+                   #disciplinarySort="matSort" class="col-12 mat-elevation-z8 no-padding" matSort matSortActive="activeResolved" matSortDirection="asc" matSortDisableClear>
+
+          <ng-container matColumnDef="disciplinaryAction">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Disciplinary Action #</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <a class="cmn-link" (click)="onClickHyperLink(element.diciplinaryActionId)">{{element.disciplinaryAction}} </a>
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="activeResolved">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+            <mat-cell *matCellDef="let element"
+                      [ngStyle]="{'color':element.activeResolved === 'Active' ? 'red' : 'green' }">{{element.activeResolved}}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="effectiveDate">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Effective Date</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.effectiveDate|  date:'MM/dd/yyyy'}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="expirationDate">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Expiration Date </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.expirationDate|  date:'MM/dd/yyyy'}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="comments">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Comments </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.comments}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="isDeleted">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Action </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="fs-12">
+              <mat-icon id="" class="text-danger float-right" role="img" (click)="deleteDisciplinaryDialog(element.diciplinaryActionId)">delete</mat-icon>
+            </mat-cell>
+          </ng-container>
+          <mat-header-row style="font-size-adjust:inherit" *matHeaderRowDef="disciplinaryColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: disciplinaryColumns;"></mat-row>
+        </mat-table>
+          
+        <div id="disciplinarycheckPaginator" class="col-12">
+          <mat-paginator #disciplinaryPaginator="matPaginator" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </div>
+      </div>
+      <!-- Disciplinary List-->
+    </div>
+    <div id="#" class="text-secondary text-center py-5" *ngIf="!(isdisciplinaryActionTable)">No disciplinary actions have been added</div>
+    <div>
+    </div>
+
+
+    <div *ngIf="historyFileData && historyFileData.length > 0">
+
+      <div class="info_heading">
+        <h4 class="text-dark">Current Insurance File </h4>
+      </div>
+
+      <div class="row info_content">
+        <div class="col-md-1 text-center bg-content py-3">
+          <img src="../assets/img/icon_pdf_note.png" width="30" />
+        </div>
+
+        <div class="col-md-11">
+          <p class="mt-2 mb-0">{{ historyFileData[0].fileName.split(".",1)+".pdf" }}</p>
+          <button type="button" class="btn btn-link p-0 m-0" (click)="downloadFile(historyFileData[0].documentKey,historyFileData[0].fileName)">View / Download</button>
+        </div>
+      </div>
+
+    </div>
+
+    <div *ngIf="historyFileData && historyFileData.length > 1">
+
+
+      <div class="info_heading">
+        <h4 class="text-dark">Insurance File History</h4>
+      </div>
+
+      <div class="row info_content">
+        <div class="col-md-1 text-center bg-content py-3">
+          <img src="../assets/img/icon_pdf_note.png" width="30" />
+        </div>
+        <div class="col-md-11" *ngFor="let item of historyFileData | slice : 1">
+          <p class="mt-2 mb-0">{{ item.fileName.split(".",1)+".pdf" }}</p>
+          <button type="button" class="btn btn-link p-0 m-0" (click)="downloadFile(item.documentKey,item.fileName)">View / Download</button>
+        </div>
+      </div>
+    </div>
+
+
+    <div>
+
+      <div class="info_heading">
+        <h4 class="text-dark">History Changes</h4>
+      </div>
+
+
+      <div class="col-12" style="overflow:auto; " id="vendorHistoryTable">
+        <mat-table #table [dataSource]="historytabledata"
+                   #historySort="matSort" class="col-12 mat-elevation-z8 no-padding" matSort matSortActive="timestamp" matSortDirection="desc" >
+          <ng-container matColumnDef="propertyName">
+            <mat-header-cell *matHeaderCellDef mat-sort-header (click)="getRecord()"> Field </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{addSpaces(element.propertyName)}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="oldValue">
+            <mat-header-cell *matHeaderCellDef mat-sort-header (click)="getRecord()"> New Value </mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.oldValue}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="newValue">
+            <mat-header-cell *matHeaderCellDef mat-sort-header (click)="getRecord()">Old Value</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.newValue}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="changedBy">
+            <mat-header-cell *matHeaderCellDef mat-sort-header (click)="getRecord()"> Changed By </mat-header-cell>
+            <mat-cell *matCellDef="let element"> USER </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="timestamp">
+            <mat-header-cell *matHeaderCellDef mat-sort-header (click)="getRecord()"> Date </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.timestamp| date:'MM/dd/yyyy HH:mm:ss'}} </mat-cell>
+          </ng-container>
+          <mat-header-row style="font-size-adjust:inherit" *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+
+        <div class="col-12 text-center" *ngIf="historydata && historydata.historyLogs && historydata.historyLogs.length > 5">
+          <a class="btn btn-default normal mx-auto my-4" (click)="showmore('more')" [hidden]="!isShowMore">Show more</a>
+          <a class="btn btn-default normal mx-auto my-4" (click)="showmore('less')" [hidden]="isShowMore">Show less</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+

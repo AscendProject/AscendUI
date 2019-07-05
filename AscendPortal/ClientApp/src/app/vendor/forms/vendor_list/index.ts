@@ -1,0 +1,1 @@
+export * from './vendor_list.component';

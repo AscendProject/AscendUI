@@ -1,0 +1,53 @@
+.vendor_details{
+    position: relative;
+    background: #ffedd7;
+}
+.vendor_info {
+    height: 80px;
+}
+.vendor_info {
+  h2 {
+    font-size: 1.6rem;
+    line-height: 1.2em;
+    font-weight: 600;
+    text-transform: capitalize;
+  }
+
+  span {
+    text-transform: uppercase;
+    font-size: 1.2rem;
+  }
+}
+
+.vendor_details:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top:0;
+    bottom:0;
+    width: 4px;
+    background: #ff9900;
+}
+
+.vendor_summary {
+  font-size: 0.87em;
+}
+
+.mat-chip {
+  font-size: 11px;
+  line-height: 6px;
+}
+
+.edit-button{
+  cursor: pointer !important;
+  font-size:18px !important;
+}
+.details-label {
+  width: 135px;
+  margin-right: 15px;
+  span {
+    float: right;
+  }
+}
+
+

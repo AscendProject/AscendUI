@@ -1,0 +1,205 @@
+<div class="container-fluid info_container" *ngIf="insurancedetailsdata!=undefined">
+
+  <div class="row border-bottom">
+    <div class="col-md-8">
+      <h4 id="insuranceDetailsPageTitle" class="my-3"> Insurance Details: <span>{{(insurancedetailsdata.vendorInsurance.policyNumber)}}</span> </h4>
+    </div>
+    <div class="col-md-4">
+      <div class="float-right pt-1">
+        <button type="button" (click)="goBack()" class="btn btn-link">CANCEL</button>
+        <button id="btnEditInsurance" (click)="editInsurance()" type="submit" class="btn btn-sm normal btn-primary my-1">Edit</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-12">
+      <div class="info_heading">
+        <h4 class="text-dark">PERSONAL INFO</h4>
+      </div>
+
+      <div class="row info_content">
+        <div class="col-12 col-sm-6 col-md-4">
+          <label id="lblFirstName-InsuranceDetails"> First Name </label>
+          <div class="info-field">
+            <span>{{(insurancedetailsdata.vendorInsurance.firstName)}}</span>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-4">
+          <label id="lblMiddleName-InsuranceDetails"> Middle Initial </label>
+          <div class="info-field">
+            <span>{{(insurancedetailsdata.vendorInsurance.middleInitial )}}</span>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-4">
+          <label id="lblLastName-InsuranceDetails"> Last Name </label>
+          <div class="info-field">
+            <span>{{(insurancedetailsdata.vendorInsurance.lastName)}}</span>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-4">
+          <label id="lblSuffix-InsuranceDetails"> Suffix </label>
+          <div class="info-field">
+            <span>{{insurancedetailsdata.vendorInsurance.suffix}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="info_heading">
+        <h4 class="text-dark">INSURANCE DETAILS</h4>
+      </div>
+
+      <div class="row info_content">
+
+        <div class="col-12 col-sm-6 col-md-4">
+          <label id="lblInsuranceType-InsuranceDetails"> Insurance Type </label>
+          <div class="info-field">
+            <span>{{insurancedetailsdata.vendorInsurance.insuranceType}}</span>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-4">
+          <label id="lblInsuranceCarrier-InsuranceDetails"> Insurance Carrier </label>
+          <div class="info-field">
+            <span>{{ (insurancedetailsdata.vendorInsurance.insuranceCarrier )}}</span>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-4">
+          <label id="lblCoveragePerClaim-InsuranceDetails"> Coverage Per Claim </label>
+          <div class="info-field">
+            <span>{{coveragePerClaim }}</span>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-4">
+          <label id="lblCoveragePerYear-InsuranceDetails"> Coverage Per Year </label>
+          <div class="info-field">
+            <span>{{coveragePerYear }}</span>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-4">
+          <label id="lblEffectiveDate-InsuranceDetails"> Effective Date </label>
+          <div class="info-field">
+            <span>{{insurancedetailsdata.vendorInsurance.effectiveDate | date:'MM/dd/yyyy'}}</span>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-4">
+          <label id="lblExpirationDate-InsuranceDetails"> Expiration Date </label>
+          <div class="info-field">
+            <span>{{insurancedetailsdata.vendorInsurance.expirationDate | date:'MM/dd/yyyy'}}</span>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-4">
+          <label id="lblLastDateVerified-InsuranceDetails"> Last Date Verified </label>
+          <div class="info-field">
+            <span>{{insurancedetailsdata.vendorInsurance.lastDateVerified | date:'MM/dd/yyyy'}}</span>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-4">
+          <label id="lblLastVerifiedResult-InsuranceDetails"> Last Verified Result </label>
+          <div class="info-field">
+            <span>{{(insurancedetailsdata.vendorInsurance.lastVerifiedResult)}}</span>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-4">
+          <label id="lblVerificationMethod-InsuranceDetails"> Verification Method </label>
+          <div class="info-field">
+            <span>{{(insurancedetailsdata.vendorInsurance.verificationMethod )}}</span>
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- History of uploaded file-->
+
+
+      <div *ngIf="historyFileData && historyFileData.length > 0">
+
+        <div class="info_heading">
+          <h4 class="text-dark">Current License File </h4>
+        </div>
+
+        <div class="row info_content">
+          <div class="col-md-1 text-center bg-content py-3">
+            <img src="../assets/img/icon_pdf_note.png" width="30" />
+          </div>
+
+          <div class="col-md-11">
+            <p class="mt-2 mb-0">{{ historyFileData[0].fileName.split(".",1)+".pdf" }}</p>
+            <button type="button" class="btn btn-link p-0 m-0" (click)="downloadFile(historyFileData[0].documentKey,historyFileData[0].fileName)">View / Download</button>
+          </div>
+        </div>
+
+      </div>
+
+      <div *ngIf="historyFileData && historyFileData.length > 1">
+
+        <div class="info_heading">
+          <h4 class="text-dark">License File History</h4>
+        </div>
+        <div class="row info_content">
+          <div class="col-md-1 text-center bg-content py-3">
+            <img src="../assets/img/icon_pdf_note.png" width="30" />
+          </div>
+          <div class="col-md-11" *ngFor="let item of historyFileData | slice : 1">
+            <p class="mt-2 mb-0">{{ item.fileName.split(".",1)+".pdf" }}</p>
+            <button type="button" class="btn btn-link p-0 m-0" (click)="downloadFile(item.documentKey,item.fileName)">View / Download</button>
+          </div>
+        </div>
+
+      </div>
+
+
+      <!--End-->
+      <!-- Insurance Histroy Details -->
+
+      <div *ngIf="historydata && historydata.historyLogs && historydata.historyLogs.length > 0">
+
+        <div class="info_heading">
+          <h4 class="text-dark">History Changes</h4>
+        </div>
+
+        <div class="col-12" style="overflow:auto;" id="vendorHistoryTable">
+          <mat-table #table [dataSource]="historytabledata" class="mt-3 mat-elevation-z8"  #historySort="matSort" matSort matSortDisableClear="true"  matSortActive="date" matSortDirection="desc" >
+            <ng-container matColumnDef="propertyName">
+              <mat-header-cell *matHeaderCellDef mat-sort-header (click)="getRecord()"> Field </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{addSpaces(element.propertyName)}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="oldValue">
+              <mat-header-cell *matHeaderCellDef mat-sort-header (click)="getRecord()"> New Value </mat-header-cell>
+              <mat-cell *matCellDef="let element" [innerHtml]="element.oldValue"> </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="newValue">
+              <mat-header-cell *matHeaderCellDef mat-sort-header (click)="getRecord()">Old Value</mat-header-cell>
+              <mat-cell *matCellDef="let element" [innerHtml]="element.newValue">  </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="changedBy">
+              <mat-header-cell *matHeaderCellDef mat-sort-header (click)="getRecord()"> Changed By </mat-header-cell>
+              <mat-cell *matCellDef="let element"> USER </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="date">
+              <mat-header-cell *matHeaderCellDef mat-sort-header (click)="getRecord()"> Date </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.timestamp| date:'MM/dd/yyyy HH:mm:ss'}} </mat-cell>
+            </ng-container>
+            <mat-header-row style="font-size-adjust:inherit" *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+          <div class="col-12 text-center" *ngIf="historydata && historydata.historyLogs && historydata.historyLogs.length > 5">
+            <a class="btn btn-default normal mx-auto my-4" (click)="showmore('more')" [hidden]="!isShowMore">Show more</a>
+            <a class="btn btn-default normal mx-auto my-4" (click)="showmore('less')" [hidden]="isShowMore">Show less</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>

@@ -1,0 +1,188 @@
+<div class="container info_container" *ngIf="OrderInfo != undefined && OrderInfo != null && OrderInfo != ''">
+    <div class="row info_heading ">
+        <h4 class="text-dark">VENDOR</h4>
+    </div>
+    <div class="row info_content pt-2 pb-2">
+        <div class="col-md-4 pt-1 col-sm-12 no-padding">
+            <label class="col-12">
+                Vendor ID
+            </label>
+            <div class="col-12 py-1 info-field">
+                <span *ngIf="OrderInfo.vendorId!=null">{{OrderInfo.vendorId}}</span>
+                <span class="no-content-d" *ngIf="OrderInfo.vendorId==null">-</span>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-sm-12 no-padding" *ngIf="VendorDetails!=undefined">
+            <label class="col-12">
+                First Name
+            </label>
+            <div class="col-12 py-1 info-field">
+                <span *ngIf="VendorDetails.vendorName.firstName!=null">{{VendorDetails.vendorName.firstName}}</span>
+                <span class="no-content-d" *ngIf="VendorDetails.vendorName.firstName==null"> -</span>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-12 no-padding" *ngIf="VendorDetails!=undefined">
+            <label class="col-12">
+                Last Name
+            </label>
+            <div class="col-12 py-1 info-field">
+                <span *ngIf="VendorDetails.vendorName!=null">{{VendorDetails.vendorName.lastName}}</span>
+                <span class="no-content-d" *ngIf="VendorDetails.vendorName.lastName==null">-</span>
+            </div>
+        </div>
+    </div>
+    <div class="row info_content pt-2 pb-2" *ngIf="VendorDetails!=undefined">
+        <div class="col-md-4 pt-1 col-sm-12 no-padding">
+            <label class="col-12">
+                Address
+            </label>
+            <div class="col-12 py-1 info-field">
+                <span *ngIf="VendorDetails.vendorAddress.length!=0">{{VendorDetails.vendorAddress.streetAddress}}, {{VendorDetails.vendorAddress.streetAddress}}, {{VendorDetails.vendorAddress.city}},
+                    {{VendorDetails.vendorAddress.state}}- {{VendorDetails.vendorAddress.zipcode}}</span>
+                <span class="no-content-d" *ngIf="VendorDetails.vendorAddress.length==0">-</span>
+            </div>
+        </div>
+        <div class="col-md-4 pt-1 col-sm-12 no-padding">
+            <label class="col-12">
+                Phone
+            </label>
+            <div class="col-12 py-1 info-field">
+                <span *ngIf="VendorDetails.vendorPhone.length!=0">{{VendorDetails.vendorPhone}}</span>
+                <span class="no-content-d" *ngIf="VendorDetails.vendorPhone.length==0">-</span>
+            </div>
+        </div>
+        <div class="col-md-4 pt-1 col-sm-12 no-padding">
+            <label class="col-12">
+                Email
+            </label>
+            <div class="col-12 py-1 info-field">
+                <span *ngIf="VendorDetails.vendorEmail.length!=0">
+                    {{VendorDetails.vendorEmail[0].email}}
+                </span>
+                <span class="no-content-d" *ngIf="VendorDetails.vendorEmail.length==0">-</span>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="row info_heading">
+        <h4 class="text-dark"> PROPERTY</h4>
+    </div>
+    <div class="row info_content pt-2 pb-2" *ngIf="OrderInfo.property!=null">
+        <div class="col-md-4 pt-1 col-sm-12 no-padding">
+            <label class="col-12">
+                Type
+            </label>
+            <div class="col-12 py-1 info-field" *ngIf="OrderInfo.property.type!=null">
+                <span>{{OrderInfo.property.type}}</span>
+                <span class="no-content-d" *ngIf="OrderInfo.property.type==null">-</span>
+            </div>
+        </div>
+        <div class="col-md-8 pt-1 col-sm-12 no-padding">
+            <label class="col-12">
+                Address
+            </label>
+            <div class="col-12 py-1 info-field" *ngIf="OrderInfo.property.address!=null">
+                <span> {{OrderInfo.property.address.street1 }}, {{OrderInfo.property.address.city }}, {{OrderInfo.property.address.state}}
+                </span>
+                <span class="no-content-d" *ngIf="OrderInfo.property.address==null">-</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row info_heading">
+        <h4 class="text-dark">DUE DATES AND FEES</h4>
+    </div>
+    <div class="row info_content pt-2 pb-2">
+        <div class="col-md-4 pt-1 col-sm-12 no-padding">
+            <label class="col-12">
+                Client Due Date
+            </label>
+            <div class="col-12 py-1 info-field" *ngIf="OrderInfo.clientDueDate!=null">
+                <span>
+                    <p class="no-margin mt-2">{{OrderInfo.clientDueDate | date:'MM/dd/yyyy'}}</p>
+
+                </span>
+                <span class="no-content-d" *ngIf="OrderInfo.clientDueDate==null">-</span>
+            </div>
+        </div>
+
+        <div class="col-md-4 pt-1 col-sm-12 no-padding">
+            <label class="col-12">
+                Client Fee
+            </label>
+            <div class="col-12 py-1 info-field" *ngIf="OrderInfo.clientFee!=null">
+                <span>
+                    <p class="no-margin mt-2">{{OrderInfo.clientFee | currency}}</p>
+                </span>
+                <span class="no-content-d" *ngIf="OrderInfo.clientFee==null">-</span>
+            </div>
+        </div>
+    </div>
+    <div class="row info_content pt-2 pb-2">
+        <div class="col-md-4 pt-1 col-sm-12 no-padding">
+            <label class="col-12">
+                Vendor Due Date
+            </label>
+            <div class="col-12 py-1 info-field" *ngIf="OrderInfo.vendorDueDate!=null">
+                <span>
+                    <p class="no-margin mt-2">{{OrderInfo.vendorDueDate | date:'MM/dd/yyyy'}}</p>
+                </span>
+                <span class="no-content-d" *ngIf="OrderInfo.vendorDueDate==null">-</span>
+            </div>
+        </div>
+        <div class="col-md-4 pt-1 col-sm-12 no-padding">
+            <label class="col-12">
+                Vendor Fee
+            </label>
+            <div class="col-12 py-1 info-field" *ngIf="OrderInfo.vendorFee!=null">
+                <span>
+                    <p class="no-margin mt-2">{{OrderInfo.vendorFee | currency}}</p>
+                </span>
+                <span class="no-content-d" *ngIf="OrderInfo.vendorFee==null">-</span>
+            </div>
+        </div>
+    </div>
+    <div class="row info_heading ">
+        <h4 class="text-dark">RESOURCES</h4>
+    </div>
+
+    <div class="row info_content pt-2 pb-2">
+        <table class="table table-hover" *ngIf="OrderInfo.resources!=null && OrderInfo.resources.length>0">
+            <thead>
+                <tr>
+                    <th> Name </th>
+                    <th> Role </th>
+                    <th> </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let orderinfo of OrderInfo.resources">
+                    <td> {{orderinfo.resourceName}} </td>
+                    <td> {{orderinfo.role}} </td>
+                    <td>
+                        <mat-icon class="text-primary">edit</mat-icon>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row info_heading">
+        <h4 class="text-dark">WORK ORDER FORM</h4>
+    </div>
+
+    <div class="row info_content pt-2 pb-2" *ngIf="OrderInfo.form!=null">
+        <div class="col-12 py-1">
+            <a [href]="OrderInfo.form.formUrl" target="_blank">OPEN FORM</a>
+        </div>
+    </div>
+    <div class="row info_heading">
+        <h4 class="text-dark">ENGAGEMENT LETTER</h4>
+    </div>
+    <div class="row info_content pt-2 pb-2">
+        <div class="col-12 py-1">
+            HTML and PDF links for the engagement letter are displayed here (not implemented yet).
+        </div>
+    </div>

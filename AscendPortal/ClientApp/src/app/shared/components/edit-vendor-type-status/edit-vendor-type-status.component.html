@@ -1,0 +1,64 @@
+<div class="edit-vendor-types-form">
+  <form [formGroup]="editVendorTypeAndStatus">
+    <div class="editVendorStatus-dialogbox">
+      <div mat-dialog-content class="text-center">
+        <h4 style="text-align: left; margin-bottom:35px;">{{title}}</h4>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3 col-md-3 col-xl-3">
+            <mat-form-field>
+              <mat-select placeholder="Vendor Type"
+                          formControlName="vendorType" [(ngModel)]="selectedVendorType" required (change)="changeVendorStatusList($event)" disableRipple>
+                <mat-option *ngFor="let vendorType of vendorTypes" [value]="vendorType.value">
+                  {{ vendorType.viewValue }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="editVendorTypeAndStatus.controls['vendorType'].invalid">
+                Vendor Type is Required.
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-3 col-md-3 col-xl-3">
+            <mat-form-field>
+              <mat-select placeholder="Vendor Status"
+                          formControlName="vendorStatus" [(ngModel)]="selectedStatus" (change)="changeVendorStatusDetailsList($event)" required disableRipple>
+                <mat-option *ngFor="let vendorStatus of vendorStatusTypes" [value]="vendorStatus.value">
+                  {{ vendorStatus.viewValue }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="editVendorTypeAndStatus.controls['vendorStatus'].touched">
+
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-lg-6 col-md-6 col-xl-6">
+            <mat-form-field>
+              <mat-select placeholder="Vendor Status Detail"
+                          formControlName="vendorStatusDetail" [(ngModel)]="selectedStatusDetails" required disableRipple>
+                <mat-option *ngFor="let vendorStatusDetail of vendorStatusTypesDetails" [value]="vendorStatusDetail.value">
+                  {{ vendorStatusDetail.viewValue }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="editVendorTypeAndStatus.controls['vendorStatusDetail'].touched">
+
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+        </div>
+      </div>
+
+
+
+      <div mat-cards-actions align="end" class="mat-dialog-actions">
+        <button class="btn btn-default normal" (click)="close()"> Cancel </button>
+        <button [disabled]="editVendorTypeAndStatus.invalid" class="btn btn-primary normal" (click)="saveTypeAndStatus()" cdkFocusInitial>{{btnText}}</button>
+      </div>
+
+
+
+    </div>
+  </form>
+</div>

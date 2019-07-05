@@ -1,0 +1,282 @@
+<h5 mat-dialog-subtitle>Please select the reason for declining this offer?</h5>
+<p mat-dialog-subtitle [ngClass]="validationMessageDisplay?'font-italic text-danger':'font-italic'">Select at least one reason</p>
+<h6 class="text-danger" *ngIf="validationErrorFlag"> {{validationErrorMessage}}</h6>
+<div mat-dialog-content class="decline-dialog-content p-4" hasBackdrop="true">
+  <div id="feeSection">
+    <div class="row mt-3">
+      <div class="col-sm-6" id="feeTitle"> Fee </div>
+      <div class="col-sm-6">
+        <mat-slide-toggle id="feeToggleBtn"
+                          class="example-margin float-xl-right"
+                          (change)="checkToggleValidation(declineDialog)"
+                          [checked]="declineDialog.fee"
+                          [(ngModel)]="declineDialog.fee">
+          <span *ngIf="declineDialog.fee;then yesFlag else noFlag"></span>
+          <ng-template #noFlag>
+            No
+          </ng-template>
+          <ng-template #yesFlag>Yes</ng-template>
+        </mat-slide-toggle>
+      </div>
+    </div>
+    <div class="row text-muted" *ngIf="declineDialog.fee">
+      <div class="col-sm-12" id="feeQuestion">
+        Do you want to propose conditions?
+      </div>
+      <div class="col-sm-12">
+        <mat-radio-group [(ngModel)]="feeOptionValues">
+          <mat-radio-button class="mt-2" id="feeRadioOption1" value="optionYes">Yes</mat-radio-button>
+          <mat-radio-button class="mt-2 ml-5" id="feeRadioOption2" value="optionNo">No</mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+    <div class="row" *ngIf="feeOptionValues === 'optionYes' && declineDialog.fee">
+      <div class="col-sm-6">
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Enter New Fee *" appTwoDigitDecimaNumber type="text" [formControl]="feeFormControl" [(ngModel)]="declineOrderForm.fee"
+                   [errorStateMatcher]="matcher">
+            <span matPrefix>$&nbsp;</span>
+          </mat-form-field>
+      </div>
+      <div class="col-sm-6">
+        <mat-form-field>
+          <input matInput placeholder="Enter Message" id="feeMessage" [(ngModel)]="declineOrderForm.feeMessage">
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div id="tatSection">
+    <div class="row mt-5">
+      <div class="col-sm-6" id="tatTitle">TAT</div>
+      <div class="col-sm-6">
+        <mat-slide-toggle id="tatToggleBtn"
+                          class="example-margin float-xl-right"
+                          (change)="checkToggleValidation(declineDialog)"
+                          [checked]="declineDialog.tat"
+                          [(ngModel)]="declineDialog.tat">
+          <span *ngIf="declineDialog.tat;then yesFlag else noFlag"></span>
+          <ng-template #noFlag>
+            No
+          </ng-template>
+          <ng-template #yesFlag>Yes</ng-template>
+        </mat-slide-toggle>
+      </div>
+    </div>
+    <div class="row text-muted" *ngIf="declineDialog.tat">
+      <div class="col-sm-12" id="tatQuestion">
+        Do you want to propose conditions?
+      </div>
+      <div class="col-sm-12">
+        <mat-radio-group [(ngModel)]="tatOptionValues">
+          <mat-radio-button class="mt-2" id="tatRadioOption1" value="optionYes">Yes</mat-radio-button>
+          <mat-radio-button class="mt-2 ml-5" id="tatRadioOption2" value="optionNo">No</mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+    <div class="row" *ngIf="tatOptionValues === 'optionYes' && declineDialog.tat">
+      <div class="col-sm-6">
+        <mat-form-field class="example-full-width">
+          <input matInput [matDatepicker]="picker"
+                 placeholder="New TAT (days) *"
+                 [formControl]="tatFormControl"
+                 [(ngModel)]="declineOrderForm.tat">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div id="complexitySection">
+    <div class="row mt-5">
+      <div class="col-sm-6" id="complexityTitle">Complexity of assignment</div>
+      <div class="col-sm-6">
+        <mat-slide-toggle id="complexityToggleBtn"
+                          class="example-margin float-xl-right"
+                          (change)="checkToggleValidation(declineDialog)"
+                          [checked]="declineDialog.complexity"
+                          [(ngModel)]="declineDialog.complexity">
+          <span *ngIf="declineDialog.complexity;then yesFlag else noFlag"></span>
+          <ng-template #noFlag>
+            No
+          </ng-template>
+          <ng-template #yesFlag>Yes</ng-template>
+        </mat-slide-toggle>
+      </div>
+    </div>
+    <div class="row text-muted" *ngIf="declineDialog.complexity">
+      <div class="col-sm-12" id="complexityQuestion">
+        Fee can be negotiated, Would you reconsider?
+      </div>
+      <div class="col-sm-12">
+        <mat-radio-group [(ngModel)]="complexityOptionValues">
+          <mat-radio-button class="mt-2" id="complexityRadioOption1" value="optionYes">Yes</mat-radio-button>
+          <mat-radio-button class="mt-2 ml-5" id="complexityRadioOption2" value="optionNo">No</mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+    <div class="row" *ngIf="complexityOptionValues === 'optionYes' && declineDialog.complexity">
+      <div class="col-sm-6">
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Enter New Fee *" appTwoDigitDecimaNumber type="text" [formControl]="feeFormControl" [(ngModel)]="declineOrderForm.fee"
+                 [errorStateMatcher]="matcher">
+          <span matPrefix>$&nbsp;</span>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div id="outOfOffice">
+    <div class="row mt-5">
+      <div class="col-sm-6" id="outOfOfcTitle">Out of office</div>
+      <div class="col-sm-6">
+        <mat-slide-toggle id="outOfOfcToggleBtn"
+                          class="example-margin float-xl-right"
+                          (change)="checkToggleValidation(declineDialog)"
+                          [checked]="declineDialog.outOfOffice"
+                          [(ngModel)]="declineDialog.outOfOffice">
+          <span *ngIf="declineDialog.outOfOffice;then yesFlag else noFlag"></span>
+          <ng-template #noFlag>
+            No
+          </ng-template>
+          <ng-template #yesFlag>Yes</ng-template>
+        </mat-slide-toggle>
+      </div>
+    </div>
+    <div class="row text-muted" *ngIf="declineDialog.outOfOffice">
+      <div class="col-sm-12" id="outOfOfcQuestion">
+        If TAT can be extended, Would you reconsider?
+      </div>
+      <div class="col-sm-12">
+        <mat-radio-group [(ngModel)]="outOfOfficeOptionValues">
+          <mat-radio-button class="mt-2" id="outOfOfcRadioOption1" value="optionYes">Yes</mat-radio-button>
+          <mat-radio-button class="mt-2 ml-5" id="outOfOfcRadioOption2" value="optionNo">No</mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+    <div class="row" *ngIf="outOfOfficeOptionValues === 'optionYes' && declineDialog.outOfOffice">
+      <div class="col-sm-6">
+        <mat-form-field class="example-full-width">
+          <input matInput [matDatepicker]="picker"
+                 placeholder="New TAT (days) *"
+                 [formControl]="tatFormControl"
+                 [(ngModel)]="declineOrderForm.tat">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row" *ngIf="outOfOfficeOptionValues === 'optionNo' && declineDialog.outOfOffice">
+      <div class="col-sm-12">
+        <span class="text-primary font-italic" id="outOfOfcMessage">
+          Please update your availability on your profile to ensure we do not continue to offer you work while you are not available
+        </span>
+      </div>
+    </div>
+  </div>
+  <div id="coverageAreaSection">
+    <div class="row mt-5">
+      <div class="col-sm-6" id="coverageTitle">Out side of coverage area</div>
+      <div class="col-sm-6">
+        <mat-slide-toggle id="coverageToggleBtn"
+                          class="example-margin float-xl-right"
+                          (change)="checkToggleValidation(declineDialog)"
+                          [checked]="declineDialog.coverageArea"
+                          [(ngModel)]="declineDialog.coverageArea">
+          <span *ngIf="declineDialog.coverageArea;then yesFlag else noFlag"></span>
+          <ng-template #noFlag>
+            No
+          </ng-template>
+          <ng-template #yesFlag>Yes</ng-template>
+        </mat-slide-toggle>
+      </div>
+    </div>
+    <div class="row text-muted" *ngIf="declineDialog.coverageArea">
+      <div class="col-sm-12" id="coverageQuestion">
+        If fee can be negotiated, would you reconsider?
+      </div>
+      <div class="col-sm-12">
+        <mat-radio-group [(ngModel)]="coverageAreaOptionValues">
+          <mat-radio-button class="mt-2" id="coverageRadioOption1" value="optionYes">Yes</mat-radio-button>
+          <mat-radio-button class="mt-2 ml-5" id="coverageRadioOption2" value="optionNo">No</mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+    <div class="row" *ngIf="coverageAreaOptionValues === 'optionYes' && declineDialog.coverageArea">
+      <div class="col-sm-6">
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Enter New Fee *" appTwoDigitDecimaNumber type="text" [formControl]="feeFormControl" [(ngModel)]="declineOrderForm.fee"
+                 [errorStateMatcher]="matcher">
+          <span matPrefix>$&nbsp;</span>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row" *ngIf="coverageAreaOptionValues === 'optionNo' && declineDialog.coverageArea">
+      <div class="col-sm-12">
+        <span class="text-primary font-italic" id="coverageMessage">
+          Please note, you provided this Work Offer because it was within you defined coverage area.  If you would like to change your coverage area, please make sure to update appropriately so that we don't continue to offer you work within this area.
+        </span>
+      </div>
+    </div>
+  </div>
+  <div id="capacitySection">
+    <div class="row mt-5">
+      <div class="col-sm-6" id="capacityTitle">Over capacity</div>
+      <div class="col-sm-6">
+        <mat-slide-toggle id="capacityToggleBtn"
+                          class="example-margin float-xl-right"
+                          (change)="checkToggleValidation(declineDialog)"
+                          [checked]="declineDialog.capacity"
+                          [(ngModel)]="declineDialog.capacity">
+          <span *ngIf="declineDialog.capacity;then yesFlag else noFlag"></span>
+          <ng-template #noFlag>
+            No
+          </ng-template>
+          <ng-template #yesFlag>Yes</ng-template>
+        </mat-slide-toggle>
+      </div>
+    </div>
+    <div class="row" *ngIf="declineDialog.capacity">
+      <div class="col-sm-12">
+        <span class="text-primary font-italic" id="capacityMessage">
+          Please take a moment to update your Availability to reflect your unavailability so that we do not continue to offer you work while you are busy.
+        </span>
+      </div>
+    </div>
+  </div>
+  <div id="commentSection">
+    <div class="row mt-5">
+      <div class="col-sm-6" id="commentTitle">Other</div>
+      <div class="col-sm-6">
+        <mat-slide-toggle id="commentToggleBtn"
+                          class="example-margin float-xl-right"
+                          (change)="checkToggleValidation(declineDialog)"
+                          [checked]="declineDialog.comment"
+                          [(ngModel)]="declineDialog.comment">
+          <span *ngIf="declineDialog.comment;then yesFlag else noFlag"></span>
+          <ng-template #noFlag>
+            No
+          </ng-template>
+          <ng-template #yesFlag>Yes</ng-template>
+        </mat-slide-toggle>
+      </div>
+    </div>
+    <div class="row" *ngIf="declineDialog.comment">
+      <div class="col-sm-12">
+        <mat-form-field class="example-full-width w-75" hintLabel="Max 160 characters">
+          <textarea #input id="commentValue" maxlength="160" matInput placeholder="Leave a comment" [(ngModel)]="declineOrderForm.userComment"></textarea>
+          <mat-hint align="end">{{input.value?.length || 0}}/160</mat-hint>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div mat-dialog-actions class="float-md-right">
+  <button mat-button id="cancelBtn" class="cancel-button" (click)="onCancelClick('cancel')">Cancel</button>
+  <button mat-raised-button id="submitBtn"
+          [disabled]="(((tatOptionValues === 'optionYes' && declineDialog.tat) || (outOfOfficeOptionValues === 'optionYes' && declineDialog.outOfOffice)) && tatFormControl.invalid) ||
+                      (((feeOptionValues === 'optionYes' && declineDialog.fee) || (coverageAreaOptionValues === 'optionYes' && declineDialog.coverageArea) || (complexityOptionValues === 'optionYes' && declineDialog.complexity)) && feeFormControl.invalid || validationMessageDisplay)"
+          class="action-button"
+          (click)="declineFromSubmit(declineDialog, declineOrderForm)">
+  submit</button>
+</div>
+

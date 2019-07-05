@@ -1,0 +1,96 @@
+
+
+<form [formGroup]="attestationForm" class="info_container">
+
+<div class="row border-bottom">
+  <div class="col-md-8">
+    <h4 mat-dialog-subtitle class="mb-4">
+      Attestation Details
+    </h4>
+  </div>
+  </div>
+
+
+
+  <div *ngIf="isAddAttestationDetails">
+  <div class="row info_content">
+          <form [formGroup]="appraisalMethodologies" class="w-100">
+            <p class="cmn-head"> Please select all methodologies you are competent to complete </p>
+            <div *ngFor="let methodology of methodologies; let i = index" formArrayName="methodologies">
+              <mat-checkbox class="check-primary" [formControlName]="i"  (change)="checkOtherMethodologySelected()">
+                {{methodology}}
+              </mat-checkbox> 
+            </div>
+            <mat-form-field *ngIf="isOtherMethodologySelected" >
+                <textarea  (focusout)="enableConfirmButton()" formControlName="otherMethodology" matInput placeholder="Enter details"  required></textarea>
+              </mat-form-field>
+            
+          </form>
+      </div>
+
+      <div class="row info_content">
+            <form [formGroup]="appraisalProperties" class="w-100">
+              <p class="cmn-head">  Please select the types of properties you are competent to appraise </p>
+              <div *ngFor="let property of properties; let i = index" formArrayName="properties">
+                <mat-checkbox class="check-primary" [formControlName]="i" (change)="checkOtherPropertySelected()">
+                  {{property}}
+                </mat-checkbox>
+              </div>
+              <mat-form-field *ngIf="isOtherPropertySelected" >
+                  <textarea (focusout)="enableConfirmButton()" formControlName="otherProperty" matInput placeholder="Enter details" (focusout)="enableConfirm($event)" required></textarea>
+                </mat-form-field>              
+            </form>
+  
+        </div>
+
+        <div mat-cards-actions align="end" class="mat-dialog-actions">
+            <button type="button" class="btn btn-default normal" (click)="cancelAttestationDetails()"> Cancel </button>
+            <button type="button" [disabled]="isDisableConfirm"  
+            class="btn btn-primary normal" (click)="saveAttestationDetails()" cdkFocusInitial>Confirm</button>
+          </div>
+      
+        </div>
+
+
+<div *ngIf="isViewAttestationDetails" class="info_container">
+
+  <div class="row info_heading mt-4">
+    <h4 class="text-dark"> Methodologies</h4>
+  </div>
+    <div *ngFor="let viewMethodology of viewMethodologies">
+        <mat-icon class="pt-4 text-success"><i class="material-icons icon-success">check_circle_outline</i></mat-icon>
+        <label class="txt-top" *ngIf="viewMethodology.isOther">Other:</label>
+        <label class="txt-top">{{ viewMethodology.methodology }}</label>
+    </div>
+    
+    <!-- <mat-form-field *ngIf="isOtherMethodologySelected" >
+        <textarea disabled matInput >{{viewOtherMethodology}}</textarea>
+      </mat-form-field> -->
+
+
+
+
+      <div class="row info_heading mt-4">
+        <h4> Properties</h4>
+      </div>
+
+      <div *ngFor="let viewProperty of viewProperties">
+        <mat-icon class="pt-4 text-success"><i class="material-icons icon-success">check_circle_outline</i></mat-icon>
+        <label class="txt-top" *ngIf="viewProperty.isOther">Other:</label>
+        <label class="txt-top">{{ viewProperty.property }}</label>
+
+      </div>
+  </div>
+  <!-- <mat-form-field *ngIf="isOtherPropertySelected" >
+      <textarea disabled  matInput >{{viewOtherProperty}}</textarea>
+    </mat-form-field> -->
+  
+
+
+    <div mat-cards-actions align="end" class="mat-dialog-actions" *ngIf="isViewAttestationDetails">
+      <button type="button" class="btn btn-default normal" (click)="cancelAttestationDetails()"> Close </button>
+    </div>
+
+
+
+</form>

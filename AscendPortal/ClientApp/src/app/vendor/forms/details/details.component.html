@@ -1,0 +1,83 @@
+<div class="row no-margin vendor_details">
+  <div class="col-12 vendor_info">
+    
+      <h2 class="align-self-center mt-4 mb-0"  *ngIf="vendordata != null">
+        {{vendordata?.vendorCompany.companyName}}
+      </h2>
+        <p mat-line>
+          <span *ngFor="let serviceslist of servicetypes;let i = index">
+          {{serviceslist}} </span>
+          <!-- <span *ngIf="servicetypes.length!=i+1">, </span> -->
+        </p>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="col-12 vendor_summary">
+
+    <div class="row">
+      <div class="col-6 my-2">
+        <div class="details-label float-left">
+          Name  <span>:</span>
+        </div>
+
+        <div class="details-info">
+          {{vendorname}}
+        </div>
+      </div>
+
+      <div class="col-6">
+        <div class="details-label float-left">
+          Aggregate Rating
+          <span>:</span>
+        </div>
+        <div class="details-info">
+          <mat-star-rating [rating]="rating" [starCount]="starCount" [color]="starColor" (ratingUpdated)="onRatingChanged($event)"></mat-star-rating> &nbsp;&nbsp;{{rating }} / {{starCount}}
+        </div>
+      </div>
+
+      <div class="col-6 my-2">
+        <div class="details-label float-left">
+          Vendor ID
+          <span>:</span>
+        </div>
+        <div class="details-info">
+          {{vendordata.vendorId}}
+        </div>
+      </div>
+
+
+
+
+      <div class="col-6">
+        <div class="details-label float-left">
+          Sourced Method
+          <span>:</span>
+        </div>
+        <div class="details-info">
+          Text
+        </div>
+      </div>
+
+      <div class="col-12 my-2">
+        <div class="details-label float-left">
+          Vendor Type
+          <span>:</span>
+        </div>
+        <div class="details-info">
+          {{vendordata?.vendorTypeStatus.vendorType}}
+          <mat-chip [ngClass]="chipColor(vendordata?.vendorTypeStatus.vendorStatus)" class="normal ml-2">
+            {{vendordata?.vendorTypeStatus.vendorStatus}}
+          </mat-chip>
+          <mat-chip class="normal ml-2 btn-outline" *ngIf="vendordata?.vendorTypeStatus.vendorStatusDetails">
+            {{vendordata?.vendorTypeStatus.vendorStatusDetails}}
+          </mat-chip>
+          <button mat-button (click)="editVendorTypeAndStatus()" class="icon-link ml-2">
+            <mat-icon class="text-primary">edit</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    </div>
+    </div>

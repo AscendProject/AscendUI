@@ -1,0 +1,75 @@
+<router-outlet></router-outlet>
+
+<!-- <div class="row no-margin no-padding hgt100">
+    <div class="col-4 no-padding hgt100">
+        <div class="row no-margin no-padding selectionpane-filter">
+            <div class="col-12 no-padding d-flex align-items-center">
+                <mat-select [(ngModel)]="selectedValue" (change)="selecteddropdown()" class="text-primary col-12 mat-no-underline">
+                    <mat-option value="Service">All Service Orders</mat-option>
+                    <mat-option value="Work">All Work Orders</mat-option>
+                    <mat-option value="Orders">My Orders (show empty)</mat-option>
+                    <mat-option value="Unassigned">Unassigned Work Orders</mat-option>
+                </mat-select>
+            </div>
+        </div>
+        <mat-divider></mat-divider>
+        <router-outlet name="selectionPane"></router-outlet>
+        <div class="row no-margin no-padding selectionpane-search">
+            <div class="col-10 d-flex align-items-center">
+                <input class="search_filed col-12 no-padding no-border" matInput placeholder="Search {{searchplaceholder}}" [(ngModel)]="searchid">
+            </div>
+            <div class="col-2 text-right no-padding">
+                <button class="search_btn" mat-button (click)="SearchData(searchid)">
+                    <mat-icon class="text-primary">search</mat-icon>
+                </button>
+            </div>
+        </div>
+        <mat-divider></mat-divider>
+
+        <div class="col-12 no-padding no-padding orders_list">
+            
+            <div class="col-12 no-padding" *ngIf="selectedValue == 'Service'">
+                <serviceorderslist (details)="DetailsLoad($event)" [serviceorderslist]="ServiceOrdersList"></serviceorderslist>
+            </div>
+            <div class="col-12 no-padding" *ngIf="selectedValue == 'Work'">
+                <workorderslist (details)="DetailsLoad($event)" [workorderslist]="WorkOrdersList"></workorderslist>
+            </div>
+            <div class="col-12" *ngIf="selectedValue == 'Orders'">
+                <h3>No Records Found</h3>
+            </div>
+            <div class="col-12" *ngIf="selectedValue == 'Unassigned'">
+                <h3>No Records Found</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-8 no-scroll no-padding shadow-cs interactionpane-bg">
+        <router-outlet name="interactionPane"></router-outlet>
+        <div class="col-12 no-padding">
+            <orderdetails [details]="detailsdata"></orderdetails>
+        </div>
+        <div class="col-12 no-padding order_tabs">
+            <nav mat-tab-nav-bar class="demo-tab-group" *ngIf="selectedValue == 'Service'">
+                <a mat-tab-link *ngFor="let routeLink of SOTabs" [routerLink]="routeLink.link" routerLinkActive #rla="routerLinkActive" [active]="rla.isActive">
+                    {{routeLink.label}}
+                </a>
+            </nav>
+            <nav mat-tab-nav-bar class="demo-tab-group" *ngIf="selectedValue == 'Work'">
+                <a mat-tab-link *ngFor="let routeLink of WOTabs" [routerLink]="routeLink.link" routerLinkActive #rla="routerLinkActive" [active]="rla.isActive">
+                    {{routeLink.label}}
+                </a>
+            </nav>
+            <div class="col-12 p-3 order_content">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+    <div class="col-8 no-scroll d-flex align-items-center no-padding shadow-cs interactionpane-bg" *ngIf="detailsdata === undefined">
+        <div class="row col-12 d-flex justify-content-center">
+            <div class="col-12 d-flex justify-content-center">
+                <img src="../assets/img/emptydata_arrow.png" style="height: 90px;" alt="Assurant logo" />
+            </div>
+            <div class="col-12 d-flex justify-content-center">Select Order View Details</div>
+        </div>
+
+    </div>
+</div> -->

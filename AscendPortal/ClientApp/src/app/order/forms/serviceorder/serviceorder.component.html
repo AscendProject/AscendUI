@@ -1,0 +1,224 @@
+<div *ngIf="SOinfo === undefined">
+    {{message}}
+</div>
+<div class="container info_container" *ngIf="SOinfo != undefined">
+    <div class="row info_content pt-2 pb-2" *ngIf="SOinfo.serviceOrderID != null">
+        <div class="col-md-4 pt-1 col-sm-12 no-padding">
+            <label class="col-12">
+                Service Order ID
+            </label>
+            <div class="col-12 py-1 info-field">
+                <span *ngIf="SOinfo.serviceOrderID !=null">
+                    <a [routerLink]="['/order/service-orders',SOinfo.serviceOrderID,'info']"> {{SOinfo.serviceOrderID}}</a>
+                </span>
+                <span class="no-content-d" *ngIf="SOinfo.serviceOrderID==null">-</span>
+            </div>
+        </div>
+    </div>
+    <div class="row info_heading ">
+        <h4 class="text-dark">PROPERTY</h4>
+    </div>
+    <div class="row info_content pt-2 pb-2" *ngIf="SOinfo.property != null">
+        <div class="col-md-4 pt-1 col-sm-12 no-padding">
+            <label class="col-12">
+                Type
+            </label>
+            <div class="col-12 py-1 info-field">
+                <span *ngIf="SOinfo.property.type !=null">{{SOinfo.property.type}}</span>
+                <span class="no-content-d" *ngIf="SOinfo.property.type==null">-</span>
+            </div>
+        </div>
+        <div class="col-md-8 pt-1 col-sm-12 no-padding">
+            <label class="col-12">
+                Address
+            </label>
+            <div class="col-12 py-1 info-field">
+                <span *ngIf="SOinfo.property.address != null"> {{SOinfo.property.address.street1 }}, {{SOinfo.property.address.city }}, {{SOinfo.property.address.state}}
+                </span>
+                <span class="no-content-d" *ngIf="SOinfo.property.address == null">-</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row info_heading ">
+        <h4 class="text-dark">DUE DATES & FEES</h4>
+    </div>
+    <div class="row info_content pt-2 pb-2">
+        <div class="col-md-4 pt-1 col-sm-12 no-padding">
+            <label class="col-12">
+                Client Due Date
+            </label>
+            <div class="col-12 py-1 info-field">
+                <span *ngIf="SOinfo.clientDueDate != null">{{SOinfo.clientDueDate | date:'MM/dd/yyyy'}}</span>
+                <span class="no-content-d" *ngIf="SOinfo.clientDueDate == null">-</span>
+            </div>
+        </div>
+        <div class="col-md-8 pt-1 col-sm-12 no-padding">
+            <label class="col-12">
+                Client Fee
+            </label>
+            <div class="col-12 py-1 info-field">
+                <span *ngIf="SOinfo.clientFee != null">{{SOinfo.clientFee | currency}}</span>
+                <span class="no-content-d" *ngIf="SOinfo.clientFee == null">-</span>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row info_heading">
+        <h4 class="text-dark">CLIENT</h4>
+    </div>
+    <div class="row info_content pt-2 pb-2" *ngIf="SOinfo.clientDetails != null">
+        <div class="col-md-4 pt-1 col-sm-12 no-padding">
+            <label class="col-12">
+                First Name
+            </label>
+            <div class="col-12 py-1 info-field">
+                <span *ngIf="SOinfo.clientDetails.first != null">{{SOinfo.clientDetails.first}}</span>
+                <span class="no-content-d" *ngIf="SOinfo.clientDetails.first == null">-</span>
+            </div>
+        </div>
+        <div class="col-md-8 pt-1 col-sm-12 no-padding">
+            <label class="col-12">
+                Last Name
+            </label>
+            <div class="col-12 py-1 info-field">
+                <span *ngIf="SOinfo.clientDetails.last != null">{{SOinfo.clientDetails.last}}</span>
+                <span class="no-content-d" *ngIf="SOinfo.clientDetails.last == null">-</span>
+            </div>
+        </div>
+        <div class="col-md-4 pt-1 col-sm-12 no-padding">
+            <label class="col-12">
+                Phone
+            </label>
+            <div class="col-12 py-1 info-field">
+                <span *ngIf="SOinfo.clientDetails.primaryPhone != null">{{SOinfo.clientDetails.primaryPhone}}</span>
+                <span class="no-content-d" *ngIf="SOinfo.clientDetails.primaryPhone == null">-</span>
+            </div>
+        </div>
+        <div class="col-md-4 pt-1 col-sm-12 no-padding">
+            <label class="col-12">
+                Email
+            </label>
+            <div class="col-12 py-1 info-field">
+                <span *ngIf="SOinfo.clientDetails.email != null">{{SOinfo.clientDetails.email}}</span>
+                <span class="no-content-d" *ngIf="SOinfo.clientDetails.email == null">-</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row info_heading">
+        <h4 class="text-dark">BORROWER</h4>
+    </div>
+    <div class="row info_content pt-2 pb-2" *ngIf="SOinfo.borrowerInfo != null || SOinfo.borrowerInfo !=undefined">
+        <div class="col-md-4 pt-1 col-sm-12 no-padding">
+            <label class="col-12">
+                First Name
+            </label>
+            <div class="col-12 py-1 info-field">
+                <span *ngIf="SOinfo.borrowerInfo.FirstName != null">{{SOinfo.borrowerInfo.FirstName}}</span>
+                <span class="no-content-d" *ngIf="SOinfo.borrowerInfo.FirstName == null">-</span>
+            </div>
+        </div>
+        <div class="col-md-8 pt-1 col-sm-12 no-padding">
+            <label class="col-12">
+                Last Name
+            </label>
+            <div class="col-12 py-1 info-field">
+                <span *ngIf="SOinfo.borrowerInfo.LastName != null">{{SOinfo.borrowerInfo.LastName}}</span>
+                <span class="no-content-d" *ngIf="SOinfo.borrowerInfo.LastName == null">-</span>
+            </div>
+        </div>
+        <div class="col-md-12 pt-1 col-sm-12 no-padding">
+            <label class="col-12">
+                Address
+            </label>
+            <div class="col-12 py-1 info-field">
+                <span *ngIf="SOinfo.borrowerInfo.Address != null">{{SOinfo.borrowerInfo.Address.street1 }}, {{SOinfo.borrowerInfo.Address.city }}, {{SOinfo.borrowerInfo.Address.state}}</span>
+                <span class="no-content-d" *ngIf="SOinfo.borrowerInfo.Address == null">-</span>
+            </div>
+        </div>
+    </div>
+    <div class="row info_heading">
+        <h4 class="text-dark">LOAN INFORMATION</h4>
+    </div>
+    <div class="row info_content pt-2 pb-2" *ngIf="SOinfo.loanDetails != null">
+        <div class="col-md-4 pt-1 col-sm-12 no-padding">
+            <label class="col-12">
+                Closing Date
+            </label>
+            <div class="col-12 py-1 info-field">
+                <span *ngIf="SOinfo.loanDetails.closingDate != null">{{SOinfo.loanDetails.closingDate}}</span>
+                <span class="no-content-d" *ngIf="SOinfo.loanDetails.closingDate == null">-</span>
+            </div>
+        </div>
+        <div class="col-md-8 pt-1 col-sm-12 no-padding">
+            <label class="col-12">
+                FHA Case Number
+            </label>
+            <div class="col-12 py-1 info-field">
+                <span *ngIf="SOinfo.loanDetails.fhaCaseNumber != null">{{SOinfo.loanDetails.fhaCaseNumber}}</span>
+                <span class="no-content-d" *ngIf="SOinfo.loanDetails.fhaCaseNumber == null">-</span>
+            </div>
+        </div>
+        <div class="col-md-4 pt-1 col-sm-12 no-padding">
+            <label class="col-12">
+                Loan Interest
+            </label>
+            <div class="col-12 py-1 info-field">
+                <span *ngIf="SOinfo.loanDetails.loanInterest != null">{{SOinfo.loanDetails.loanInterest}}</span>
+                <span class="no-content-d" *ngIf="SOinfo.loanDetails.loanInterest == null">-</span>
+            </div>
+        </div>
+        <div class="col-md-8 pt-1 col-sm-12 no-padding">
+            <label class="col-12">
+                Loan Number
+            </label>
+            <div class="col-12 py-1 info-field">
+                <span *ngIf="SOinfo.loanDetails.loanNumber != null">{{SOinfo.loanDetails.loanNumber}}</span>
+                <span class="no-content-d" *ngIf="SOinfo.loanDetails.loanNumber == null">-</span>
+            </div>
+        </div>
+        <div class="col-md-4 pt-1 col-sm-12 no-padding">
+            <label class="col-12">
+                Loan Purpose
+            </label>
+            <div class="col-12 py-1 info-field">
+                <span *ngIf="SOinfo.loanDetails.loanPurpose != null">{{SOinfo.loanDetails.loanPurpose}}</span>
+                <span class="no-content-d" *ngIf="SOinfo.loanDetails.loanPurpose == null">-</span>
+            </div>
+        </div>
+        <div class="col-md-8 pt-1 col-sm-12 no-padding">
+            <label class="col-12">
+                Loan Type
+            </label>
+            <div class="col-12 py-1 info-field">
+                <span *ngIf="SOinfo.loanDetails.loanType != null">{{SOinfo.loanDetails.loanType}}</span>
+                <span class="no-content-d" *ngIf="SOinfo.loanDetails.loanType == null">-</span>
+            </div>
+        </div>
+    </div>
+    <div class="row info_heading">
+        <h4 class="text-dark">RESOURCES</h4>
+    </div>
+    <div class="row info_content pt-2 pb-2">
+        <table class="table table-hover" *ngIf="SOinfo.resources !=null && SOinfo.resources.length>0">
+            <thead>
+                <tr>
+                    <th> Name </th>
+                    <th> Role </th>
+                    <th> </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let rs of SOinfo.resources">
+                    <td> {{rs.resourceName}} </td>
+                    <td> {{rs.role}} </td>
+                    <td>
+                        <mat-icon class="text-primary">edit</mat-icon>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

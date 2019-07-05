@@ -1,0 +1,56 @@
+
+
+       <div class="col-12" *ngIf="getVendorsdata ===undefined || getVendorsdata.length===0 ">
+          {{message}}
+      </div>
+
+<mat-list role="list" class="panel_list">
+  <mat-list-item class="row no-gutters no-padding" *ngFor="let vendor of getVendorsdata; let i = index" (click)="setClickedRow(i,vendor)"
+    [ngClass]="i == selectedRow ? 'active':''">
+
+    <div class="col-12 no-padding">
+      <div class="row no-margin">
+        <div class="col-9 pl-0 pr-2">
+          <h4 mat-line>{{vendor.Name}}</h4>
+          <!--<div class="col-12 mt-1 no-padding">
+            <p mat-line>
+              <span class="type text-primary">Appriser</span>
+              <span><em> | City name</em></span>
+          </div>-->
+          <div class="col-12 mt-1 no-padding">
+            <p mat-line>
+              <span class="type text-primary" *ngFor="let serviceslist of vendor.servicetypes;let i = index">
+                {{serviceslist}}
+                <!--<span *ngIf="servicetypes.length!=i+1">, </span>-->
+              </span>
+
+              <span *ngIf="vendor.state !=null">
+                <em> | {{vendor.state}}</em>
+              </span>
+            </p>
+
+          </div>
+        </div>
+        <!-- <div class="col-3 text-right no-padding">
+          <mat-chip-list class="float-right all_status">
+            <mat-chip selected="true" class="badge-success" *ngIf="vendor.Status=='Active'">
+              {{vendor.Status}}
+            </mat-chip>
+            <mat-chip selected="true" ngClass="badge-warning" *ngIf="vendor.Status=='New'">
+              {{vendor.Status}}
+            </mat-chip>
+            <mat-chip selected="true" color="accent" *ngIf="vendor.Status=='Deleted'">
+              {{vendor.Status}}
+            </mat-chip>
+            <mat-chip *ngIf="vendor.Status=='Inactive'">
+              {{vendor.Status}}
+            </mat-chip>
+
+          </mat-chip-list>
+        </div> -->
+      </div>
+    </div>
+    <mat-divider *ngIf="getVendorsdata.length!=i+1"></mat-divider>
+  </mat-list-item>
+</mat-list>
+

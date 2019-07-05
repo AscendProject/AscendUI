@@ -1,0 +1,79 @@
+<div class="row no-margin no-padding hgt100">
+    <div class="col-4 no-padding hgt100">
+
+        <div class="row no-margin no-padding selectionpane-filter">
+            <div class="col-12 no-padding d-flex align-items-center">
+                <mat-select [(ngModel)]="selectedValue" (change)="selecteddropdown()" class="text-primary col-12 mat-no-underline">
+                    <mat-option value="Service">All Service Orders</mat-option>
+                    <mat-option value="Work">All Work Orders</mat-option>
+                    <mat-option value="Orders">My Orders (show empty)</mat-option>
+                    <mat-option value="Unassigned">Unassigned Work Orders</mat-option>
+                </mat-select>
+            </div>
+        </div>
+
+        <mat-divider></mat-divider>        
+        <div class="row no-margin no-padding selectionpane-search">
+            <div class="col-10 d-flex align-items-center">
+                <input class="search_filed col-12 no-padding no-border" matInput placeholder="Search Work Orders" [(ngModel)]="searchid">
+            </div>
+            <div class="col-2 text-right no-padding">
+                <button class="search_btn" mat-button (click)="searchData(searchid)">
+                    <mat-icon class="text-primary">search</mat-icon>
+                </button>
+            </div>
+        </div>
+        <mat-divider></mat-divider>
+
+        <div class="col-12 no-padding orders_list">
+
+            <mat-list role="list" class="panel_list" *ngIf="WOrdersList">
+                <mat-list-item class="row no-gutters no-padding" (click)="selectedItem(i,order)" [ngClass]="i == selectedRow ? 'active':''"
+                    *ngFor="let order of WOrdersList.records; let i = index">
+                    <div class="col-12 no-padding">
+                        <div class="row no-margin">
+                            <div class="col-9 pl-0 pr-2">
+                                <h4 mat-line>{{order.workOrderId}}</h4>
+                            </div>
+                            <div class="col-3 text-right no-padding">
+                                <mat-chip-list class="float-right all_status">
+                                    <mat-chip selected="true" [ngClass]="chipColor(order.workOrderStatus)">
+                                        {{order.workOrderStatus | statusTranslate }}
+                                    </mat-chip>
+                                </mat-chip-list>
+                            </div>
+                            <div class="col-12 mt-1 no-padding">
+
+
+                                <p mat-line>
+                                    <span *ngIf="order.workOrderType!=null" class="type text-primary">{{order.workOrderType}}</span>
+                                    <span *ngIf="order.property!=null">
+                                        <em *ngIf="order.property.address!=null"> | {{order.property.address.street1 }} , {{order.property.address.city }} , {{order.property.address.state}}
+                                        </em>
+                                    </span>
+                                </p>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <mat-divider *ngIf="WOrdersList.records.length!=i+1"></mat-divider>
+                </mat-list-item>
+            </mat-list>
+
+        </div>
+    </div>
+    <div class="col-8 no-scroll order_tabs hgt100 no-padding shadow-cs interactionpane-bg" *ngIf="selectedOrder!==undefined" >
+        <router-outlet></router-outlet>        
+    </div>
+    <div class="col-8 no-scroll d-flex align-items-center no-padding shadow-cs interactionpane-bg" *ngIf="selectedOrder===undefined">
+        <div class="row col-12 d-flex justify-content-center">
+            <div class="col-12 d-flex justify-content-center">
+                <img src="../assets/img/emptydata_arrow.png" style="height: 90px;" alt="Assurant logo" />
+            </div>
+            <div class="col-12 d-flex justify-content-center">Select Order View Details</div>
+        </div>
+
+    </div>
+</div>

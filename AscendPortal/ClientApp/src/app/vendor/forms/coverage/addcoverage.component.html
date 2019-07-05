@@ -1,0 +1,193 @@
+
+<form *ngIf="coverageAreaForm" [formGroup]="coverageAreaForm" (ngSubmit)="saveService(false)">
+  <div class="info_heading sub-head">
+    <h4 class="text-dark d-inline">Coverage/Pricing</h4>
+    <!--<div class="col-lg-8">Coverage/Pricing</div>-->
+    <div class="float-right" *ngIf="!isCoverageAdd && !isEditCoverage" (click)="editCoverage();">
+      <button type="button" class="btn-link" *ngIf="coverageAreaData?.length > 0"><mat-icon>edit</mat-icon>Edit</button>
+    </div>
+    <div class="float-right" *ngIf="!isCoverageAdd && isEditCoverage" (click)="cancelCoverageEdit();">
+      <button type="button" class="btn-link">Cancel</button>
+    </div>
+  </div>
+  <table id="coveragesTable" class="table no-footer w-100 mt-3" sortable-table (sorted)="onCoverageSorted($event)">
+    <thead>
+      <tr>
+        <th sortable-column="state" class="mdl-data-table__cell--non-numeric cursor-hand">State</th>
+        <th sort-direction="asc" sortable-column="county" class="mdl-data-table__cell--non-numeric cursor-hand">County</th>
+        <th sortable-column="zipcode" class="mdl-data-table__cell--non-numeric cursor-hand">Zip</th>
+        <th sortable-column="pricing" class="mdl-data-table__cell--non-numeric">Pricing</th>
+        <th sortable-column="tat" class="mdl-data-table__cell--non-numeric">TAT</th>
+        <th sortable-column="attestation" class="mdl-data-table__cell--non-numeric">Attestation</th>
+        <th class="mdl-data-table__cell--non-numeric">Coverage Status</th>
+      </tr>
+    </thead>
+    <tbody #coveragecontainer>
+      <tr *ngIf="coverageAreaData?.length == 0 && !isCoverageAdd">
+        <td colspan="7"> <p class="text-secondary col-12 text-center py-2 ng-star-inserted">No coverages !</p></td>
+      </tr>
+      <ng-container *ngIf="!isEditCoverage">
+        <tr *ngFor="let ca of coverageAreaData; let k = index;" [class.coverage_pending_row]="ca.county == '' || ca.zipcode == '' || ca.pricing == 0 || ca.tat == 0 || (isValidStateForAttestation(ca.state) && !ca.isAttestationView)">
+          <td *ngIf="ca.serviceName == serviceName" class="mdl-data-table__cell--non-numeric">{{ ca.state }}</td>
+          <td *ngIf="ca.serviceName == serviceName" class="mdl-data-table__cell--non-numeric">{{ ca.county }}</td>
+          <td *ngIf="ca.serviceName == serviceName" class="mdl-data-table__cell--non-numeric">{{ ca.zipcode }}</td>
+          <td *ngIf="ca.serviceName == serviceName" class="mdl-data-table__cell--non-numeric">{{ ca.pricing }}</td>
+          <td *ngIf="ca.serviceName == serviceName" class="mdl-data-table__cell--non-numeric">{{ ca.tat }}</td>
+          <td *ngIf="!isValidStateForAttestation(ca.state)" class="mdl-data-table__cell--non-numeric">
+            NA
+          </td>
+          <td *ngIf="ca.isAttestationView">
+            <mat-checkbox class="mr-2 rounded-check check-success" [checked]="true" disabled readonly></mat-checkbox>
+            <button type="button" class="btn btn-link cmn-link" (click)="viewAttestationDialog(ca.attestation)">View</button>
+          </td>
+          <td *ngIf="(isValidStateForAttestation(ca.state) && ca.serviceName == 'HVR+') && !ca.isAttestationView" class="mdl-data-table__cell--non-numeric">
+            Edit to add attestation
+          </td>
+          <td *ngIf="ca.serviceName == serviceName" class="mdl-data-table__cell--non-numeric"></td>
+          <!--<td *ngIf="ca.serviceName == serviceName && (ca.county == '' || ca.zipcode == '' || ca.pricing == 0 || ca.tat == 0)" class="mdl-data-table__cell--non-numeric"> Pending Information </td>
+          <td *ngIf="ca.serviceName == serviceName && (ca.county != '' && ca.zipcode != '' && ca.pricing != 0 && ca.tat != 0)" class="mdl-data-table__cell--non-numeric"> Pending Verification </td>-->
+        </tr>
+      </ng-container>
+      <ng-container *ngIf="isEditCoverage">
+        <tr *ngFor="let ca of tempCoverageAreaData; let j = index;" [class.coverage_pending_row]="ca.county == '' || ca.zipcode == '' || ca.pricing == 0 || ca.tat == 0 || (isValidStateForAttestation(ca.state) && !ca.isAttestationView)">
+          <td *ngIf="ca.serviceName == serviceName" class="mdl-data-table__cell--non-numeric">{{ ca.state }}</td>
+          <td *ngIf="ca.serviceName == serviceName" class="mdl-data-table__cell--non-numeric">
+            <mat-form-field>
+              <mat-select style="width: 75px;" placeholder="County" [value]="ca.county" #cntsVal
+                          (change)="getEditCoverageZips(j, cntsVal.value); onChangeCounty(j, cntsVal.value);">
+                <mat-option [value]="">
+                  Select County
+                </mat-option>
+                <mat-option *ngFor="let cnts of ca.counties" [value]="cnts.countyName">{{cnts.countyName}}</mat-option>
+              </mat-select>
+              <!-- <mat-error *ngIf="coverageAreaForm.controls['county'].touched && coverageAreaForm.controls['county'].errors && coverageAreaForm.controls['county'].invalid ">Please select county.</mat-error>-->
+            </mat-form-field>
+          </td>
+          <td *ngIf="ca.serviceName == serviceName">
+            <mat-form-field>
+              <mat-select id="coverageZip"
+                          (change)="onChangeZipcode(zipval.value, j)" #zipval
+                          placeholder="Select Zip" style="width: 75px;" [value]="ca.zipcode">
+                <mat-option [value]="">
+                  Select Zip
+                </mat-option>
+                <mat-option *ngFor="let zip of ca.reszips" [value]="zip">
+                  {{zip}}
+                </mat-option>
+              </mat-select>
+              <mat-error id="state-Error">
+
+              </mat-error>
+            </mat-form-field>
+          </td>
+          <td *ngIf="ca.serviceName == serviceName" class="mdl-data-table__cell--non-numeric">
+            <mat-form-field>
+              <input matInput placeholder="Pricing" CurrencyFormat maxlength="8" appTwoDigitDecimaNumber [value]="ca.pricing" type="text" (focus)="isCursorEnetered('pricing', j);" #pricing_val (change)="applyPricing(pricing_val.value, j);">
+              <!--<i class="material-icons md-18" *ngIf="(coverageAreaData?.length > 1) && ca.isPricingEntered" (click)="applyPricingToAll(pricing_val.value);" style="cursor: pointer; margin-left: 20px" title="Apply to all">done_all</i>-->
+              <span matSuffix *ngIf="(coverageAreaData?.length > 1) && ca.isPricingEntered" (click)="applyPricingToAll(pricing_val.value);" style="color:#286090; cursor: pointer">Apply to all</span>
+            </mat-form-field>
+          </td>
+          <td *ngIf="ca.serviceName == serviceName" class="mdl-data-table__cell--non-numeric">
+            <mat-form-field>
+              <input matInput placeholder="TAT (in days)" NumberFormat min="0" maxlength="8" appTwoDigitDecimaNumber type="text" (focus)="isCursorEnetered('tat', j);" #tatVal [value]="ca.tat!=0 ? ca.tat  : ''" (change)="applyTat(tatVal.value, j);">
+              <!--<i class="material-icons md-18" *ngIf="(coverageAreaData?.length > 1) && ca.isTatEntered" (click)="applyTatToAll(tatVal.value);" style="cursor: pointer; margin-left: 25px" title="Apply to all">done_all</i>-->
+              <span matSuffix *ngIf="(coverageAreaData?.length > 1) && ca.isTatEntered" (click)="applyTatToAll(tatVal.value);" style="color:#286090; cursor: pointer">Apply to all</span>
+            </mat-form-field>
+          </td>
+          <td *ngIf="(isValidStateForAttestation(ca.state) && ca.serviceName == 'HVR+') && !ca.isAttestationView" class="mdl-data-table__cell--non-numeric">
+            <mat-checkbox formControlName="attestation" class="check-primary" (change)="showConfirmationDialog(j,ca.attestation)">
+            </mat-checkbox>
+          </td>
+          <td *ngIf="!isValidStateForAttestation(ca.state)" class="mdl-data-table__cell--non-numeric">
+            NA
+          </td>
+          <td *ngIf="ca.isAttestationView">
+            <mat-checkbox class="mr-2 rounded-check check-success" [checked]="true" disabled readonly></mat-checkbox>
+            <!--<button type="button" class="btn btn-link cmn-link" (click)="viewAttestationDialog(ca.attestation)">View</button>-->
+          </td>
+          <td *ngIf="ca.serviceName == serviceName" class="mdl-data-table__cell--non-numeric"></td>
+          <!--<td *ngIf="ca.serviceName == serviceName && (ca.county == '' || ca.zipcode == '' || ca.pricing == 0 || ca.tat == 0)" class="mdl-data-table__cell--non-numeric"> Pending Information </td>
+          <td *ngIf="ca.serviceName == serviceName && (ca.county != '' && ca.zipcode != '' && ca.pricing != 0 && ca.tat != 0)" class="mdl-data-table__cell--non-numeric"> Pending Verification </td>-->
+        </tr>
+        </ng-container>
+        <tr>
+          <td class="mdl-data-table__cell--non-numeric" colspan="7" *ngIf="isCoverageAdd">
+            <div class="row">
+              <div class="col-4">
+                <mat-form-field>
+                  <mat-select placeholder="State*" formControlName="state" #stateVal (change)="getCounties(stateVal.value);">
+                    <mat-option *ngFor="let state of states" [value]="state.stateAbbreviation">
+                      {{ state.stateAbbreviation }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="coverageAreaForm.controls['state'].touched && coverageAreaForm.controls['state'].errors && coverageAreaForm.controls['state'].invalid ">Please select valid state.</mat-error>
+                </mat-form-field>
+
+              </div>
+              <div class="col-4">
+                <mat-form-field>
+                  <mat-select placeholder="County" formControlName="county" #cntsVal (change)="getZips(cntsVal.value);" multiple>
+                    <mat-option *ngFor="let cnts of counteis" [value]="cnts.countyName">{{cnts.countyName}}</mat-option>
+                  </mat-select>
+                 <!-- <mat-error *ngIf="coverageAreaForm.controls['county'].touched && coverageAreaForm.controls['county'].errors && coverageAreaForm.controls['county'].invalid ">Please select county.</mat-error>-->
+                </mat-form-field>
+
+              </div>
+              <div class="col-4">
+                <mat-form-field>
+                  <mat-select placeholder="Zip" formControlName="zipcode" multiple #zipVal (change)="checkZips(coverageAreaForm.controls['state'].value,zipVal.value);">
+                    <mat-optgroup *ngFor="let eachzipcounty of zipCodes" [label]="eachzipcounty.countyName"
+                                  [disabled]="eachzipcounty.disabled">
+                      <mat-option *ngFor="let zip of eachzipcounty.zipcode" [value]="zip">
+                        {{ zip }}
+                      </mat-option>
+                    </mat-optgroup>
+                  </mat-select>
+                  <!--<mat-error *ngIf="!isZipValid && coverageAreaForm.controls['zipcode'].touched && coverageAreaForm.controls['zipcode'].errors && coverageAreaForm.controls['zipcode'].invalid">Please select each county's one zipcode.</mat-error>-->
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row" *ngIf="isCoverageAdd || isEditCoverage">
+              <div class="col-12">
+                <div *ngIf="this.serviceName == 'HVR+'" class="float-right">
+                  <button type="button" class="btn btn-default normal" (click)="cancelCoverageArea();">Cancel</button>
+                  <button type="submit" class="btn btn-primary normal" [disabled]="(coverageAreaForm.dirty && coverageAreaForm.invalid) || coverageAreaForm.pristine || !isZipValid || isCoverageDuplicate || !isSelectH">Add </button>
+                </div>
+                <div *ngIf="this.serviceName == 'Exterior Inspection'" class="float-right">
+                  <button type="button" class="btn btn-default normal" (click)="cancelCoverageArea();">Cancel</button>
+                  <button type="submit" class="btn btn-primary normal" [disabled]="(coverageAreaForm.dirty && coverageAreaForm.invalid) || coverageAreaForm.pristine || !isZipValid || isCoverageDuplicate || !isSelectEx">Add </button>
+                </div>
+              </div>
+            </div>
+
+          </td>
+        </tr>
+        <!-- <td class="mdl-data-table__cell--non-numeric"></td>
+      <td class="mdl-data-table__cell--non-numeric"></td>
+      <td class="mdl-data-table__cell--non-numeric">
+        <mat-checkbox formControlName="attestation"  class="example-margin" (change)="showConfirmationDialog()" >
+
+        </mat-checkbox>
+      </td>
+      <td class="mdl-data-table__cell--non-numeric"></td>
+    </tr> -->
+
+
+        <tr *ngIf="(!isCoverageAdd && coverageAreaData?.length > 0) && isEditCoverage">
+          <td colspan="7">
+            <div *ngIf="this.serviceName == 'HVR+'" class="float-right">
+              <button type="button" class="btn btn-default normal" (click)="cancelCoverageArea();">Cancel</button>
+              <button type="submit" class="btn btn-primary normal" [disabled]="isCoverageDuplicate || !isSelectH">Add </button>
+            </div>
+            <div *ngIf="this.serviceName == 'Exterior Inspection'" class="float-right">
+              <button type="button" class="bbtn btn-default normal" (click)="cancelCoverageArea();">Cancel</button>
+              <button type="submit" class="btn btn-primary normal" [disabled]="isCoverageDuplicate || !isSelectEx">Add </button>
+            </div>
+          </td>
+        </tr>
+
+    </tbody>
+  </table>
+</form>
+<button class="btn btn-primary normal" [disabled]="isCoverageAdd || isEditCoverage" (click)="addCoverageClick();">+ Add Coverage</button>

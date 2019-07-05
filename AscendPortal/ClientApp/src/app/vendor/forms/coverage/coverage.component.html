@@ -1,0 +1,117 @@
+  <div class="container-fluid info_container content_panel">
+
+    <div class="row border-bottom panel-head">
+      <div class="col-md-8">
+        <h4 class="my-3">Add New Service</h4>
+      </div>
+      <div class="col-md-4">
+        <div class="float-right py-2">
+          <button type="button" class="btn btn-link" (click)="addServiceToggleClose()">CANCEL</button>
+        </div>
+      </div>
+    </div>
+
+    <!--<div class="row">
+      <div class="col-12 no-padding">
+        <div id="vendorDetailsPanel">
+          <ascend-vendor-details [details]="detailsdata"></ascend-vendor-details>
+        </div>
+      </div>
+    </div>-->
+
+    <div *ngIf="data" class="add-new-service">
+      <div class="vendor-contact-header mt-4">
+
+        <div class="info_heading">
+          <h4 class="text-dark d-inline" id="pageTitle-ListInsurancePage">
+            EILIGIBLE SERVICE(S)<span class="text-primary"></span>
+          </h4>
+        </div>
+
+        <div *ngIf="data?.Appraisal || data?.Broker ">
+          <div *ngIf="data?.Appraisal =='Elgible'">
+            <button class="accordion mt-3" [class.active]="isopenH" (click)="accordianClickFunc('HVR+');">
+              <div class="row">
+                <div class="col-4">
+                  <mat-checkbox class="mr-2 check-primary" (click)="$event.stopPropagation();" [checked]="isSelectH" (change)="isSelectH = !isSelectH">HVR+</mat-checkbox>
+                </div>
+                <div class="col-4">
+                  <mat-checkbox class="mr-2 rounded-check check-success" checked="checked" disabled readonly>Insurance</mat-checkbox>
+                  <mat-checkbox class="mr-2 rounded-check check-success" checked="checked" disabled readonly>License</mat-checkbox>
+                </div>
+                <div class="col-4">
+                  <span class="showdetails float-right">{{ !isopenH ? 'Show details' : 'Hide details'}}</span>
+                </div>
+              </div>
+            </button>
+            <div class="panel" [style.display]="isopenH ? 'block' : 'none'">
+              <app-addcoverage id="hvr" [vendorID]="vendorID" (isaccordiansuccess)="receiveAccordianSuccess($event)" (messageEvent)="receiveMessage($event)" [isSelectEx]="isSelectEx" [isSelectH]="isSelectH" [serviceName]="serviceName" [recievecoveragehvrdata]="coverageHvrServiceData" [accordianhvrdata]="coverageHvrAccordianData"></app-addcoverage>
+            </div>
+          </div>
+          <br />
+          <div *ngIf="data?.Broker =='Elgible'">
+            <button class="accordion mt-3" [class.active]="isopenEx" (click)="accordianClickFunc('Exterior Inspection');">
+              <div class="row">
+                <div class="col-4">
+                  <mat-checkbox class="mr-2 check-primary" (click)="$event.stopPropagation();" [checked]="isSelectEx" (change)="isSelectEx = !isSelectEx">Exterior Inspection</mat-checkbox>
+                </div>
+                <div class="col-4">
+                  <mat-checkbox class="mr-2 rounded-check check-success" checked="checked" disabled readonly>Insurance</mat-checkbox>
+                  <mat-checkbox class="mr-2 rounded-check check-success" checked="checked" disabled readonly>License</mat-checkbox>
+                </div>
+                <div class="col-4">
+                  <span class="showdetails float-right">{{ !isopenEx ? 'Show details' : 'Hide details'}}</span>
+                </div>
+              </div>
+            </button>
+            <div class="panel" [style.display]="isopenEx ? 'block' : 'none'">
+              <app-addcoverage id="exterior" [vendorID]="vendorID" (isaccordiansuccess)="receiveAccordianSuccess($event)" (messageEvent)="receiveMessage($event)" [isSelectEx]="isSelectEx" [isSelectH]="isSelectH" [serviceName]="serviceName" [recievecoverageexteriordata]="coverageExteriorServiceData" [accordianexteriordata]="coverageExteriorAccordianData"></app-addcoverage>
+            </div>
+          </div>
+        </div>
+
+        <div class="info_heading mt-3">
+          <h4 class="text-dark d-inline" id="pageTitle-ListInsurancePage">
+            NON-EILIGIBLE SERVICE(S)<span class="text-primary">
+            </span>
+          </h4>
+        </div>
+
+
+        <div *ngIf=" data != '' && data != undefined">
+          <div class="row" *ngIf="data?.Appraisal || data?.Broker ">
+            <div class="col-12" *ngIf="data?.Appraisal =='NotElgible'">
+              <mat-card class="mat-text border-bottom">
+                <div class="row info_content">
+                  <div class="col-4">
+                    <h4 class="my-2">HVR+</h4>
+                  </div>
+                  <div class="col-8">
+                    <mat-checkbox class="mr-2 rounded-check" [class.check-success]="data?.IsAppraisalInsuranceValid == 'true'" [class.check-error]="data?.IsAppraisalInsuranceValid == 'false'" [checked]="data?.IsAppraisalInsuranceValid == 'true'" disabled readonly>Insurance</mat-checkbox>
+                    <mat-checkbox class="mr-2 rounded-check" [class.check-success]="data?.IsAppraisalLicenseValid == 'true'" [class.check-error]="data?.IsAppraisalLicenseValid == 'false'" [checked]="data?.IsAppraisalLicenseValid == 'true'" disabled readonly>License</mat-checkbox>
+                  </div>
+                </div>
+              </mat-card>
+            </div>
+            <div class="col-12" *ngIf="data?.Broker =='NotElgible'">
+              <mat-card class="mat-text border-bottom">
+                <div class="row info_content">
+                  <div class="col-4">
+                    <h4 class="my-2">Exterior Inspection</h4>
+                  </div>
+                  <div class="col-8">
+                    <mat-checkbox class="mr-2 rounded-check" [class.check-success]="data?.IsBrokerInsuranceValid == 'true'" [class.check-error]="data?.IsBrokerInsuranceValid == 'false'" [checked]="data?.IsBrokerInsuranceValid == 'true'" disabled readonly>Insurance</mat-checkbox>
+                    <mat-checkbox class="mr-2 rounded-check" [class.check-success]="data?.IsBrokerLicenseValid == 'true'" [class.check-error]="data?.IsBrokerLicenseValid == 'false'" [checked]="data?.IsBrokerLicenseValid == 'true'" disabled readonly>License</mat-checkbox>
+                  </div>
+                </div>
+              </mat-card>
+            </div>
+          </div>
+          <div class="row">
+            <div class="text-secondary col-12 text-center py-5" *ngIf="data?.Broker !='NotElgible' && data?.Appraisal !='NotElgible'">There are no non eligible services available</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+

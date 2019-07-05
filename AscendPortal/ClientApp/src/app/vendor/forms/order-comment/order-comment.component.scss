@@ -1,0 +1,13 @@
+
+.panel_note {
+  .creator {
+    margin-bottom: 0.5rem;
+    .date, .time {
+      font-size: 0.87em;
+      vertical-align: middle;
+    }
+  }
+}
+.panel_list .mat-list-item {
+  height: auto!important;
+}

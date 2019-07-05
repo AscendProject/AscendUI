@@ -1,0 +1,23 @@
+<mat-sidenav-container class="full-height">
+    <ascend-header (click)="closeRightNav($event)" (rightnav)="openRightNav($event)" (navToggle)="isExpanded = !isExpanded"></ascend-header>
+    <mat-drawer-container>
+        <mat-drawer [ngClass]="isExpanded ? 'sidebar-active':''" class="no-padding sidebar" #sidenav mode="side" position="start"
+            opened="true">
+            <ascend-sidenvabar></ascend-sidenvabar>
+        </mat-drawer>
+        <mat-drawer-content [ngClass]="isExpanded ? 'sidebar-active ':''" class="no-padding">
+            <router-outlet></router-outlet>
+        </mat-drawer-content>
+        <mat-drawer (closed)="toggleClose();" class="col-3 no-padding" #rightNav mode="over" position="end" opened="false" (keydown.escape)="closeRightNav($event)">
+          <div *ngIf="showNotification">
+            <ascend-notification></ascend-notification>
+          </div>
+          <div *ngIf="showProfile">
+            <ascend-userprofile></ascend-userprofile>
+          </div>
+          <div *ngIf="showResource">
+            <ascend-resource></ascend-resource>
+          </div>
+        </mat-drawer>
+    </mat-drawer-container>
+</mat-sidenav-container>

@@ -1,0 +1,177 @@
+<mat-drawer-container id="addVendorContainer" style="height: 100% !important" hasBackdrop="true">
+  <mat-drawer-content>
+
+    <div class="row no-margin no-padding hgt100">
+      <div class="col-12 col-sm-6 col-md-4 no-padding hgt100">
+
+        <div class="row no-margin no-padding selectionpane-filter">
+          <div class="col-9 no-padding d-flex align-items-center">
+            <mat-select value="all" class="text-primary col-12 mat-no-underline">
+              <mat-option value="all">All Vendors</mat-option>
+              <mat-option value="active">Active Vendors</mat-option>
+              <mat-option value="inactive">Inactive Vendors</mat-option>
+            </mat-select>
+          </div>
+          <div class="col-3 no-padding">
+
+            <button mat-button class="addbuttonBGC bg-primary" (click)="addFormToggle.open();">
+              <mat-icon>add</mat-icon>
+              <span>Add</span>
+            </button>
+          </div>
+          
+
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <!-- <button class="search_btn float-right px-3"
+            (click)="openAdvanceSearch()" mat-button>
+              <i class="text-primary fa fa-binoculars" ></i>
+            </button> -->
+
+        <div class="row no-margin no-padding selectionpane-search">
+          <div class="col-9 d-flex align-items-center">
+            <input class="search_filed col-12 no-padding no-border" (keyup.enter)="vendorSearch()"  matInput placeholder="Search Vendor" [(ngModel)]="searchkey" >
+          </div>
+          <div class="col-3 text-right no-padding">
+            <button class="search_btn float-left px-2" mat-button (click)="vendorSearch()" >
+              <mat-icon class="text-primary">search</mat-icon>
+
+            </button>
+            <button class="search_btn float-right px-2"
+            (click)="openAdvanceSearch()" mat-button>
+              <i class="text-primary fa fa-binoculars" ></i>
+            </button>
+            
+          </div>
+         
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <ascend-pagination-header (nextpage)="getPaging($event)" (previouspage)="getPaging($event)" (changepage)="getPaging($event)"
+                                  [totalRecords]="totalCount" [totalPages]="totalPages" [pageNumber]="pageNumber" [pageSize]="pageSize"></ascend-pagination-header>
+
+        <div class="col-12 no-padding vendors_list">
+          <vendorlist (details)="detailsLoad($event)" (pageDetails)="getpagedetails($event)" ></vendorlist>
+        </div>
+
+        <ascend-page-footer (changepage)="changePage($event)" [totalPages]="totalPages" [totalRecords]="totalCount"
+                            [pageNumber]="pageNumber" [pageSize]="pageSize"></ascend-page-footer>
+
+      </div>
+
+
+      <div class="col-12 col-sm-6 col-md-8 hgt100 no-scroll no-padding shadow-cs interactionpane-bg"
+           *ngIf="detailsdata !== undefined">
+
+        <div class="col-12 no-padding" *ngIf="detailsdata !=='addvendor'">
+          <div id="vendorDetailsPanel">
+            <ascend-vendor-details *ngIf="!isAdded" [details]="detailsdata"></ascend-vendor-details>
+          </div>
+        </div>
+        <div class="col-12 no-padding vendor_tabs">
+          <nav mat-tab-nav-bar>
+            <mat-tab-group>
+              <mat-tab *ngFor="let routeLink of routeLinks">
+                <ng-template mat-tab-label>
+                  <a mat-tab-link
+                     [routerLink]="routeLink.link == '' ? routeLinks[0].link : routeLink.link"
+                     [routerLinkActiveOptions]="{exact: true}"
+                     routerLinkActive
+                     [active]="rla.isActive"
+                     #rla="routerLinkActive">
+                    {{routeLink.label}}
+                  </a>
+                </ng-template>
+              </mat-tab>
+            </mat-tab-group>
+          </nav>
+
+
+              <!--<nav mat-tab-nav-bar class="demo-tab-group" *ngIf="detailsdata !=='addvendor' && !isAdded">
+                <ng-template mat-tab-label>
+                  <a mat-tab-link *ngFor="let routeLink of routeLinks" [routerLink]="routeLink.link == '' ? routeLinks[0].link : routeLink.link" routerLinkActive #rla="routerLinkActive"
+                     [active]="rla.isActive">
+                    {{routeLink.label}}
+                  </a>
+                </ng-template>
+              </nav>-->
+
+              <div class="vendor_content">
+                <router-outlet> </router-outlet>
+              </div>
+        </div>
+      </div>
+
+
+      <div class="col-8 no-scroll d-flex align-items-center no-padding shadow-cs interactionpane-bg" *ngIf="detailsdata === undefined">
+        <div class="row col-12 d-flex justify-content-center">
+          <div class="col-12 d-flex justify-content-center">
+            <img src="../assets/img/emptydata_arrow.png" style="height: 90px;" alt="Assurant logo" />
+          </div>
+          <div class="col-12 d-flex justify-content-center">Select Vendor View Details</div>
+        </div>
+      </div>
+
+      <!--<div class="col-12 hgt100 no-scroll no-padding shadow-cs interactionpane-bg" *ngIf="selectedFormPage === 'advanceSearch'">
+        <router-outlet> </router-outlet>
+      </div>-->
+
+
+
+    </div>
+
+   
+  </mat-drawer-content>
+  
+
+  <mat-drawer #addFormToggle mode="over" (closed)="toggleClose();" opened="false" position="end" class="multiFormToggle">
+    <div *ngIf="selectedFormPage === 'addVendor'" class="hgt100 no-scroll">
+      <app-addvendor (closeToggle)="addFormToggle.close(); closeToggleEvent = true"></app-addvendor>
+    </div>
+
+    <div *ngIf="selectedFormPage === 'advanceSearch'" class="hgt100 no-scroll">
+      <app-vendor-advanced-search (closeToggle)="addFormToggle.close(); closeToggleEvent = true"></app-vendor-advanced-search>
+    </div>
+
+    <div *ngIf="selectedFormPage === 'insurance'">
+      <ascend-vendor-details *ngIf="!isAdded" [details]="detailsdata"></ascend-vendor-details>
+      <insurances (closeToggle)="refreshDataList('insuranceData')"></insurances>
+    </div>
+    <div *ngIf="selectedFormPage === 'insuranceEdit'">
+      <ascend-vendor-details *ngIf="!isAdded" [details]="detailsdata"></ascend-vendor-details>
+      <insurances [insuranceId]="selectedFormValue" (closeToggle)="addFormToggle.close(); closeToggleEvent = true"></insurances>
+    </div>
+    <div *ngIf="selectedFormPage === 'license'">
+      <ascend-vendor-details *ngIf="!isAdded" [details]="detailsdata"></ascend-vendor-details>
+      <license (closeToggle)="refreshDataList('licenseData')"></license>
+    </div>
+    <div *ngIf="selectedFormPage === 'backgroundcheck'">
+      <ascend-vendor-details *ngIf="!isAdded" [details]="detailsdata"></ascend-vendor-details>
+      <backgroundcheck (closeToggle)="addFormToggle.close(); closeToggleEvent = true"></backgroundcheck>
+    </div>
+
+    <div *ngIf="selectedFormPage === 'backgroundcheckEdit'">
+      <ascend-vendor-details *ngIf="!isAdded" [details]="detailsdata"></ascend-vendor-details>
+      <backgroundcheck (closeToggle)="addFormToggle.close(); closeToggleEvent = true"></backgroundcheck>
+    </div>
+
+    <div *ngIf="selectedFormPage === 'licenseEdit'">
+      <ascend-vendor-details *ngIf="!isAdded" [details]="detailsdata"></ascend-vendor-details>
+      <license [licenseId]="selectedFormValue" (closeToggle)="addFormToggle.close(); closeToggleEvent = true"></license>
+    </div>
+    <div *ngIf="selectedFormPage === 'vendorservice'" class="hgt100 no-scroll">
+      <ascend-vendor-details *ngIf="!isAdded" [details]="detailsdata"></ascend-vendor-details>
+      <app-coverage *ngIf="isServiceClicked" [isServiceChangedFromService]="isServiceClickedFromService" [vendorID]="vendorid" [receiveData]="detailsdata" (closeToggle)="addFormToggle.close(); closeToggleEvent = true;"></app-coverage>
+    </div>
+    <div *ngIf="selectedFormPage === 'add-edit-financial-information'" class="hgt100 no-scroll">
+      <ascend-vendor-details *ngIf="!isAdded" [details]="detailsdata"></ascend-vendor-details>
+      <app-add-edit-financial-information [vendorid]="selectedFormValue" (closeToggle)="addFormToggle.close(); closeToggleEvent = true"></app-add-edit-financial-information>
+    </div>
+  </mat-drawer>
+  <!--<mat-drawer #addServiceToggle mode="slide" position="end" style="width: 75% !important" (closed)="toggleServiceClose()">
+    <app-coverage *ngIf="isServiceClicked" [vendorID]="vendorid" [receiveData]="detailsdata" (closeServiceToggle)="addServiceToggle.close(); closeServiceToggleEvent = true;"></app-coverage>
+  </mat-drawer>-->
+</mat-drawer-container>

@@ -1,0 +1,25 @@
+.order_details{
+    position: relative;
+    background: #ffedd7;
+}
+.order_info {
+    height: 81px;
+}
+.order_info h2 {
+    font-size: 1.6rem;
+    line-height: 1.2em;
+    span {
+        text-transform: uppercase;
+        font-size: 1.2rem;
+        display: block;
+    }
+}
+.order_details:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top:0;
+    bottom:0;
+    width: 4px;
+    background: #ff9900;
+}

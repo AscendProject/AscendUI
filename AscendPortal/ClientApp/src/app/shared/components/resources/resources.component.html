@@ -1,0 +1,43 @@
+<div class="resoucelist-main-wrapper">
+  <div class="topheader no-margin row no-margin">
+    <div class="title col-9 my-3">Resources</div>
+  </div>
+  <mat-divider></mat-divider>
+  <!--Link Block-->
+  <div class="resource_list" *ngIf="resourcesData != null">
+    <div *ngFor="let resouces of resourcesData">
+      <div class="row no-margin border-bottom" *ngIf="resouces.resourceType == 'openlink'">
+        <div class="title col-10 mt-2 text-primary">
+          <a target="_blank" rel="noopener noreferrer" href="{{resouces.resourceURL}}">
+            {{resouces.resourceTitle}}
+          </a>
+        </div>
+        <div class="contant col-12 my-2">
+          {{resouces.resourceDescription}}
+        </div>
+        <div>
+          
+        </div>
+        
+      </div>
+      
+      <!-- Document Block-->
+      <div class="row no-margin border-bottom" *ngIf="resouces.resourceType == 'document'">
+        <div class="contant col-10 my-2">
+          {{resouces.resourceTitle}}
+        </div>
+        <div class="col-2 text-right mb-2">
+          <a class="download-link" (click)="downloadFile(resouces.resourceURL,resouces.resourceTitle)" download>
+            <i class="material-icons">
+              play_for_work
+            </i>
+          </a>
+        </div>
+        <div>
+          
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>

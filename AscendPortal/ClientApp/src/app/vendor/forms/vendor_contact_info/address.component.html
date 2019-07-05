@@ -1,0 +1,264 @@
+<!--<div class="row no-margin bg-darkgrey heading">
+  <div class="col-8 py-2 px-3"></div>
+  <div class="col-4 py-2 px-3 text-right">
+    <button mat-button class="text-primary" (click)="addVendorAddress()">
+      <mat-icon>add</mat-icon> Add
+    </button>
+  </div>
+<div class="col-4 py-2 px-3 text-right">
+
+</div>
+<div class="col-4 py-2 px-3 text-right" *ngIf="isaddvendoraddress">
+    <button mat-button class="text-primary" (click)="saveAddressDetails()" [disabled]="(vendorProfileAddAddressForm.dirty && vendorProfileAddAddressForm.invalid) ||   vendorProfileAddAddressForm.pristine || isPoBoxError">
+      <mat-icon>save</mat-icon> Save
+    </button>
+    <button mat-button class="text-primary" (click)="canceladdressupdate()">
+      <mat-icon>cancel</mat-icon> Cancel
+    </button>
+  </div>
+</div>-->
+
+<div class="info_heading">
+  <h4 class="text-dark d-inline">ADDRESS</h4>
+  <div class="float-right" *ngIf="isvendoraddressdetails">
+    <button class="btn-link" id="editAddress" (click)="editvendoraddressdetails()" *ngIf="addressViewData?.length > 0">
+      <mat-icon>edit</mat-icon> Edit
+    </button>
+    <button class="btn-link" (click)="editvendoraddressdetails()" *ngIf="addressViewData?.length == 0">
+      <mat-icon>add</mat-icon> Add
+    </button>
+  </div>
+  <div class="float-right" *ngIf="iseditvendoraddressdetais">
+    <button class="btn-link" (click)="savevendoraddressdetails()"
+            [disabled]="((vendorProfileAddressPhysicalForm.dirty && vendorProfileAddressPhysicalForm.invalid) || (vendorProfileAddressMailingForm.dirty && vendorProfileAddressMailingForm.invalid)) || submitted || isAddrFormDisable || isDisableBtn">
+      <mat-icon>save</mat-icon> Save
+    </button>
+    <button class="btn-link" (click)="canceladdressupdate()">
+      <mat-icon>cancel</mat-icon> Cancel
+    </button>
+  </div>
+</div>
+<!-- Address details -->
+
+<div class="row info_content" *ngIf="isvendoraddressdetails">
+  <div class="col-12 col-sm-6 col-md-4 py-1 text-dark" *ngFor="let address of (addressViewData | orderby: 'Physical')">
+    <div *ngIf="address?.streetAddress != '' && address?.streetAddress !== undefined && address?.isDeleted !=true">
+      <label><span *ngIf="address?.addressType && address?.isDeleted !=true">{{address.addressType}}</span> Address</label>
+      <div class="info-field">
+        <span *ngIf="address?.streetAddress && address?.isDeleted !=true"> {{toTitleCase(address.streetAddress)}}</span><br />
+        <span *ngIf="address?.city || address?.state && address?.isDeleted !=true">{{toTitleCase(address.city)}}, {{address.state}}</span>
+        <span *ngIf="address?.zipcode && address?.isDeleted !=true">{{address.zipcode}}</span>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- add address -->
+<!--<div class="row">
+  <form [formGroup]="vendorProfileAddAddressForm"
+        style="margin-left:29px;" *ngIf="isaddvendoraddress">
+    <div>
+      <mat-radio-group required formControlName="isPhysical">
+        <mat-radio-button value="Physical" (change)="setErrorForPOBox(vendorProfileAddAddressForm.controls['streetAddress'].value,'streetAddress', null)"> <label> Physical Address</label></mat-radio-button>
+        <mat-radio-button value="Mailing" (change)="setErrorForPOBox(vendorProfileAddAddressForm.controls['streetAddress'].value,'streetAddress', null)"><label> Mailing Address</label> </mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <div class="col-md-4 col-lg-4 col-sm-4 pl-0">
+      <mat-form-field class=" mat-form-field-infix">
+        <input matInput id="txtStreet" placeholder="Street" type="text" class="form-control" formControlName="streetAddress" maxlength="100" (focusout)="onBlurAddAddress($event.target.value,'streetAddress')" (change)="setErrorForPOBox($event.target.value,'streetAddress', null)" />
+      </mat-form-field>
+      <mat-error *ngIf="vendorProfileAddAddressForm.controls['streetAddress'].touched && vendorProfileAddAddressForm.controls['streetAddress'].errors && vendorProfileAddAddressForm.controls['streetAddress'].invalid ">
+        please enter valid street.
+      </mat-error>
+      <mat-error *ngIf="isPoBoxError">
+        Street should not contain PO Box
+      </mat-error>
+    </div>
+    <div class="col-md-4 col-lg-4 col-sm-4 pl-0">
+      <mat-form-field class=" mat-form-field-infix">
+        <input matInput id="txtCity" placeholder="City" type="text" formControlName="city" (focusout)="onBlurAddAddress($event.target.value,'city')" maxlength="100" />
+      </mat-form-field>
+      <mat-error *ngIf="vendorProfileAddAddressForm.controls['city'].touched && vendorProfileAddAddressForm.controls['city'].errors">
+        <span id="city-Error">please enter valid city.</span>
+      </mat-error>
+    </div>
+    <div class="col-md-4 col-lg-4 col-sm-4 pl-0">
+      <mat-form-field class=" mat-form-field-infix">
+        <mat-select id="ddlState"
+                    (focusout)="onBlurAddressMethod($event.target.value,'state', 0)"
+                    formControlName="state"
+                    placeholder="Select State">
+          <mat-option *ngFor="let state of states" [value]="state">
+            {{state}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-md-4 col-lg-4 col-sm-4 pl-0">
+      <mat-form-field class=" mat-form-field-infix">
+        <input matInput id="txtZipcode" placeholder="Zip Code" name="zipcode" formControlName="zipcode" [maxlength]="zipLength" (focusout)="onBlurAddAddress($event.target.value,'zipcode')" class="form-control" type="text">
+      </mat-form-field>
+      <mat-error id="zipcode-Error" *ngIf="vendorProfileAddAddressForm.controls['zipcode'].touched && vendorProfileAddAddressForm.controls['zipcode'].errors">
+        Zipcode should be of 5 digits
+      </mat-error>
+    </div>
+  </form>
+</div>-->
+<!-- END -->
+<!-- Edit Address-->
+
+<div *ngIf="iseditvendoraddressdetais">
+  <form [formGroup]="vendorProfileAddressPhysicalForm" *ngIf="iseditvendoraddressdetais">
+
+    <div class="info_heading sub-head">
+      <h4 class="text-dark d-inline">Physical Address</h4>
+      <mat-icon id="" class="text-danger float-right" role="img" aria-hidden="true"
+                (click)="deletevendoraddressdetails(vendorProfileAddressPhysicalForm.controls['addressId'].value)">delete</mat-icon>
+    </div>
+
+
+    <div class="container">
+      <mat-divider></mat-divider>
+    </div>
+
+    <!--<div class="ml-auto" *ngIf="addressViewData?.length > 0">
+    </div>-->
+
+
+
+    <div class="row info_content">
+      <div class="col-12 col-sm-6 col-md-4">
+        <mat-form-field>
+          <input matInput id="txtStreet" placeholder="Street" formControlName="street"
+                 maxlength="100" (focusout)="onBlurMethod($event.target.value,'street')"
+                 (change)="setErrorForPOBox($event.target.value,'street')">
+          <mat-error *ngIf="(vendorProfileAddressPhysicalForm.controls['street'].touched && vendorProfileAddressPhysicalForm.controls['street'].errors)||vendorProfileAddressPhysicalForm.controls['street'].invalid ">
+
+          </mat-error>
+          <mat-error *ngIf="((vendorProfileAddressPhysicalForm.controls['street'].touched && vendorProfileAddressPhysicalForm.controls['street'].errors) ||vendorProfileAddressPhysicalForm.controls['street'].invalid) && isPoBoxError">
+            Street should not contain PO Box
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-sm-6 col-md-4">
+        <mat-form-field>
+          <input matInput id="txtCity" placeholder="City" formControlName="city"
+                 maxlength="100" (focusout)="onBlurMethod($event.target.value,'city')">
+          <mat-error *ngIf="(vendorProfileAddressPhysicalForm.controls['city'].touched && vendorProfileAddressPhysicalForm.controls['city'].errors)||vendorProfileAddressPhysicalForm.controls['city'].invalid">
+
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-sm-6 col-md-4">
+        <mat-form-field>
+          <mat-select id="ddlState"
+                      (change)="onStateChange($event)"
+                      [ngClass]="vendorProfileAddressPhysicalForm.controls['state'].value === '' ? 'splacefolder' : 'removeplacefolder'"
+                      formControlName="state"
+                      placeholder="Select State">
+            <mat-option [value]="">
+              - Select State -
+            </mat-option>
+            <mat-option *ngFor="let state of states" [value]="state">
+              {{state}}
+            </mat-option>
+          </mat-select>
+          <mat-error id="state-Error" *ngIf="(vendorProfileAddressPhysicalForm.controls['state'].touched && vendorProfileAddressPhysicalForm.controls['state'].errors)||vendorProfileAddressPhysicalForm.controls['state'].invalid ">
+
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-sm-6 col-md-4">
+        <mat-form-field>
+          <input matInput id="txtZipcode" placeholder="Zip Code" formControlName="zipcode"
+                 [maxlength]="zipLength" (focusout)="onBlurMethod($event.target.value,'zipcode')">
+          <mat-error id="zipcode-Error" *ngIf="vendorProfileAddressPhysicalForm.controls['zipcode'].invalid && isAllFieldsOfAddressRequired ">
+
+          </mat-error>
+          <mat-error id="invalidZipcode-Error" *ngIf="((vendorProfileAddressPhysicalForm.controls['zipcode'].touched && vendorProfileAddressPhysicalForm.controls['zipcode'].errors)||vendorProfileAddressPhysicalForm.controls['zipcode'].invalid)&&!isAllFieldsOfAddressRequired ">
+            Zipcode should be of 5 digits
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+  </form>
+  <!-- Address Section for Physical Ends Here-->
+  <!-- Address Section for Mailing Starts Here-->
+  <form [formGroup]="vendorProfileAddressMailingForm" *ngIf="iseditvendoraddressdetais">
+    <div class="row info_content mb-3">
+      <div class="col-md-12 col-lg-12 col-sm-12">
+        <mat-checkbox [checked]="vendorProfileAddressMailingForm.controls['chkmailbox'].value" formControlName="chkmailbox" (change)="addressChecked($event)">If mailing address is different than physical address</mat-checkbox>
+        <!--<mat-checkbox id="chkmail" formControlName="chkmailbox" (change)="addressChecked($event)"><span id="addMailingAddress-Message">If mailing address is different than physical address</span></mat-checkbox>-->
+      </div>
+    </div>
+    <div *ngIf="vendorProfileAddressMailingForm.controls['chkmailbox'].value">
+
+
+
+
+      <div class="info_heading sub-head">
+        <h4 class="text-dark d-inline">Mailing Address</h4>
+        <mat-icon id="" class="text-danger float-right" role="img" aria-hidden="true"
+                  (click)="deletevendoraddressdetails(vendorProfileAddressMailingForm.controls['addressId'].value)">delete</mat-icon>
+      </div>
+
+      <div class="container">
+        <mat-divider></mat-divider>
+      </div>
+
+
+      <div class="row info_content">
+        <div class="col-12 col-sm-6 col-md-4">
+          <mat-form-field>
+            <input matInput id="txtStreet" placeholder="Street" formControlName="mstreet"
+                   maxlength="100" (focusout)="onBlurMethod($event.target.value,'mstreet')">
+            <mat-error id="mstreet-Error" *ngIf="(vendorProfileAddressMailingForm.controls['mstreet'].touched && vendorProfileAddressMailingForm.controls['mstreet'].errors) || vendorProfileAddressMailingForm.controls['mstreet'].invalid ">
+
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4">
+          <mat-form-field>
+            <input matInput id="txtCity" placeholder="City" formControlName="mcity"
+                   maxlength="100" (focusout)="onBlurMethod($event.target.value,'mcity')">
+            <mat-error *ngIf="(vendorProfileAddressMailingForm.controls['mcity'].touched && vendorProfileAddressMailingForm.controls['mcity'].errors) || vendorProfileAddressMailingForm.controls['mcity'].invalid ">
+
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4">
+          <mat-form-field>
+            <mat-select id="ddlState"
+                        (change)="onStateChange($event)"
+                        [ngClass]="vendorProfileAddressMailingForm.controls['mstate'].value === '' ? 'splacefolder' : 'removeplacefolder'"
+                        formControlName="mstate"
+                        placeholder="Select State">
+              <mat-option [value]="">
+                - Select State -
+              </mat-option>
+              <mat-option *ngFor="let state of states" [value]="state">
+                {{state}}
+              </mat-option>
+            </mat-select>
+            <mat-error id="mstate-Error" *ngIf="(vendorProfileAddressMailingForm.controls['mstate'].touched && vendorProfileAddressMailingForm.controls['mstate'].errors)||vendorProfileAddressMailingForm.controls['mstate'].invalid ">
+
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-4">
+          <mat-form-field>
+            <input matInput id="txtZipcode" placeholder="Zip Code" formControlName="mzipcode"
+                   [maxlength]="zipLength" (focusout)="onBlurMethod($event.target.value,'mzipcode')">
+            <mat-error id="mzipcode-Error" *ngIf="vendorProfileAddressMailingForm.controls['mzipcode'].invalid && isAllFieldsOfMailingAddressRequired ">
+
+            </mat-error>
+            <mat-error id="invalidMailingZipcode-Error" *ngIf="((vendorProfileAddressMailingForm.controls['mzipcode'].touched && vendorProfileAddressMailingForm.controls['mzipcode'].errors)||vendorProfileAddressMailingForm.controls['mzipcode'].invalid)&&!isAllFieldsOfMailingAddressRequired ">
+              Zipcode should be of 5 digits
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

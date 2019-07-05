@@ -1,0 +1,394 @@
+
+    <form [formGroup]="vendorProfileForm" (ngSubmit)="addvendorDialog()"  #f="ngForm" class="container-fluid info_container content_panel">
+      <div class="row border-bottom panel-head">
+        <div class="col-12 col-sm-6 col-md-8">
+          <h4 class="my-3">Add Vendor</h4>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4">
+          <div class="float-right pt-1">
+            <button type="button" class="btn btn-link" (click)="addVendorToggleClose()">CANCEL</button>
+            <button id="btnAddVendor" class="btn btn-sm normal btn-primary my-1"
+                    [disabled]="(vendorProfileForm.dirty && vendorProfileForm.invalid) || submitted || vendorProfileForm.pristine || vendorProfileForm.controls['firstName'].value === 'undefined'  || isdisable || isPoBoxError">{{ !submitted ? 'Add' : 'Adding...' }}</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vendor Name Details Starts Here-->
+      <div class="add-vendor-form mt-3">
+        <div class="info_heading">
+          <h4 class="text-dark">PERSONAL INFO</h4>
+        </div>
+        <div class="row info_content">
+          <div class="col-12 col-sm-6 col-md-4">
+            <mat-form-field class=" mat-form-field-infix">
+              <mat-select id="ddlSuffix"
+                          [ngClass]="vendorProfileForm.controls['suffix'].value === '' ? 'splacefolder' : 'removeplacefolder'"
+                          formControlName="suffix"
+                          placeholder="Select Suffix">
+                <mat-option [value]="">
+                  - Select Suffix -
+                </mat-option>
+                <mat-option *ngFor="let p of suffixs" [value]="p">
+                  {{p}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-sm-6 col-md-4">
+            <mat-form-field class=" mat-form-field-infix mat-custom-field">
+              <input matInput id="txtPreferredName" placeholder="Preferred Name" formControlName="preferedName"
+                     maxlength="200" (focusout)="onBlurMethod($event.target.value,'preferedName')">
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-sm-6 col-md-4">
+          </div>
+        </div>
+        <div class="row info_content">
+          <div class="col-12 col-sm-6 col-md-4">
+            <mat-form-field class=" mat-form-field-infix">
+              <input matInput id="txtFirstName" placeholder="First Name" formControlName="firstName"
+                     maxlength="200" (focusout)="onBlurMethod($event.target.value,'firstName')" trim="blur" required>
+              <mat-error *ngIf="vendorProfileForm.controls['firstName'].touched && vendorProfileForm.controls['firstName'].errors">
+                First Name is Required!!
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-sm-6 col-md-4">
+            <mat-form-field class=" mat-form-field-infix">
+              <input matInput id="txtMiddleName" placeholder="Middle Name" formControlName="middleName"
+                     maxlength="200" (focusout)="onBlurMethod($event.target.value,'middleName')">
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-sm-6 col-md-4">
+            <mat-form-field class=" mat-form-field-infix">
+              <input matInput id="txtLastName" placeholder="Last Name" formControlName="lastName"
+                     maxlength="200" (focusout)="onBlurMethod($event.target.value,'lastName')" required>
+              <mat-error *ngIf="vendorProfileForm.controls['lastName'].touched && vendorProfileForm.controls['lastName'].errors">
+                Last Name is Required!!
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <!-- Vendor Name Details Ends Here-->
+        <!-- Company Information Starts Here-->
+        <div class="info_heading">
+          <h4 class="text-dark">COMPANY</h4>
+        </div>
+        <div class="row info_content">
+          <div class="col-12">
+            <mat-checkbox id="chkStaffApraiser" [value]="chkStaffApraiser" formControlName="chkStaffApraiser" (change)="setCompanyInfomation($event)">AMS Staff  Appraiser</mat-checkbox>
+          </div>
+        </div>
+        <div class="row info_content">
+          <div class="col-12 col-sm-6 col-md-8">
+            <mat-form-field class=" mat-form-field-infix">
+              <input matInput id="txtCompanyName" placeholder="Company Name" formControlName="companyName"
+                     maxlength="200" (change)="onBlurMethod($event.target.value,'companyName')" required [readonly]="markCompanyNameReadonly">
+              <mat-error *ngIf="vendorProfileForm.controls['companyName'].touched && vendorProfileForm.controls['companyName'].errors">
+                Company Name Required!!
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-sm-6 col-md-4">
+            <mat-form-field class=" mat-form-field-infix">
+              <mat-select id="ddlCompanyState" #cstate
+                          (change)="onBlurMethod(cstate.value,'companystate')"
+                          [ngClass]="vendorProfileForm.controls['companystate'].value === '' ? 'splacefolder' : 'removeplacefolder'"
+                          formControlName="companystate"
+                          placeholder="Select Company State" required>
+                <mat-option [value]="">
+                  - Select Company State -
+                </mat-option>
+                <mat-option *ngFor="let state of states" [value]="state">
+                  {{state}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <!-- Company Information Ends Here-->
+        <!-- Service Section Starts Here-->
+        <div class="info_heading">
+          <h4 class="text-dark">SERVICE TYPE(S)</h4>
+        </div>
+
+        <div class="row info_content">
+          <div class="col-12" *ngFor="let service of services; let i = index" formArrayName="services">
+
+            <!--<div *ngFor="let service of services; let i = index" formArrayName="services">
+        <input id="chkServiceType" type="checkbox" [formControlName]="i">
+        <span>{{service}} Services</span>
+      </div>-->
+
+            <mat-checkbox id="chkServiceType{{i}}" [formControlName]="i">{{service}} Services</mat-checkbox>
+
+          </div>
+        </div>
+        <div class="row info_content">
+          <small class="text-danger">*Please enter at least one method of contact</small>
+        </div>
+        <!-- Service Section Ends Here-->
+        <!-- Address Section for Physical Starts Here-->
+
+        <div class="info_heading">
+          <h4 class="text-dark">PHYSICAL ADDRESS</h4>
+        </div>
+        <div class="row info_content">
+          <div class="col-12 col-sm-6 col-md-4">
+            <mat-form-field class=" mat-form-field-infix">
+              <input matInput id="txtStreet" placeholder="Street" formControlName="street"
+                     maxlength="100" (focusout)="onBlurMethod($event.target.value,'street')"
+                     (change)="setErrorForPOBox($event.target.value,'street')">
+              <mat-error *ngIf="(vendorProfileForm.controls['street'].touched && vendorProfileForm.controls['street'].errors)||vendorProfileForm.controls['street'].invalid ">
+
+              </mat-error>
+              <mat-error *ngIf="((vendorProfileForm.controls['street'].touched && vendorProfileForm.controls['street'].errors) ||vendorProfileForm.controls['street'].invalid) && isPoBoxError">
+                Street should not contain PO Box
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-sm-6 col-md-4">
+            <mat-form-field class=" mat-form-field-infix">
+              <input matInput id="txtCity" placeholder="City" formControlName="city"
+                     maxlength="100" (focusout)="onBlurMethod($event.target.value,'city')">
+              <mat-error *ngIf="(vendorProfileForm.controls['city'].touched && vendorProfileForm.controls['city'].errors)||vendorProfileForm.controls['city'].invalid">
+
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-sm-6 col-md-4">
+            <mat-form-field class=" mat-form-field-infix">
+              <mat-select id="ddlState"
+                          (change)="onStateChange($event)"
+                          [ngClass]="vendorProfileForm.controls['state'].value === '' ? 'splacefolder' : 'removeplacefolder'"
+                          formControlName="state"
+                          placeholder="Select State">
+                <mat-option [value]="">
+                  - Select State -
+                </mat-option>
+                <mat-option *ngFor="let state of states" [value]="state">
+                  {{state}}
+                </mat-option>
+              </mat-select>
+              <mat-error id="state-Error" *ngIf="(vendorProfileForm.controls['state'].touched && vendorProfileForm.controls['state'].errors)||vendorProfileForm.controls['state'].invalid ">
+
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row info_content">
+          <div class="col-12 col-sm-6 col-md-4">
+            <mat-form-field class=" mat-form-field-infix">
+              <input matInput id="txtZipcode" placeholder="Zip Code" formControlName="zipcode"
+                     [maxlength]="zipLength" (focusout)="onBlurMethod($event.target.value,'zipcode')">
+              <mat-error id="zipcode-Error" *ngIf="vendorProfileForm.controls['zipcode'].invalid && isAllFieldsOfAddressRequired ">
+
+              </mat-error>
+              <mat-error id="invalidZipcode-Error" *ngIf="((vendorProfileForm.controls['zipcode'].touched && vendorProfileForm.controls['zipcode'].errors)||vendorProfileForm.controls['zipcode'].invalid)&&!isAllFieldsOfAddressRequired ">
+                Zipcode should be of 5 digits
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <!-- Address Section for Physical Ends Here-->
+        <!-- Address Section for Mailing Starts Here-->
+        <div class="row info_content">
+          <div class="col-12">
+            <mat-checkbox id="chkmail" [value]="chkmailbox" formControlName="chkmailbox" (change)="addressChecked($event)"><span id="addMailingAddress-Message">If mailing address is different than physical address</span></mat-checkbox>
+          </div>
+        </div>
+
+        <div *ngIf="vendorProfileForm.controls['chkmailbox'].value">
+          <div class="info_heading">
+            <h4 class="text-dark">MAILING ADDRESS</h4>
+          </div>
+
+          <div class="row info_content">
+            <div class="col-12 col-sm-6 col-md-4">
+              <mat-form-field class=" mat-form-field-infix">
+                <input matInput id="txtStreet" placeholder="Street" formControlName="mstreet"
+                       maxlength="100" (focusout)="onBlurMethod($event.target.value,'mstreet')">
+                <mat-error id="mstreet-Error" *ngIf="(vendorProfileForm.controls['mstreet'].touched && vendorProfileForm.controls['mstreet'].errors) || vendorProfileForm.controls['mstreet'].invalid ">
+
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4">
+              <mat-form-field class=" mat-form-field-infix">
+                <input matInput id="txtCity" placeholder="City" formControlName="mcity"
+                       maxlength="100" (focusout)="onBlurMethod($event.target.value,'mcity')">
+                <mat-error *ngIf="(vendorProfileForm.controls['mcity'].touched && vendorProfileForm.controls['mcity'].errors) || vendorProfileForm.controls['mcity'].invalid ">
+
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4">
+              <mat-form-field class=" mat-form-field-infix">
+                <mat-select id="ddlState"
+                            (change)="onStateChange($event)"
+                            [ngClass]="vendorProfileForm.controls['mstate'].value === '' ? 'splacefolder' : 'removeplacefolder'"
+                            formControlName="mstate"
+                            placeholder="Select State">
+                  <mat-option [value]="">
+                    - Select State -
+                  </mat-option>
+                  <mat-option *ngFor="let state of states" [value]="state">
+                    {{state}}
+                  </mat-option>
+                </mat-select>
+                <mat-error id="mstate-Error" *ngIf="(vendorProfileForm.controls['mstate'].touched && vendorProfileForm.controls['mstate'].errors)||vendorProfileForm.controls['mstate'].invalid ">
+
+                </mat-error>
+              </mat-form-field>
+
+            </div>
+          </div>
+
+          <div class="row info_content">
+            <div class="col-12 col-sm-6 col-md-4">
+              <mat-form-field class=" mat-form-field-infix">
+                <input matInput id="txtZipcode" placeholder="Zip Code" formControlName="mzipcode"
+                       [maxlength]="zipLength" (focusout)="onBlurMethod($event.target.value,'mzipcode')">
+                <mat-error id="mzipcode-Error" *ngIf="vendorProfileForm.controls['mzipcode'].invalid && isAllFieldsOfMailingAddressRequired ">
+
+                </mat-error>
+                <mat-error id="invalidMailingZipcode-Error" *ngIf="((vendorProfileForm.controls['mzipcode'].touched && vendorProfileForm.controls['mzipcode'].errors)||vendorProfileForm.controls['mzipcode'].invalid)&&!isAllFieldsOfMailingAddressRequired ">
+                  Zipcode should be of 5 digits
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <!-- Phone Section Starts Here-->
+
+
+        <div class="info_heading">
+          <h4 class="text-dark">CONTACT INFO</h4>
+        </div>
+
+
+
+        <div formArrayName="phoneInfo">
+          <div *ngFor="let phone of vendorProfileForm.controls.phoneInfo['controls']; let i=index">
+            <!-- <div class="col-md-4 pt-1 col-sm-12 no-padding">
+        <label class="col-12">
+          Contact Info {{i+1}}
+        </label>
+        <span class="glyphicon glyphicon-remove pull-right" *ngIf="vendorProfileForm.controls.phoneInfo.controls.length>1" (click)="removephone(i)">
+        </span>
+      </div>-->
+            <div [formGroupName]="i" class="row info_content">
+              <div class="col-12 col-sm-6 col-md-8">
+                <div class="row">
+                  <div class="col-12 col-sm-6 col-md-5">
+                    <mat-form-field>
+                      <input matInput id="txtPhoneNumber" placeholder="Phone Number" formControlName="phoneNumber"
+                             [maxlength]="max" pattern="\[0-9]{10,10}|\(?\b\d\d\d\)?[-. ]?\d\d\d[-. ]?\d\d\d\d"
+                             (input)="primaryNumberFormatChange($event.target.value,i)"
+                             (focus)="primaryNumFoucusIn($event.target.value,i)"
+                             (focusout)="out($event.target.value,i)" numbers>
+                      <mat-error id="phone-Error" *ngIf="vendorProfileForm.controls.phoneInfo.controls[i].controls.phoneNumber.touched && vendorProfileForm.controls.phoneInfo.controls[i].controls.phoneNumber.errors">
+                        Required and should be a number of  10 digits
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-12 col-sm-6 col-md-3">
+                    <mat-form-field>
+                      <input matInput id="txtPhoneExtension" placeholder="Extension" maxlength="6" pattern="[0-9]+" formControlName="phoneExtension">
+                      <mat-error id="phone-Error" *ngIf="vendorProfileForm.controls.phoneInfo.controls[i].controls.phoneExtension.touched && vendorProfileForm.controls.phoneInfo.controls[i].controls.phoneExtension.errors">
+                        Extension should be number of upto 6 digits
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-12 col-sm-6 col-md-4">
+                    <mat-form-field>
+                      <mat-select id="ddlPhoneType" #phnid
+                                  (change)="onTypeChange(phnid.value,i)"
+                                  [ngClass]="vendorProfileForm.controls.phoneInfo.controls[i].controls.phoneType.value === '' ? 'splacefolder' : 'removeplacefolder'"
+                                  formControlName="phoneType"
+                                  placeholder="Select Phone Type">
+                        <mat-option [value]="">
+                          - Select Phone Type -
+                        </mat-option>
+                        <mat-option *ngFor="let phonetype of phonetypes" [value]="phonetype">
+                          {{phonetype}}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error id="phoneType-Error" *ngIf="vendorProfileForm.controls.phoneInfo.controls[i].controls.phoneType.errors && !vendorProfileForm.controls.phoneInfo.controls[i].controls.phoneType.pristine">
+                        Required
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="col-12 col-sm-6 col-md-4">
+                <div class="row">
+                  <div class="col-12 col-sm-6 col-md-6">
+                    <label id="lblAllowTexts">Allow Text</label>
+                    <div class="py-1 info-field">
+                      <mat-slide-toggle id="switchAllowTexts" (valueget)="changeSwitch($event,i)" formControlName="mySwitch"></mat-slide-toggle>
+                    </div>
+                  </div>
+                  <div class="col-12 col-sm-6 col-md-6">
+                    <label></label>
+                    <div class="info-field">
+                      <!--<mat-radio-button id="rdbtnPhoneRadio" formControlName="phoneRadio" name="phoneRadio" value="Primary" [checked]="i===0" (change)="handleChange($event,i)">Primary</mat-radio-button>
+                <input id="rdbtnPhoneRadio" type="radio" formControlName="phoneRadio" name="phoneRadio" value="Primary" [checked]="i===0" (change)="handleChange($event,i)" />
+                <span id="lblPrimaryPhone">Primary</span>-->
+
+                      <mat-radio-button value="1" id="rdbtnPhoneRadio{{i}}" formControlName="phoneRadio" name="phoneRadio" [checked]="i===0" (change)="handleChange($event,i)"><span id="lblPrimaryPhone">Primary</span></mat-radio-button>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row info_content">
+          <div class="col-12">
+            <a class="btn normal btn-dark btn-sm" id="lnkAddPhone" (click)="addPhone()">
+              Add another number
+            </a>
+          </div>
+        </div>
+
+        <!-- Phone Section Ends  Here-->
+        <!-- Email  Starts   Here-->
+
+        <div class="row info_content">
+          <div class="col-12 col-sm-6 col-md-8">
+            <mat-form-field class="mat-form-field-infix">
+              <input matInput id="txtPrimaryEmail" placeholder="Enter Primary Email ID" formControlName="primaryemail"
+                     pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+                     (input)="onBlurMethod($event.target.value,'primaryemail')"
+                     trim="blur">
+              <mat-error id="primaryEmail-Error" *ngIf="vendorProfileForm.controls['primaryemail'].touched && vendorProfileForm.controls['primaryemail'].errors">
+                Please Enter Valid Email Address
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-sm-6 col-md-4">
+          </div>
+          <div class="col-12 col-sm-6 col-md-8">
+            <mat-form-field class="mat-form-field-infix">
+              <input matInput id="txtSecondaryEmail" placeholder="Enter Secondary Email ID" formControlName="secondaryemail"
+                     pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+                     (input)="onBlurMethod($event.target.value,'secondaryemail')"
+                     trim="blur">
+              <mat-error id="primaryEmail-Error" *ngIf="vendorProfileForm.controls['secondaryemail'].touched && vendorProfileForm.controls['secondaryemail'].errors">
+                Please Enter Valid Email Address
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-sm-6 col-md-4">
+          </div>
+        </div>
+
+        
+
+        </div>
+</form>

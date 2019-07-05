@@ -1,0 +1,33 @@
+
+.mat-disabled .mat-slide-toggle-bar{
+    background-color: rgba(0,98,204,.5) !important
+}
+.mat-disabled .mat-slide-toggle-thumb{
+    background-color: rgba(0,98,204,.8) !important
+}
+
+.mat-dialog-container {
+    padding: 15px!important;
+}
+.table-VendorsList {    
+    width: 100%;
+}
+
+
+.table-VendorsList tr:first-child td{
+    border-top: 0;
+}
+.selectionpane-search {
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    margin-bottom: 10px;
+}
+.rank-vrecord, .offer-vrecord {
+    flex-grow: 1;
+}
+.id-vrecord {
+    flex-grow: 2;
+}
+.vendors-list-grid:hover {
+    background:#fafafa;
+}

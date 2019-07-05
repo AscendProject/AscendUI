@@ -1,0 +1,98 @@
+.accordion {
+  background-color: #fff;
+  color: #444;
+  cursor: pointer;
+  padding: 5px 10px;
+  width: 100%;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 1px solid #e5e5e5;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+  transition: 0.4s;
+}
+
+.active, .accordion:hover {
+  background-color: rgba(204, 224, 245, 0.3);
+}
+
+.panel {
+  padding: 0;  
+  background-color: white;
+  overflow: hidden;
+}
+.showdetails {
+  color: #007bff !important;
+}
+
+.mat-toolbar-row, .mat-toolbar-single-row {
+    height: 25px !important;
+    font-size: 12px !important;
+}
+
+.panel-action {
+    font-size: 12px;
+    color: #0456a7;
+    text-decoration: underline;
+}
+.select-button {
+    color: #08b143;
+    font-size: 13px;
+}
+.panel-title {
+    color: #0456a7;
+    font-weight: 600;
+}
+.check-icon {
+    color: #8cce0c;
+    font-size: 20px;
+}
+.mat-expansion-panel-header {
+    height: 30px !important;
+}
+.mat-action-row {
+  justify-content: flex-start !important;
+}
+.add-button-action {
+  background-color: #e0e0e0;
+  height: 32px;
+  font-size: 11px;
+}
+.submit-action {
+  height: 30px;
+  font-size: 13px;
+}
+
+
+
+// Utility Classes
+.font-13 {
+    font-size: 13px;
+}
+.display-flex {
+  display: flex;
+}
+.margin-top-pull-10 {
+  margin-top: 10px;
+}
+.mat-checkbox-checked.mat-accent .mat-checkbox-background {
+  background-color: #1a54a8!important;
+}
+
+
+.content_panel {
+  height: calc(100% - 193px);
+  overflow: hidden;
+}
+
+.panel-head {
+  height: 45px;
+}
+
+.add-new-service {
+  height: calc(100% - 45px);
+  overflow-y: auto;
+  overflow-x: hidden;
+} 

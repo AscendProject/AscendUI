@@ -28,7 +28,7 @@
     "@ngx-loading-bar/http": "^2.1.0",
     "@ngx-loading-bar/http-client": "^2.1.0",
     "@ngx-loading-bar/router": "^2.1.0",
-    "bootstrap": "^4.1.1",
+    "bootstrap": "^4.3.1",
     "classlist.js": "^1.1.20150312",
     "core-js": "^2.4.1",
     "cors": "^2.8.4",
